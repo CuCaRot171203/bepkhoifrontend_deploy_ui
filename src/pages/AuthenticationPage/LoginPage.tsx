@@ -17,7 +17,7 @@ export default function LoginPage() {
     username: "",
     password: "",
   });
-  const { authInfo, setAuthInfo } = useAuth()
+  const { authInfo, setAuthInfo } = useAuth();
 
   // Xử lý khi người dùng nhập dữ liệu vào form
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +36,7 @@ export default function LoginPage() {
     try {
       const response = await fetch(`${API_BASE_URL}login`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -178,4 +179,3 @@ export default function LoginPage() {
     </div>
   );
 }
-

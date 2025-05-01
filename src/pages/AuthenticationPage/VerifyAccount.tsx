@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../../styles/VerifyAccount/VerifyAccount.module.css"; 
-import wallImage from "../../styles/VerifyAccount/restaurant.jpg"; 
+import styles from "../../styles/VerifyAccount/VerifyAccount.module.css";
+import wallImage from "../../styles/VerifyAccount/restaurant.jpg";
 import { useAuth } from "../../context/AuthContext";
 const API_BASE_URL = process.env.REACT_APP_API_APP_ENDPOINT;
 
-
 export default function VerifyPassword() {
   const navigate = useNavigate();
-  const { authInfo, setAuthInfo } = useAuth()
+  const { authInfo, setAuthInfo } = useAuth();
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [isOtpStage, setIsOtpStage] = useState(false); // Trạng thái giữa lần bấm đầu và thứ hai
@@ -29,14 +28,12 @@ export default function VerifyPassword() {
     if (!isOtpStage) {
       // request OTP
       try {
-        const response = await fetch(
-          `${API_BASE_URL}api/Passwords/send-otp`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email }),
-          }
-        );
+        const response = await fetch(`${API_BASE_URL}api/Passwords/send-otp`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email }),
+        });
         const data = await response.json();
         if (response.ok) {
           alert("OTP đã được gửi đến email của bạn!");
@@ -65,8 +62,8 @@ export default function VerifyPassword() {
           setAuthInfo({
             token: data.token,
             userId: data.userId,
-            roleName: data.roleName || null, 
-            userName: data.userName || null, 
+            roleName: data.roleName || null,
+            userName: data.userName || null,
           });
           navigate(data.roleName === "manager" ? "/manage/menu" : "/pos");
         } else {

@@ -4,7 +4,9 @@ const API_BASE_URL = process.env.REACT_APP_API_APP_ENDPOINT;
 
 // Khởi tạo kết nối SignalR
 const connection = new signalR.HubConnectionBuilder()
-  .withUrl(`${API_BASE_URL}SignalrHub`)
+  .withUrl(`${API_BASE_URL}SignalrHub`, {
+    withCredentials: true,
+  })
   .withAutomaticReconnect()
   .build();
 
@@ -35,7 +37,9 @@ export const stopConnection = async (): Promise<void> => {
       await connection.stop();
       console.log("SignalR đã ngắt kết nối");
       // Reset groupReferences khi ngắt kết nối
-      Object.keys(groupReferences).forEach((key) => delete groupReferences[key]);
+      Object.keys(groupReferences).forEach(
+        (key) => delete groupReferences[key]
+      );
     } catch (err) {
       console.error("Ngắt kết nối SignalR thất bại:", err);
       throw err;
@@ -44,7 +48,10 @@ export const stopConnection = async (): Promise<void> => {
 };
 
 // Đăng ký listener cho eventName
-export const addListener = (eventName: string, callback: ListenerCallback): void => {
+export const addListener = (
+  eventName: string,
+  callback: ListenerCallback
+): void => {
   if (!listeners[eventName]) {
     listeners[eventName] = [];
 
@@ -65,7 +72,10 @@ export const addListener = (eventName: string, callback: ListenerCallback): void
 };
 
 // Xóa listener
-export const removeListener = (eventName: string, callback: ListenerCallback): void => {
+export const removeListener = (
+  eventName: string,
+  callback: ListenerCallback
+): void => {
   if (listeners[eventName]) {
     listeners[eventName] = listeners[eventName].filter((cb) => cb !== callback);
     if (listeners[eventName].length === 0) {
@@ -116,9 +126,11 @@ connection.onreconnected(() => {
   console.log("SignalR đã kết nối lại");
   Object.keys(groupReferences).forEach((groupName) => {
     if (groupReferences[groupName] > 0) {
-      connection.invoke("JoinGroup", groupName).catch((err) =>
-        console.error(`Khôi phục group ${groupName} thất bại:`, err)
-      );
+      connection
+        .invoke("JoinGroup", groupName)
+        .catch((err) =>
+          console.error(`Khôi phục group ${groupName} thất bại:`, err)
+        );
     }
   });
 });

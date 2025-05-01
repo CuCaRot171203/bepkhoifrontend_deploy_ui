@@ -66,9 +66,13 @@ const OrderManagePage: React.FC = () => {
   const [orderDetails, setOrderDetails] = useState<OrderDetailItem[]>([]);
   const [detailLoading, setDetailLoading] = useState(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-  const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInformation | null>(null);
+  const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInformation | null>(
+    null
+  );
   const [deliveryLoading, setDeliveryLoading] = useState(false);
-  const [cancellationHistory, setCancellationHistory] = useState<CancellationHistoryItem[]>([]);
+  const [cancellationHistory, setCancellationHistory] = useState<
+    CancellationHistoryItem[]
+  >([]);
   const [historyLoading, setHistoryLoading] = useState(false);
 
   const fetchDeliveryInfo = async (deliveryInfoId: number) => {
@@ -81,12 +85,15 @@ const OrderManagePage: React.FC = () => {
             Authorization: `Bearer ${authInfo?.token}`,
             "Content-Type": "application/json; charset=utf-8",
           },
+          credentials: "include",
         }
       );
 
       if (response.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
         return;
       }
 
@@ -112,12 +119,15 @@ const OrderManagePage: React.FC = () => {
             Authorization: `Bearer ${authInfo?.token}`,
             "Content-Type": "application/json; charset=utf-8",
           },
+          credentials: "include",
         }
       );
 
       if (response.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
         return;
       }
 
@@ -143,25 +153,31 @@ const OrderManagePage: React.FC = () => {
             Authorization: `Bearer ${authInfo?.token}`,
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(filterParams),
         }
       );
 
       if (response.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
         setOrders([]);
         return;
       }
 
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      if (!response.ok)
+        throw new Error(`HTTP error! status: ${response.status}`);
 
       const data = await response.json();
       const ordersData = data.data || [];
 
       const ordersWithCustomerNames = ordersData.map((order: Order) => ({
         ...order,
-        customerName: customers.find((c) => c.customerId === order.customerId)?.customerName || "Khách vãng lai",
+        customerName:
+          customers.find((c) => c.customerId === order.customerId)
+            ?.customerName || "Khách vãng lai",
       }));
 
       setOrders(ordersWithCustomerNames);
@@ -186,12 +202,15 @@ const OrderManagePage: React.FC = () => {
             Authorization: `Bearer ${authInfo?.token}`,
             "Content-Type": "application/json; charset=utf-8",
           },
+          credentials: "include",
         }
       );
 
       if (response.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
         return;
       }
 
@@ -213,12 +232,15 @@ const OrderManagePage: React.FC = () => {
             Authorization: `Bearer ${authInfo?.token}`,
             "Content-Type": "application/json; charset=utf-8",
           },
+          credentials: "include",
         }
       );
 
       if (response.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
         return;
       }
 

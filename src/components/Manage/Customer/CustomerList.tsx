@@ -36,7 +36,9 @@ const CustomerList: React.FC<CustomerListProps> = ({ search }) => {
 
     setLoading(true);
     const apiUrl = search.trim()
-      ? `${process.env.REACT_APP_API_APP_ENDPOINT}api/Customer/search?searchTerm=${encodeURIComponent(search.trim())}`
+      ? `${
+          process.env.REACT_APP_API_APP_ENDPOINT
+        }api/Customer/search?searchTerm=${encodeURIComponent(search.trim())}`
       : `${process.env.REACT_APP_API_APP_ENDPOINT}api/Customer`;
 
     try {
@@ -46,6 +48,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ search }) => {
           Authorization: `Bearer ${authInfo.token}`,
           "Content-Type": "application/json; charset=utf-8",
         },
+        credentials: "include",
       });
       if (response.status === 401) {
         message.error("Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại!");
@@ -83,6 +86,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ search }) => {
             Authorization: `Bearer ${authInfo.token}`,
             "Content-Type": "application/json; charset=utf-8",
           },
+          credentials: "include",
         }
       );
       if (response.status === 401) {

@@ -61,13 +61,16 @@ const InvoiceManagePage: React.FC = () => {
             Authorization: `Bearer ${authInfo?.token}`,
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(params),
         }
       );
 
       if (response.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
         setInvoices([]);
         return;
       }
@@ -98,7 +101,7 @@ const InvoiceManagePage: React.FC = () => {
 
   const calculateTotalRevenue = () => {
     return invoices
-      .filter(invoice => invoice.status)
+      .filter((invoice) => invoice.status)
       .reduce((sum, invoice) => sum + invoice.amountDue, 0);
   };
 
@@ -109,11 +112,11 @@ const InvoiceManagePage: React.FC = () => {
   return (
     <div className="flex w-full h-full px-[8.33%] font-sans screen-menu-page">
       <div className="flex flex-1 p-4 gap-4">
-      <div className="h-fit">
-        <FilterSidebar
-          onFilterSubmit={handleFilterSubmit}
-          loading={loading}
-        />
+        <div className="h-fit">
+          <FilterSidebar
+            onFilterSubmit={handleFilterSubmit}
+            loading={loading}
+          />
         </div>
         <main className="flex-1 overflow-auto">
           <div className="flex justify-between items-center mb-4">
@@ -126,7 +129,9 @@ const InvoiceManagePage: React.FC = () => {
           <div className="grid grid-cols-3 gap-4 mb-4">
             <Card className="shadow-sm">
               <div className="text-gray-500">Tổng số hóa đơn</div>
-              <div className="text-2xl font-bold">{calculateTotalInvoices()}</div>
+              <div className="text-2xl font-bold">
+                {calculateTotalInvoices()}
+              </div>
             </Card>
             <Card className="shadow-sm">
               <div className="text-gray-500">Tổng doanh thu</div>
@@ -137,7 +142,7 @@ const InvoiceManagePage: React.FC = () => {
             <Card className="shadow-sm">
               <div className="text-gray-500">Hóa đơn chưa thanh toán</div>
               <div className="text-2xl font-bold text-red-500">
-                {invoices.filter(i => !i.status).length}
+                {invoices.filter((i) => !i.status).length}
               </div>
             </Card>
           </div>

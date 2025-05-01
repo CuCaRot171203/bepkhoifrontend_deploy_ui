@@ -50,11 +50,14 @@ const fetchOrderDetail = async (
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      credentials: "include",
     });
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -69,7 +72,9 @@ const fetchOrderDetail = async (
       if (response.status === 400) {
         console.error("Bad Request:", errorData.message);
       } else if (response.status === 404) {
-        console.error("Not Found: No order details found for the given orderId.");
+        console.error(
+          "Not Found: No order details found for the given orderId."
+        );
       } else {
         console.error("Server Error:", errorData.message);
       }
@@ -102,13 +107,17 @@ const updateOrderDetailQuantity = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return null;
     }
 
     if (!response.ok) {
       const errorData = await response.json();
-      message.error(errorData.message || "Không thể cập nhật số lượng sản phẩm.");
+      message.error(
+        errorData.message || "Không thể cập nhật số lượng sản phẩm."
+      );
       return null;
     }
 
@@ -140,7 +149,9 @@ const addNoteToOrderDetail = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return false;
     }
 
@@ -191,7 +202,9 @@ const fetchDeleteUnconfirmOrderDetail = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return false;
     }
 
@@ -247,7 +260,9 @@ const fetchDeleteConfirmOrderDetail = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return false;
     }
 
@@ -269,17 +284,25 @@ const POSListOfOrder: React.FC<Props> = ({ selectedOrder }) => {
   const { authInfo, clearAuthInfo } = useAuth();
   const [selectedOrders, setSelectedOrders] = useState<OrderDetailModel[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentOrderDetail, setCurrentOrderDetail] = useState<OrderDetailModel | null>(null);
-  const [isModalDeleteOrderdetailOpen, setIsModalDeleteOrderdetailOpen] = useState(false);
+  const [currentOrderDetail, setCurrentOrderDetail] =
+    useState<OrderDetailModel | null>(null);
+  const [isModalDeleteOrderdetailOpen, setIsModalDeleteOrderdetailOpen] =
+    useState(false);
   const [deleteReason, setDeleteReason] = useState("");
-  const [deletingOrderDetailId, setDeletingOrderDetailId] = useState<number | null>(null);
+  const [deletingOrderDetailId, setDeletingOrderDetailId] = useState<
+    number | null
+  >(null);
 
   const fetchData = useCallback(async () => {
     if (!authInfo?.token) {
       message.error("Vui lòng đăng nhập để tiếp tục.");
       return;
     }
-    const orderDetails = await fetchOrderDetail(selectedOrder, authInfo.token, clearAuthInfo);
+    const orderDetails = await fetchOrderDetail(
+      selectedOrder,
+      authInfo.token,
+      clearAuthInfo
+    );
     setSelectedOrders(orderDetails);
   }, [authInfo?.token, clearAuthInfo, selectedOrder]);
 
@@ -356,11 +379,17 @@ const POSListOfOrder: React.FC<Props> = ({ selectedOrder }) => {
     setIsModalOpen(true);
   }, []);
 
-  const handleNoteChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (currentOrderDetail) {
-      setCurrentOrderDetail({ ...currentOrderDetail, productNote: e.target.value });
-    }
-  }, [currentOrderDetail]);
+  const handleNoteChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (currentOrderDetail) {
+        setCurrentOrderDetail({
+          ...currentOrderDetail,
+          productNote: e.target.value,
+        });
+      }
+    },
+    [currentOrderDetail]
+  );
 
   const saveNote = useCallback(async () => {
     if (!authInfo?.token) {
@@ -374,7 +403,11 @@ const POSListOfOrder: React.FC<Props> = ({ selectedOrder }) => {
         note: currentOrderDetail.productNote || "",
       };
 
-      const success = await addNoteToOrderDetail(request, authInfo.token, clearAuthInfo);
+      const success = await addNoteToOrderDetail(
+        request,
+        authInfo.token,
+        clearAuthInfo
+      );
       if (success) {
         fetchData();
         message.success("Thêm ghi chú thành công.");
@@ -384,7 +417,13 @@ const POSListOfOrder: React.FC<Props> = ({ selectedOrder }) => {
     }
     setIsModalOpen(false);
     setCurrentOrderDetail(null);
-  }, [authInfo?.token, clearAuthInfo, currentOrderDetail, selectedOrder, fetchData]);
+  }, [
+    authInfo?.token,
+    clearAuthInfo,
+    currentOrderDetail,
+    selectedOrder,
+    fetchData,
+  ]);
 
   const deleteOrderDetail = useCallback(
     async (isConfirmed: boolean, orderDetailId: number | null) => {
@@ -397,11 +436,13 @@ const POSListOfOrder: React.FC<Props> = ({ selectedOrder }) => {
         setDeletingOrderDetailId(null);
         return;
       }
-  
+
       let success = false;
       if (isConfirmed) {
         if (!authInfo.userId || isNaN(parseInt(authInfo.userId))) {
-          message.error("Không tìm thấy thông tin người dùng hợp lệ. Vui lòng đăng nhập lại.");
+          message.error(
+            "Không tìm thấy thông tin người dùng hợp lệ. Vui lòng đăng nhập lại."
+          );
           return;
         }
         success = await fetchDeleteConfirmOrderDetail(
@@ -420,7 +461,7 @@ const POSListOfOrder: React.FC<Props> = ({ selectedOrder }) => {
           clearAuthInfo
         );
       }
-  
+
       if (success) {
         fetchData();
         setIsModalDeleteOrderdetailOpen(false);
@@ -475,10 +516,15 @@ const POSListOfOrder: React.FC<Props> = ({ selectedOrder }) => {
       <div className="max-h-[40vh] overflow-y-auto">
         <ul className="space-y-2">
           {selectedOrders.map((item, index) => (
-            <li key={item.orderDetailId} className="bg-white p-2 rounded-md shadow">
+            <li
+              key={item.orderDetailId}
+              className="bg-white p-2 rounded-md shadow"
+            >
               <div className="flex justify-between items-center">
                 <span
-                  className={`font-semibold w-1/3 ${item.status ? "text-green-500" : ""}`}
+                  className={`font-semibold w-1/3 ${
+                    item.status ? "text-green-500" : ""
+                  }`}
                 >
                   {index + 1}. {item.productName}
                 </span>
@@ -488,14 +534,26 @@ const POSListOfOrder: React.FC<Props> = ({ selectedOrder }) => {
                       type="text"
                       icon={<MinusOutlined />}
                       disabled={item.status === true}
-                      onClick={() => handleUpdateOrderDetailAddMinus(false, item.orderDetailId)}
+                      onClick={() =>
+                        handleUpdateOrderDetailAddMinus(
+                          false,
+                          item.orderDetailId
+                        )
+                      }
                     />
-                    <span className="text-lg font-semibold">{item.quantity}</span>
+                    <span className="text-lg font-semibold">
+                      {item.quantity}
+                    </span>
                     <Button
                       type="text"
                       icon={<PlusOutlined />}
                       disabled={item.status === true}
-                      onClick={() => handleUpdateOrderDetailAddMinus(true, item.orderDetailId)}
+                      onClick={() =>
+                        handleUpdateOrderDetailAddMinus(
+                          true,
+                          item.orderDetailId
+                        )
+                      }
                     />
                   </div>
                 </div>
@@ -503,7 +561,10 @@ const POSListOfOrder: React.FC<Props> = ({ selectedOrder }) => {
                   <span style={{ marginRight: "30px", fontSize: "1rem" }}>
                     {item.price.toLocaleString()}đ
                   </span>
-                  <span className="font-semibold" style={{ fontSize: "1.1rem" }}>
+                  <span
+                    className="font-semibold"
+                    style={{ fontSize: "1.1rem" }}
+                  >
                     {(item.price * item.quantity).toLocaleString()}đ
                   </span>
                 </div>
@@ -514,7 +575,9 @@ const POSListOfOrder: React.FC<Props> = ({ selectedOrder }) => {
               </div>
               <div
                 className={`text-sm mt-1 ${
-                  item.status ? "text-gray-300 cursor-not-allowed" : "text-gray-500 cursor-pointer"
+                  item.status
+                    ? "text-gray-300 cursor-not-allowed"
+                    : "text-gray-500 cursor-pointer"
                 }`}
                 onClick={() => {
                   if (!item.status) openNoteModal(item);

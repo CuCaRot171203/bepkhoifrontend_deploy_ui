@@ -60,7 +60,8 @@ const fetchOrders = async (
     const query = new URLSearchParams();
     if (roomId !== null) query.append("roomId", roomId.toString());
     if (shipperId !== null) query.append("shipperId", shipperId.toString());
-    if (orderTypeId !== null) query.append("orderTypeId", orderTypeId.toString());
+    if (orderTypeId !== null)
+      query.append("orderTypeId", orderTypeId.toString());
 
     const response = await fetch(
       `${API_BASE_URL}api/orders/get-order-by-type-pos?${query.toString()}`,
@@ -70,12 +71,15 @@ const fetchOrders = async (
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
+        credentials: "include",
       }
     );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -121,7 +125,9 @@ const fetchCreateNewOrder = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return null;
     }
 
@@ -150,17 +156,22 @@ const fetchRemoveOrder = async (
   clearAuthInfo: () => void
 ): Promise<void> => {
   try {
-    const response = await fetch(`${API_BASE_URL}api/orders/remove-order/${orderId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/orders/remove-order/${orderId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       throw new Error("Unauthorized");
     }
 
@@ -188,8 +199,11 @@ const ModelRightSide: React.FC<Props> = ({
   const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false);
   const [tabs, setTabs] = useState<Tab[]>([]);
   const [activeKey, setActiveKey] = useState("");
-  const [isReloadAfterPayment, setIsReloadAfterPayment] = useState<boolean>(false);
-  const [previousSelectedOrderId, setPreviousSelectedOrderId] = useState<number | null>(null);
+  const [isReloadAfterPayment, setIsReloadAfterPayment] =
+    useState<boolean>(false);
+  const [previousSelectedOrderId, setPreviousSelectedOrderId] = useState<
+    number | null
+  >(null);
 
   const openCustomerModal = () => setIsCustomerModalOpen(true);
   const closeCustomerModal = () => setIsCustomerModalOpen(false);
@@ -244,7 +258,15 @@ const ModelRightSide: React.FC<Props> = ({
       setPreviousSelectedOrderId(null);
       message.error("Không thể lấy danh sách đơn hàng.");
     }
-  }, [authInfo?.token, clearAuthInfo, selectedTable, selectedShipper, orderType, selectedOrder, setSelectedOrder]);
+  }, [
+    authInfo?.token,
+    clearAuthInfo,
+    selectedTable,
+    selectedShipper,
+    orderType,
+    selectedOrder,
+    setSelectedOrder,
+  ]);
 
   const addTab = async () => {
     if (!authInfo?.token) {
@@ -277,7 +299,11 @@ const ModelRightSide: React.FC<Props> = ({
         orderNote: null,
       };
 
-      const newOrderId = await fetchCreateNewOrder(newOrderData, authInfo.token, clearAuthInfo);
+      const newOrderId = await fetchCreateNewOrder(
+        newOrderData,
+        authInfo.token,
+        clearAuthInfo
+      );
 
       if (newOrderId) {
         message.success("Tạo đơn hàng thành công.");
@@ -294,7 +320,8 @@ const ModelRightSide: React.FC<Props> = ({
   const removeTab = (targetKey: TargetKey) => {
     Modal.confirm({
       title: "Xác nhận xóa đơn hàng?",
-      content: "Bạn có chắc muốn xóa đơn này không? Hành động này không thể hoàn tác.",
+      content:
+        "Bạn có chắc muốn xóa đơn này không? Hành động này không thể hoàn tác.",
       okText: "Xóa",
       cancelText: "Hủy",
       okType: "danger",
@@ -306,8 +333,14 @@ const ModelRightSide: React.FC<Props> = ({
 
         try {
           const orderIdToRemove = Number(targetKey);
-          await fetchRemoveOrder(orderIdToRemove, authInfo.token, clearAuthInfo);
-          setTabs((prevTabs) => prevTabs.filter((tab) => tab.value !== targetKey));
+          await fetchRemoveOrder(
+            orderIdToRemove,
+            authInfo.token,
+            clearAuthInfo
+          );
+          setTabs((prevTabs) =>
+            prevTabs.filter((tab) => tab.value !== targetKey)
+          );
           if (activeKey === targetKey) {
             setActiveKey("");
             setSelectedOrder(null);
@@ -360,7 +393,11 @@ const ModelRightSide: React.FC<Props> = ({
     {
       eventName: "OrderListUpdate",
       groupName: "order",
-      callback: (data: { roomId: number | null; shipperId: number | null; orderStatusId: number }) => {
+      callback: (data: {
+        roomId: number | null;
+        shipperId: number | null;
+        orderStatusId: number;
+      }) => {
         console.log("Received OrderListUpdate with data:", data);
         let shouldRefresh = false;
         switch (orderType) {
@@ -368,7 +405,10 @@ const ModelRightSide: React.FC<Props> = ({
             shouldRefresh = true;
             break;
           case 2:
-            if (selectedShipper !== null && data.shipperId === selectedShipper) {
+            if (
+              selectedShipper !== null &&
+              data.shipperId === selectedShipper
+            ) {
               shouldRefresh = true;
             }
             break;
@@ -430,7 +470,10 @@ const ModelRightSide: React.FC<Props> = ({
         />
       </div>
 
-      <ModalCreateCustomer open={isCustomerModalOpen} onClose={closeCustomerModal} />
+      <ModalCreateCustomer
+        open={isCustomerModalOpen}
+        onClose={closeCustomerModal}
+      />
     </div>
   );
 };

@@ -12,7 +12,6 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import { useAuth } from "../../../context/AuthContext";
 
-
 const { Option } = Select;
 
 interface ProductCategory {
@@ -32,7 +31,9 @@ interface AddMenuModalProps {
 
 const AddMenuModal: React.FC<AddMenuModalProps> = ({ visible, onClose }) => {
   const { authInfo, clearAuthInfo } = useAuth();
-  const [productCategories, setProductCategories] = useState<ProductCategory[]>([]);
+  const [productCategories, setProductCategories] = useState<ProductCategory[]>(
+    []
+  );
   const [units, setUnits] = useState<Unit[]>([]);
   const [fileList, setFileList] = useState<any[]>([]);
   const [formData, setFormData] = useState({
@@ -126,6 +127,7 @@ const AddMenuModal: React.FC<AddMenuModalProps> = ({ visible, onClose }) => {
             Authorization: `Bearer ${authInfo.token}`,
             "Content-Type": "application/json; charset=utf-8",
           },
+          credentials: "include",
         }
       );
 
@@ -162,6 +164,7 @@ const AddMenuModal: React.FC<AddMenuModalProps> = ({ visible, onClose }) => {
             Authorization: `Bearer ${authInfo.token}`,
             "Content-Type": "application/json; charset=utf-8",
           },
+          credentials: "include",
         }
       );
 
@@ -238,7 +241,10 @@ const AddMenuModal: React.FC<AddMenuModalProps> = ({ visible, onClose }) => {
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("ProductName", formData.productName);
-      formDataToSend.append("ProductCategoryId", formData.productCategoryId!.toString());
+      formDataToSend.append(
+        "ProductCategoryId",
+        formData.productCategoryId!.toString()
+      );
       formDataToSend.append("CostPrice", formData.costPrice!.toString());
       formDataToSend.append("SellPrice", formData.sellPrice!.toString());
       if (formData.salePrice !== null) {
@@ -257,13 +263,17 @@ const AddMenuModal: React.FC<AddMenuModalProps> = ({ visible, onClose }) => {
         formDataToSend.append("Image", fileList[0].originFileObj);
       }
 
-      const response = await fetch(`${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/add`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${authInfo.token}`,
-        },
-        body: formDataToSend,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/add`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${authInfo.token}`,
+          },
+          credentials: "include",
+          body: formDataToSend,
+        }
+      );
 
       if (response.status === 401) {
         message.error("Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại!");

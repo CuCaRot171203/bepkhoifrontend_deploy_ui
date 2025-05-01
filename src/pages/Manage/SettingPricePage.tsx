@@ -43,12 +43,15 @@ const SettingPricePage: React.FC = () => {
       if (search.trim() !== "")
         queryParams.append("search", encodeURIComponent(search));
 
-      const apiUrl = `${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/export-product-price-excel?${queryParams.toString()}`;
+      const apiUrl = `${
+        process.env.REACT_APP_API_APP_ENDPOINT
+      }api/Menu/export-product-price-excel?${queryParams.toString()}`;
       const response = await fetch(apiUrl, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${authInfo.token}`,
         },
+        credentials: "include",
       });
 
       if (response.status === 401) {

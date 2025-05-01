@@ -27,7 +27,7 @@ interface Props {
 }
 
 const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
-  const { authInfo, clearAuthInfo } = useAuth()
+  const { authInfo, clearAuthInfo } = useAuth();
   const [formData, setFormData] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
   const [provinces, setProvinces] = useState<any[]>([]);
@@ -63,6 +63,7 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
             Authorization: `Bearer ${authInfo.token}`,
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
       if (response.status === 401) {
@@ -80,7 +81,7 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
         province_City: user.province_City,
         district: user.district,
         ward_Commune: user.ward_Commune,
-        date_of_Birth: user.date_of_Birth
+        date_of_Birth: user.date_of_Birth,
       });
     } catch (error) {
       message.error("Không thể tải dữ liệu người dùng!");
@@ -92,9 +93,12 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
 
   const fetchProvinces = async () => {
     try {
-      const res = await axios.get("https://online-gateway.ghn.vn/shiip/public-api/master-data/province", {
-        headers: { Token: ghnToken || "" },
-      });
+      const res = await axios.get(
+        "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
+        {
+          headers: { Token: ghnToken || "" },
+        }
+      );
       setProvinces(res.data.data);
     } catch (err) {
       console.error("Lỗi khi lấy tỉnh/thành:", err);
@@ -129,8 +133,14 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
   const handleChange = (key: keyof User, value: any) => {
     if (!formData) return;
     const updated = { ...formData, [key]: value };
-    if (key === "ward_Commune" || key === "district" || key === "province_City") {
-      updated.address = `${updated.ward_Commune || ""}, ${updated.district || ""}, ${updated.province_City || ""}`;
+    if (
+      key === "ward_Commune" ||
+      key === "district" ||
+      key === "province_City"
+    ) {
+      updated.address = `${updated.ward_Commune || ""}, ${
+        updated.district || ""
+      }, ${updated.province_City || ""}`;
     }
     setFormData(updated);
   };
@@ -146,13 +156,16 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
         provinceCity: formData.province_City,
         district: formData.district,
         wardCommune: formData.ward_Commune,
-        dateOfBirth: formData.date_of_Birth
+        dateOfBirth: formData.date_of_Birth,
       };
 
       const response = await axios.put(
         `${process.env.REACT_APP_API_APP_ENDPOINT}api/Manager/${userId}`,
         payload,
-        { headers: { Authorization: `Bearer ${authInfo.token}` } }
+        {
+          headers: { Authorization: `Bearer ${authInfo.token}` },
+          withCredentials: true,
+        }
       );
       if (response.status === 401) {
         message.error("Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại!");
@@ -186,7 +199,10 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
       const response = await axios.post(
         `${process.env.REACT_APP_API_APP_ENDPOINT}api/Passwords/change-password`,
         payload,
-        { headers: { Authorization: `Bearer ${authInfo.token}` } }
+        {
+          headers: { Authorization: `Bearer ${authInfo.token}` },
+          withCredentials: true,
+        }
       );
       if (response.status === 401) {
         message.error("Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại!");
@@ -221,13 +237,21 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
         {/* Toggle switch */}
         <div className="flex justify-center items-center mb-8">
           <button
-            className={`px-4 py-2 rounded-l-lg font-medium ${isInfoMode ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+            className={`px-4 py-2 rounded-l-lg font-medium ${
+              isInfoMode
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
             onClick={() => setIsInfoMode(true)}
           >
             Thông tin
           </button>
           <button
-            className={`px-4 py-2 rounded-r-lg font-medium ${!isInfoMode ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+            className={`px-4 py-2 rounded-r-lg font-medium ${
+              !isInfoMode
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
             onClick={() => setIsInfoMode(false)}
           >
             Mật khẩu
@@ -243,7 +267,9 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
             {/* Basic Info */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email
+                </label>
                 <Input
                   value={formData.email}
                   onChange={(e) => handleChange("email", e.target.value)}
@@ -251,7 +277,9 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Số điện thoại
+                </label>
                 <Input
                   value={formData.phone}
                   onChange={(e) => handleChange("phone", e.target.value)}
@@ -262,7 +290,9 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Tên người dùng</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Tên người dùng
+                </label>
                 <Input
                   value={formData.userName}
                   onChange={(e) => handleChange("userName", e.target.value)}
@@ -270,9 +300,15 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Ngày sinh</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Ngày sinh
+                </label>
                 <DatePicker
-                  value={formData.date_of_Birth ? moment(formData.date_of_Birth) : undefined}
+                  value={
+                    formData.date_of_Birth
+                      ? moment(formData.date_of_Birth)
+                      : undefined
+                  }
                   onChange={(d, s) => handleChange("date_of_Birth", s)}
                   format="YYYY-MM-DD"
                   className="w-full"
@@ -282,10 +318,14 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
 
             {/* Address Section */}
             <div className="mt-6 pt-4 border-t border-gray-200">
-              <h3 className="text-md font-semibold text-gray-800 mb-3">Địa chỉ</h3>
+              <h3 className="text-md font-semibold text-gray-800 mb-3">
+                Địa chỉ
+              </h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Tỉnh/Thành phố</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Tỉnh/Thành phố
+                  </label>
                   <Select
                     value={formData.province_City}
                     onChange={(v, o: any) => {
@@ -302,7 +342,9 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
                   </Select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Quận/Huyện</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Quận/Huyện
+                  </label>
                   <Select
                     value={formData.district}
                     onChange={(v, o: any) => {
@@ -322,10 +364,14 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
 
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phường/Xã</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Phường/Xã
+                  </label>
                   <Select
                     value={formData.ward_Commune}
-                    onChange={(v, o: any) => handleChange("ward_Commune", o.children)}
+                    onChange={(v, o: any) =>
+                      handleChange("ward_Commune", o.children)
+                    }
                     className="w-full"
                   >
                     {wards.map((w) => (
@@ -336,7 +382,9 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
                   </Select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Địa chỉ</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Địa chỉ
+                  </label>
                   <Input value={formData.address} disabled className="w-full" />
                 </div>
               </div>
@@ -345,7 +393,9 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
         ) : (
           <div className="space-y-4 max-w-md mx-auto">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mật khẩu cũ</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Mật khẩu cũ
+              </label>
               <Input.Password
                 value={oldPass}
                 onChange={(e) => setOldPass(e.target.value)}
@@ -353,7 +403,9 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mật khẩu mới</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Mật khẩu mới
+              </label>
               <Input.Password
                 value={newPass}
                 onChange={(e) => setNewPass(e.target.value)}
@@ -361,7 +413,9 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Xác nhận mật khẩu</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Xác nhận mật khẩu
+              </label>
               <Input.Password
                 value={confirmPass}
                 onChange={(e) => setConfirmPass(e.target.value)}
@@ -398,5 +452,5 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
       </div>
     </Modal>
   );
-}
+};
 export default UserUpdateModal;

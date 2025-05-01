@@ -66,24 +66,31 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
               Authorization: `Bearer ${authInfo.token}`,
               "Content-Type": "application/json",
             },
+            withCredentials: true,
           }
         );
 
         if (response.status === 401) {
           clearAuthInfo();
-          message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+          message.error(
+            "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+          );
           return;
         }
 
         const user = response.data.data;
         setFormData({
           ...user,
-          date_of_Birth: user.date_of_Birth ? moment(user.date_of_Birth).format("YYYY-MM-DD") : "",
+          date_of_Birth: user.date_of_Birth
+            ? moment(user.date_of_Birth).format("YYYY-MM-DD")
+            : "",
         });
       } catch (error: any) {
         if (error.response?.status === 401) {
           clearAuthInfo();
-          message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+          message.error(
+            "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+          );
         } else {
           message.error("Không thể tải dữ liệu người dùng!");
           console.error(error);
@@ -97,9 +104,12 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
 
   const fetchProvinces = useCallback(async () => {
     try {
-      const res = await axios.get("https://online-gateway.ghn.vn/shiip/public-api/master-data/province", {
-        headers: { Token: ghnToken || "" },
-      });
+      const res = await axios.get(
+        "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
+        {
+          headers: { Token: ghnToken || "" },
+        }
+      );
       setProvinces(res.data.data);
     } catch (err) {
       console.error("Lỗi khi lấy tỉnh/thành:", err);
@@ -141,8 +151,14 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
     (key: keyof User, value: any) => {
       if (!formData) return;
       const updated = { ...formData, [key]: value };
-      if (key === "ward_Commune" || key === "district" || key === "province_City") {
-        updated.address = `${updated.ward_Commune || ""}, ${updated.district || ""}, ${updated.province_City || ""}`;
+      if (
+        key === "ward_Commune" ||
+        key === "district" ||
+        key === "province_City"
+      ) {
+        updated.address = `${updated.ward_Commune || ""}, ${
+          updated.district || ""
+        }, ${updated.province_City || ""}`;
       }
       setFormData(updated);
     },
@@ -180,12 +196,15 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
             Authorization: `Bearer ${authInfo.token}`,
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
 
       if (response.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
         return;
       }
 
@@ -195,14 +214,23 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
     } catch (error: any) {
       if (error.response?.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
       } else if (error.response?.status === 400) {
         message.error("Cập nhật thất bại. Kiểm tra lại thông tin!");
       } else {
         message.error("Cập nhật thất bại!");
       }
     }
-  }, [authInfo?.token, authInfo?.userId, formData, clearAuthInfo, onClose, onReload]);
+  }, [
+    authInfo?.token,
+    authInfo?.userId,
+    formData,
+    clearAuthInfo,
+    onClose,
+    onReload,
+  ]);
 
   const submitPassword = useCallback(async () => {
     if (!authInfo?.token) {
@@ -234,12 +262,15 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
             Authorization: `Bearer ${authInfo.token}`,
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
 
       if (response.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
         return;
       }
 
@@ -251,19 +282,14 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
     } catch (error: any) {
       if (error.response?.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
       } else {
         message.error("Đổi mật khẩu thất bại!");
       }
     }
-  }, [
-    authInfo?.token,
-    formData,
-    oldPass,
-    newPass,
-    confirmPass,
-    clearAuthInfo,
-  ]);
+  }, [authInfo?.token, formData, oldPass, newPass, confirmPass, clearAuthInfo]);
 
   useEffect(() => {
     if (open && authInfo?.userId) {
@@ -281,7 +307,9 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
       centered
       destroyOnClose
     >
-      <h2 className="text-xl font-bold text-center">CẬP NHẬT THÔNG TIN CÁ NHÂN</h2>
+      <h2 className="text-xl font-bold text-center">
+        CẬP NHẬT THÔNG TIN CÁ NHÂN
+      </h2>
 
       <div className="flex justify-center items-center gap-4 mt-4 select-none">
         <span
@@ -317,11 +345,7 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
         </div>
       ) : isInfoMode ? (
         <div className="grid grid-cols-2 gap-4 mt-4">
-          <Input
-            addonBefore="Email"
-            value={formData.email}
-            disabled
-          />
+          <Input addonBefore="Email" value={formData.email} disabled />
           <Input
             addonBefore="Số điện thoại"
             value={formData.phone}
@@ -333,7 +357,11 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
             onChange={(e) => handleChange("userName", e.target.value)}
           />
           <DatePicker
-            value={formData.date_of_Birth ? moment(formData.date_of_Birth) : undefined}
+            value={
+              formData.date_of_Birth
+                ? moment(formData.date_of_Birth)
+                : undefined
+            }
             onChange={(d, s) => handleChange("date_of_Birth", s)}
             format="YYYY-MM-DD"
             style={{ width: "100%" }}

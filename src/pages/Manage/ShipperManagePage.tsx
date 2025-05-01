@@ -5,7 +5,7 @@ import { Button, message } from "antd";
 import { PlusOutlined, FileExcelOutlined } from "@ant-design/icons";
 import AddUserModal from "../../components/Manage/Shipper/AddUserModal";
 import { useAuth } from "../../context/AuthContext";
-import './MenuPage.css';
+import "./MenuPage.css";
 
 const ShipperManagePage: React.FC = () => {
   const { authInfo, clearAuthInfo } = useAuth();
@@ -15,17 +15,23 @@ const ShipperManagePage: React.FC = () => {
 
   const handleExportExcel = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_APP_ENDPOINT}api/Shipper/export`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authInfo?.token}`,
+      const response = await fetch(
+        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Shipper/export`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authInfo?.token}`,
+          },
+          credentials: "include",
         }
-      });
+      );
 
       if (response.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
         return;
       }
 
@@ -36,9 +42,9 @@ const ShipperManagePage: React.FC = () => {
 
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = 'Shippers.xlsx';
+      a.download = "Shippers.xlsx";
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -63,20 +69,27 @@ const ShipperManagePage: React.FC = () => {
             <div className="flex gap-2">
               <div className="flex items-center font-semibold button-up-of-list">
                 <Button type="default" onClick={() => setIsAddModalOpen(true)}>
-                  <PlusOutlined className="icon-of-menu-list-button" />Thêm mới
+                  <PlusOutlined className="icon-of-menu-list-button" />
+                  Thêm mới
                 </Button>
               </div>
               <div className="flex items-center font-semibold button-up-of-list">
                 <Button type="default" onClick={handleExportExcel}>
-                  <FileExcelOutlined className="icon-of-menu-list-button" />Xuất Excel
+                  <FileExcelOutlined className="icon-of-menu-list-button" />
+                  Xuất Excel
                 </Button>
               </div>
             </div>
           </div>
-          <UserList search={search} status={status}/>
+          <UserList search={search} status={status} />
         </main>
       </div>
-      {isAddModalOpen && <AddUserModal visible={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} />}
+      {isAddModalOpen && (
+        <AddUserModal
+          visible={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

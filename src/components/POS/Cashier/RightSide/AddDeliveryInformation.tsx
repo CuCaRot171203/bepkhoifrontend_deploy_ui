@@ -10,45 +10,50 @@ interface Props {
   selectedOrder: number | null;
 }
 interface DeliveryInformation {
-    deliveryInformationId: number;
-    receiverName: string;
-    receiverPhone: string;
-    receiverAddress: string;
-    deliveryNote: string | null;
-  }
-  interface DeliveryInformationCreateDto {
-    orderId: number;
-    receiverName: string;
-    receiverPhone: string;
-    receiverAddress: string;
-    deliveryNote?: string;
-  }
-// async function 
+  deliveryInformationId: number;
+  receiverName: string;
+  receiverPhone: string;
+  receiverAddress: string;
+  deliveryNote: string | null;
+}
+interface DeliveryInformationCreateDto {
+  orderId: number;
+  receiverName: string;
+  receiverPhone: string;
+  receiverAddress: string;
+  deliveryNote?: string;
+}
+// async function
 const fetchDeliveryInformation = async (
-  orderId: number, 
-  token: string, 
+  orderId: number,
+  token: string,
   clearAuthInfo: () => void
 ): Promise<DeliveryInformation | null> => {
   const url = `${API_BASE_URL}api/orders/delivery-information/${orderId}`;
 
   try {
     const response = await fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
+      credentials: "include",
     });
 
     // Kiểm tra nếu response trả về 401, gọi clearAuthInfo
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return null;
     }
 
     if (!response.ok) {
-      console.log(`Error: API request failed with status code ${response.status}`);
+      console.log(
+        `Error: API request failed with status code ${response.status}`
+      );
       return null;
     }
 
@@ -57,11 +62,11 @@ const fetchDeliveryInformation = async (
     if (data?.data) {
       return data.data;
     } else {
-      console.log('Error: Không có dữ liệu giao hàng.');
+      console.log("Error: Không có dữ liệu giao hàng.");
       return null;
     }
   } catch (error) {
-    console.error('Lỗi khi gọi API:', error);
+    console.error("Lỗi khi gọi API:", error);
     return null;
   }
 };
@@ -78,7 +83,7 @@ const fetchEditDeliveryInformation = async (
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        "Authorization": "Bearer " + token,
+        Authorization: "Bearer " + token,
         "Content-Type": "application/json",
         Accept: "*/*",
       },
@@ -87,13 +92,18 @@ const fetchEditDeliveryInformation = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return false;
     }
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.log(`API Error ${response.status}:`, errorData.message || errorData);
+      console.log(
+        `API Error ${response.status}:`,
+        errorData.message || errorData
+      );
       return false;
     }
     const data = await response.json();
@@ -104,9 +114,12 @@ const fetchEditDeliveryInformation = async (
     return false;
   }
 };
-  
-  
-const AddDeliveryInformation: React.FC<Props> = ({ open, onClose, selectedOrder }) => {
+
+const AddDeliveryInformation: React.FC<Props> = ({
+  open,
+  onClose,
+  selectedOrder,
+}) => {
   const { authInfo, clearAuthInfo } = useAuth();
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
@@ -175,7 +188,11 @@ const AddDeliveryInformation: React.FC<Props> = ({ open, onClose, selectedOrder 
       deliveryNote: note?.trim() || "",
     };
 
-    const success = await fetchEditDeliveryInformation(payload, authInfo?.token || "", clearAuthInfo);
+    const success = await fetchEditDeliveryInformation(
+      payload,
+      authInfo?.token || "",
+      clearAuthInfo
+    );
 
     if (success) {
       message.success("Thêm thông tin giao hàng thành công.");
@@ -186,7 +203,11 @@ const AddDeliveryInformation: React.FC<Props> = ({ open, onClose, selectedOrder 
   };
 
   const getDeliveryInfo = async (orderId: number) => {
-    const deliveryInfo = await fetchDeliveryInformation(orderId, authInfo?.token || "", clearAuthInfo);
+    const deliveryInfo = await fetchDeliveryInformation(
+      orderId,
+      authInfo?.token || "",
+      clearAuthInfo
+    );
     if (deliveryInfo) {
       setCustomerName(deliveryInfo.receiverName);
       setPhone(deliveryInfo.receiverPhone);
@@ -281,4 +302,3 @@ const AddDeliveryInformation: React.FC<Props> = ({ open, onClose, selectedOrder 
 };
 
 export default AddDeliveryInformation;
-

@@ -90,6 +90,8 @@ const MenuList: React.FC<MenuListProps> = ({ search, category, status }) => {
           headers: {
             Authorization: `Bearer ${authInfo.token}`,
           },
+          method: "GET",
+          credentials: "include",
         }
       );
       if (response.status === 401) {
@@ -113,7 +115,7 @@ const MenuList: React.FC<MenuListProps> = ({ search, category, status }) => {
   // API call when search, category, status, page change
   useEffect(() => {
     fetchMenuList();
-  }, [search, category, status , page, authInfo.token]);
+  }, [search, category, status, page, authInfo.token]);
 
   // Handle close row to close detail modal
   const handleCloseDetail = () => {
@@ -137,6 +139,8 @@ const MenuList: React.FC<MenuListProps> = ({ search, category, status }) => {
           headers: {
             Authorization: `Bearer ${authInfo.token}`,
           },
+          method: "GET",
+          credentials: "include",
         }
       );
       if (response.status === 401) {
@@ -172,6 +176,8 @@ const MenuList: React.FC<MenuListProps> = ({ search, category, status }) => {
             headers: {
               Authorization: `Bearer ${authInfo.token}`,
             },
+            method: "GET",
+            credentials: "include",
           }
         );
         if (response.status === 401) {
@@ -261,7 +267,7 @@ const MenuList: React.FC<MenuListProps> = ({ search, category, status }) => {
       render: (value: boolean) =>
         value ? (
           <Tag color="green" className="text-[0.8vw]">
-            Còn hàng 
+            Còn hàng
           </Tag>
         ) : (
           <Tag color="red" className="text-[0.8vw]">

@@ -7,7 +7,10 @@ interface AddShipperModalProps {
   onClose: () => void;
 }
 
-const AddShipperModal: React.FC<AddShipperModalProps> = ({ visible, onClose }) => {
+const AddShipperModal: React.FC<AddShipperModalProps> = ({
+  visible,
+  onClose,
+}) => {
   const { authInfo, clearAuthInfo } = useAuth();
   const [formData, setFormData] = useState({
     userName: "",
@@ -37,18 +40,24 @@ const AddShipperModal: React.FC<AddShipperModalProps> = ({ visible, onClose }) =
     }
     setLoading(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_APP_ENDPOINT}api/Shipper`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authInfo?.token}`,
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Shipper`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authInfo?.token}`,
+          },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
         return;
       }
 
@@ -63,7 +72,6 @@ const AddShipperModal: React.FC<AddShipperModalProps> = ({ visible, onClose }) =
       resetForm();
       onClose();
       window.location.reload();
-
     } catch (error) {
       message.error("Lỗi khi thêm nhân viên");
     } finally {

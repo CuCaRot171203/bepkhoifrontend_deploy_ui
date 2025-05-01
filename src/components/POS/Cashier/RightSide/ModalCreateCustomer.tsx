@@ -12,17 +12,21 @@ interface Props {
 
 const fetchCreateNewCustomer = async (customerName: string, phone: string) => {
   try {
-    const response = await fetch(`${API_BASE_URL}api/Customer/create-new-customer`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token,
-      },
-      body: JSON.stringify({
-        customerName: customerName,
-        phone: phone,
-      }),
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/Customer/create-new-customer`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          customerName: customerName,
+          phone: phone,
+        }),
+      }
+    );
 
     if (!response.ok) {
       // Nếu response không thành công, ném lỗi
@@ -42,24 +46,29 @@ const fetchCreateNewCustomer = async (customerName: string, phone: string) => {
   }
 };
 
-// async function 
+// async function
 
 const ModalCreateCustomer: React.FC<Props> = ({ open, onClose }) => {
-
-
   const clearFormFields = () => {
-    const customerNameInput = document.getElementsByName("customerName")[0] as HTMLInputElement;
-    const phoneInput = document.getElementsByName("phone")[0] as HTMLInputElement;
+    const customerNameInput = document.getElementsByName(
+      "customerName"
+    )[0] as HTMLInputElement;
+    const phoneInput = document.getElementsByName(
+      "phone"
+    )[0] as HTMLInputElement;
     customerNameInput.value = "";
     phoneInput.value = "";
   };
 
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const customerName = (form.elements.namedItem("customerName") as HTMLInputElement).value.trim();
-    const phone = (form.elements.namedItem("phone") as HTMLInputElement).value.trim();
+    const customerName = (
+      form.elements.namedItem("customerName") as HTMLInputElement
+    ).value.trim();
+    const phone = (
+      form.elements.namedItem("phone") as HTMLInputElement
+    ).value.trim();
     const newCustomer = await fetchCreateNewCustomer(customerName, phone);
     if (newCustomer) {
       console.log("Tạo khách hàng thành công!");
@@ -67,7 +76,9 @@ const ModalCreateCustomer: React.FC<Props> = ({ open, onClose }) => {
       onClose();
     } else {
       console.log("Tạo khách hàng thất bại!");
-      alert("Tạo khách hàng thất bại. Vui lòng kiểm tra lại thông tin và thử lại.");
+      alert(
+        "Tạo khách hàng thất bại. Vui lòng kiểm tra lại thông tin và thử lại."
+      );
     }
   };
 
@@ -105,7 +116,8 @@ const ModalCreateCustomer: React.FC<Props> = ({ open, onClose }) => {
             </div>
           </div>
           <div className="text-end my-5 ">
-            <button className="bg-[#fccb77] mx-3 px-3 py-2 rounded-lg font-semibold hover:bg-[#fab848]"
+            <button
+              className="bg-[#fccb77] mx-3 px-3 py-2 rounded-lg font-semibold hover:bg-[#fab848]"
               type="submit"
             >
               <SaveOutlined />

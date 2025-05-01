@@ -63,12 +63,15 @@ const fetchAddNoteToOrder = async (
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      credentials: "include",
       body: JSON.stringify(request),
     });
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return false;
     }
 
@@ -113,7 +116,9 @@ const confirmOrderPos = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return false;
     }
 
@@ -145,17 +150,22 @@ const fetchGeneralData = async (
   clearAuthInfo: () => void
 ): Promise<OrderGeneralDataPosDto | null> => {
   try {
-    const response = await fetch(`${API_BASE_URL}api/orders/get-order-general-data/${orderId}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/orders/get-order-general-data/${orderId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return null;
     }
 
@@ -203,8 +213,11 @@ const POSPayment: React.FC<Props> = ({
   const [isModalSplitOrderOpen, setIsModalSplitOrderOpen] = useState(false);
   const [note, setNote] = useState("");
   const [isDrawerPaymentVisible, setIsDrawerPaymentVisible] = useState(false);
-  const [orderData, setOrderData] = useState<OrderGeneralDataPosDto | null>(null);
-  const [isAddDeliveryInformationOpen, setIsAddDeliveryInformationOpen] = useState<boolean>(false);
+  const [orderData, setOrderData] = useState<OrderGeneralDataPosDto | null>(
+    null
+  );
+  const [isAddDeliveryInformationOpen, setIsAddDeliveryInformationOpen] =
+    useState<boolean>(false);
 
   const showDrawerPayment = () => setIsDrawerPaymentVisible(true);
   const onClosePaymentDrawer = () => setIsDrawerPaymentVisible(false);
@@ -219,7 +232,11 @@ const POSPayment: React.FC<Props> = ({
       setOrderData(null);
       return;
     }
-    const data = await fetchGeneralData(selectedOrder, authInfo.token, clearAuthInfo);
+    const data = await fetchGeneralData(
+      selectedOrder,
+      authInfo.token,
+      clearAuthInfo
+    );
     setOrderData(data);
   }, [authInfo?.token, clearAuthInfo, selectedOrder]);
 
@@ -236,14 +253,24 @@ const POSPayment: React.FC<Props> = ({
       message.warning("Vui lòng thêm sản phẩm mới vào đơn hàng.");
       return;
     }
-    const confirmed = await confirmOrderPos(selectedOrder, authInfo.token, clearAuthInfo);
+    const confirmed = await confirmOrderPos(
+      selectedOrder,
+      authInfo.token,
+      clearAuthInfo
+    );
     if (confirmed) {
       message.success("Đơn hàng đã được xác nhận!");
       getOrderGeneralData();
     } else {
       message.error("Xác nhận đơn hàng thất bại.");
     }
-  }, [authInfo?.token, clearAuthInfo, orderData, selectedOrder, getOrderGeneralData]);
+  }, [
+    authInfo?.token,
+    clearAuthInfo,
+    orderData,
+    selectedOrder,
+    getOrderGeneralData,
+  ]);
 
   useSignalR(
     {
@@ -264,7 +291,9 @@ const POSPayment: React.FC<Props> = ({
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         if (updatedOrderId === selectedOrder) {
-          message.info(`Khách hàng đã thêm một yêu cầu mới vào hóa đơn ${updatedOrderId}.`);
+          message.info(
+            `Khách hàng đã thêm một yêu cầu mới vào hóa đơn ${updatedOrderId}.`
+          );
           getOrderGeneralData();
         }
       }, 500);
@@ -296,11 +325,15 @@ const POSPayment: React.FC<Props> = ({
     <div className="px-3 w-full bg-white rounded-md">
       <div className="flex flex-row bg-[#fafafa] w-full border-b py-2">
         <div className="justify-start flex items-center">
-          <p className="text-gray-600 font-semibold mr-2 ml-2">Bếp Khói Ocean Park</p>
+          <p className="text-gray-600 font-semibold mr-2 ml-2">
+            Bếp Khói Ocean Park
+          </p>
         </div>
         <div className="flex-1"></div>
         <div className="justify-end flex flex-row">
-          <p className="font-semibold text-gray-700 mr-2">Tổng số lượng món: </p>
+          <p className="font-semibold text-gray-700 mr-2">
+            Tổng số lượng món:{" "}
+          </p>
           <p className="mr-2 font-normal text-gray-700">
             {orderData && selectedOrder ? orderData.totalQuantity : 0} món
           </p>
@@ -358,9 +391,14 @@ const POSPayment: React.FC<Props> = ({
         <div className="flex-1"></div>
         <div className="justify-end flex flex-row">
           <div className="px-1 py-1">
-            <span className="mr-2 font-semibold text-gray-700">Tổng số tiền:</span>
+            <span className="mr-2 font-semibold text-gray-700">
+              Tổng số tiền:
+            </span>
             <span className="mr-2 font-normal text-gray-700">
-              {orderData && selectedOrder ? orderData.amountDue.toLocaleString() : "0"}đ
+              {orderData && selectedOrder
+                ? orderData.amountDue.toLocaleString()
+                : "0"}
+              đ
             </span>
           </div>
         </div>

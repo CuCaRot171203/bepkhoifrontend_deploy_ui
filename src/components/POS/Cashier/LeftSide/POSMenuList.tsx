@@ -40,12 +40,16 @@ interface isAvailableOption {
 
 async function fetchCategories(): Promise<CategoryOption[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}api/product-categories/get-all-categories`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${API_BASE_URL}api/product-categories/get-all-categories`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       }
-    });
+    );
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -70,24 +74,29 @@ async function fetchCategories(): Promise<CategoryOption[]> {
   }
 }
 
-async function fetchMenu(token: string, clearAuthInfo: () => void): Promise<menuItem[]> {
+async function fetchMenu(
+  token: string,
+  clearAuthInfo: () => void
+): Promise<menuItem[]> {
   try {
     const response = await fetch(`${API_BASE_URL}api/Menu/get-menu-pos`, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
-      }
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
     if (!response.ok) {
-      return[];
+      return [];
     }
 
     const jsonResponse = await response.json();
@@ -139,17 +148,22 @@ async function fetchCategoryFilter(
       query.append("isAvailable", choosedIsAvailable.toString());
     }
 
-    const response = await fetch(`${API_BASE_URL}api/Menu/filter-menu-pos?${query.toString()}`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${API_BASE_URL}api/Menu/filter-menu-pos?${query.toString()}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -192,7 +206,7 @@ async function fetchAddProductToOrder(
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
           accept: "*/*",
         },
@@ -202,7 +216,9 @@ async function fetchAddProductToOrder(
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       throw new Error("Unauthorized");
     }
 
@@ -219,10 +235,7 @@ async function fetchAddProductToOrder(
   }
 }
 
-const POSMenuList: React.FC<Props> = ({
-  selectedTable,
-  selectedOrder,
-}) => {
+const POSMenuList: React.FC<Props> = ({ selectedTable, selectedOrder }) => {
   const { authInfo, clearAuthInfo } = useAuth(); // Sử dụng AuthContext
   const [currentPage, setCurrentPage] = useState(1);
   const [categoryOptionList, setCategoryOptionList] = useState<
@@ -263,7 +276,7 @@ const POSMenuList: React.FC<Props> = ({
   useEffect(() => {
     getCategory();
     getMenu();
-  }, []); 
+  }, []);
 
   useEffect(() => {
     getCategoryFilter();
@@ -272,7 +285,7 @@ const POSMenuList: React.FC<Props> = ({
   const handleSelectItem = async (item: menuItem) => {
     setSelectedProduct(item);
     if (selectedOrder != null) {
-      if(item.isAvailable === true){
+      if (item.isAvailable === true) {
         try {
           const result = await fetchAddProductToOrder(
             selectedOrder,
@@ -283,7 +296,7 @@ const POSMenuList: React.FC<Props> = ({
         } catch (error: any) {
           console.error("Failed to add product:", error.message);
         }
-      }else{
+      } else {
         message.warning("Sản phẩm này đã hết hàng!");
       }
     }

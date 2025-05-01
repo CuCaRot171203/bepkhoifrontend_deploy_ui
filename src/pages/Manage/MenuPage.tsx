@@ -38,13 +38,16 @@ const MenuPage: React.FC = () => {
       if (statusFilter)
         queryParams.append("isActive", statusFilter === "1" ? "true" : "false");
       if (searchFilter) queryParams.append("search", searchFilter);
-      const apiUrl = `${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/export-products-excel?${queryParams.toString()}`;
+      const apiUrl = `${
+        process.env.REACT_APP_API_APP_ENDPOINT
+      }api/Menu/export-products-excel?${queryParams.toString()}`;
       const response = await fetch(apiUrl, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${authInfo.token}`,
           "Content-Type": "application/json; charset=utf-8",
         },
+        credentials: "include",
       });
       if (response.status === 401) {
         message.error("Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại!");

@@ -39,11 +39,14 @@ const fetchCustomerList = async (
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -65,17 +68,22 @@ const fetchCustomerByOrderId = async (
   clearAuthInfo: () => void
 ): Promise<FetchCustomerById | null> => {
   try {
-    const response = await fetch(`${API_BASE_URL}api/orders/get-customer-of-order/${orderId}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/orders/get-customer-of-order/${orderId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return null;
     }
 
@@ -118,7 +126,9 @@ const assignCustomerToOrder = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return false;
     }
 
@@ -141,17 +151,22 @@ const fetchDeleteCustomerFromOrder = async (
   clearAuthInfo: () => void
 ): Promise<boolean> => {
   try {
-    const response = await fetch(`${API_BASE_URL}api/orders/remove-customer/${orderId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/orders/remove-customer/${orderId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return false;
     }
 
@@ -189,7 +204,9 @@ const POSTableAndCustomerBar: React.FC<Props> = ({
 }) => {
   const { authInfo, clearAuthInfo } = useAuth();
   const [searchValue, setSearchValue] = useState("");
-  const [filteredCustomers, setFilteredCustomers] = useState<CustomerModel[]>([]);
+  const [filteredCustomers, setFilteredCustomers] = useState<CustomerModel[]>(
+    []
+  );
   const [showDropdown, setShowDropdown] = useState(false);
   const [customerList, setCustomerList] = useState<CustomerModel[]>([]);
   const [isLockSearch, setIsLockSearch] = useState(false);
@@ -209,7 +226,11 @@ const POSTableAndCustomerBar: React.FC<Props> = ({
       return;
     }
     if (selectedOrder !== null) {
-      const customer = await fetchCustomerByOrderId(selectedOrder, authInfo.token, clearAuthInfo);
+      const customer = await fetchCustomerByOrderId(
+        selectedOrder,
+        authInfo.token,
+        clearAuthInfo
+      );
       if (customer) {
         setSearchValue(`${customer.customerName} - ${customer.phone}`);
         setIsLockSearch(true);
@@ -236,7 +257,8 @@ const POSTableAndCustomerBar: React.FC<Props> = ({
         );
 
         const matchedByPhone = customerList.filter(
-          (customer) => customer.phone.includes(value) && !matchedByName.includes(customer)
+          (customer) =>
+            customer.phone.includes(value) && !matchedByName.includes(customer)
         );
 
         const combinedResults = [...matchedByName, ...matchedByPhone];
@@ -315,8 +337,12 @@ const POSTableAndCustomerBar: React.FC<Props> = ({
     <div className="flex items-center rounded-md w-full h-12 mt-0 relative">
       <div className="w-1/6 text-lg font-semibold rounded-full flex items-center justify-center bg-[#ffe6bc]">
         {selectedTable === null && selectedShipper === null && "Mang về"}
-        {selectedTable === null && selectedShipper !== null && `Nhân viên ${selectedShipper}`}
-        {selectedTable !== null && selectedShipper === null && `Bàn ${selectedTable}`}
+        {selectedTable === null &&
+          selectedShipper !== null &&
+          `Nhân viên ${selectedShipper}`}
+        {selectedTable !== null &&
+          selectedShipper === null &&
+          `Bàn ${selectedTable}`}
       </div>
 
       <div className="w-5/6 p-2 rounded-md h-full relative">
@@ -330,9 +356,15 @@ const POSTableAndCustomerBar: React.FC<Props> = ({
           disabled={isLockSearch}
           suffix={
             isLockSearch ? (
-              <DeleteOutlined className="cursor-pointer" onClick={handleClearCustomer} />
+              <DeleteOutlined
+                className="cursor-pointer"
+                onClick={handleClearCustomer}
+              />
             ) : (
-              <PlusOutlined className="cursor-pointer" onClick={onCreateCustomer} />
+              <PlusOutlined
+                className="cursor-pointer"
+                onClick={onCreateCustomer}
+              />
             )
           }
         />

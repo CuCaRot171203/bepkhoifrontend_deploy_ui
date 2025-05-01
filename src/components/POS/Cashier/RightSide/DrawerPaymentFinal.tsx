@@ -109,23 +109,34 @@ async function fetchCreateInvoiceForPayment(
   invoiceDetails: InvoiceDetailForPaymentDto[],
   token: string,
   clearAuthInfo: () => void
-): Promise<{ success: boolean; message: string; invoiceId?: number; error?: any }> {
+): Promise<{
+  success: boolean;
+  message: string;
+  invoiceId?: number;
+  error?: any;
+}> {
   try {
-    const response = await fetch(`${API_BASE_URL}api/Invoice/create-invoice-for-payment`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        invoiceInfo,
-        invoiceDetails,
-      }),
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/Invoice/create-invoice-for-payment`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          invoiceInfo,
+          invoiceDetails,
+        }),
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return {
         success: false,
         message: "Phiên làm việc đã hết hạn.",
@@ -171,14 +182,16 @@ async function fetchOrderPayment(
     const response = await fetch(url, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return null;
     }
 
@@ -217,17 +230,22 @@ async function fetchVnPayUrl(
   clearAuthInfo: () => void
 ): Promise<string | null> {
   try {
-    const response = await fetch(`${API_BASE_URL}api/Invoice/vnpay-url?Id=${orderId}`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/Invoice/vnpay-url?Id=${orderId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return null;
     }
 
@@ -253,17 +271,22 @@ async function printInvoicePdf(
   clearAuthInfo: () => void
 ) {
   try {
-    const response = await fetch(`${API_BASE_URL}api/invoice/${invoiceId}/print-pdf`, {
-      method: "GET",
-      headers: {
-        "Accept": "application/pdf",
-        "Authorization": `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/invoice/${invoiceId}/print-pdf`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/pdf",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return;
     }
 
@@ -287,7 +310,7 @@ async function printInvoicePdf(
       setTimeout(() => {
         document.body.removeChild(iframe);
         URL.revokeObjectURL(blobUrl);
-      }, 7000); 
+      }, 7000);
     };
   } catch (err) {
     console.error("Lỗi khi in hóa đơn:", err);
@@ -329,13 +352,16 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
   const { authInfo, clearAuthInfo } = useAuth();
   const [selectedBank, setSelectedBank] = useState(bankItems[0]);
   const [paymentMethod, setPaymentMethod] = useState<number>(1);
-  const [orderPaymentInfo, setOrderPaymentInfo] = useState<OrderPaymentDto | null>(null);
+  const [orderPaymentInfo, setOrderPaymentInfo] =
+    useState<OrderPaymentDto | null>(null);
   const [totalVat, setTotalVat] = useState<number>();
   const [otherPayment, setOtherPayment] = useState<number>(0);
   const [discount, setDiscount] = useState<number>(0);
   const [finalAmount, setFinalAmount] = useState<number>();
   const [customerPayAmount, setCustomerPayAmount] = useState<number>(0);
-  const [currentVnpayInvoice, setCurrentVnpayInvoice] = useState<number | null>(null);
+  const [currentVnpayInvoice, setCurrentVnpayInvoice] = useState<number | null>(
+    null
+  );
 
   const debounceOrderListUpdate = useCallback(() => {
     let timeout: NodeJS.Timeout;
@@ -345,7 +371,11 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
         if (Number(currentVnpayInvoice) === Number(data.invoiceId)) {
           if (data.status) {
             message.info("Đơn hàng đã được thanh toán thành công!");
-            printInvoicePdf(data.invoiceId, authInfo?.token || "", clearAuthInfo);
+            printInvoicePdf(
+              data.invoiceId,
+              authInfo?.token || "",
+              clearAuthInfo
+            );
             setIsReloadAfterPayment(true);
             onClose();
           } else {
@@ -370,7 +400,11 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
       message.error("Vui lòng đăng nhập để tiếp tục.");
       return;
     }
-    const result = await fetchOrderPayment(orderId, authInfo.token, clearAuthInfo);
+    const result = await fetchOrderPayment(
+      orderId,
+      authInfo.token,
+      clearAuthInfo
+    );
     if (result === null) {
       message.error("Truy xuất thông tin đơn đặt hàng thất bại");
       setOrderPaymentInfo(null);
@@ -455,14 +489,15 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
       invoiceNote: orderPaymentInfo.orderNote ?? "",
       status: true,
     };
-    const invoiceDetails: InvoiceDetailForPaymentDto[] = orderPaymentInfo.orderDetails.map((detail) => ({
-      productId: detail.productId,
-      productName: detail.productName,
-      quantity: detail.quantity,
-      price: detail.price,
-      productVat: detail.productVat,
-      productNote: detail.productNote ?? "",
-    }));
+    const invoiceDetails: InvoiceDetailForPaymentDto[] =
+      orderPaymentInfo.orderDetails.map((detail) => ({
+        productId: detail.productId,
+        productName: detail.productName,
+        quantity: detail.quantity,
+        price: detail.price,
+        productVat: detail.productVat,
+        productNote: detail.productNote ?? "",
+      }));
     const result = await fetchCreateInvoiceForPayment(
       invoiceInfo,
       invoiceDetails,
@@ -508,14 +543,15 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
       invoiceNote: orderPaymentInfo.orderNote ?? "",
       status: false,
     };
-    const invoiceDetails: InvoiceDetailForPaymentDto[] = orderPaymentInfo.orderDetails.map((detail) => ({
-      productId: detail.productId,
-      productName: detail.productName,
-      quantity: detail.quantity,
-      price: detail.price,
-      productVat: detail.productVat,
-      productNote: detail.productNote ?? "",
-    }));
+    const invoiceDetails: InvoiceDetailForPaymentDto[] =
+      orderPaymentInfo.orderDetails.map((detail) => ({
+        productId: detail.productId,
+        productName: detail.productName,
+        quantity: detail.quantity,
+        price: detail.price,
+        productVat: detail.productVat,
+        productNote: detail.productNote ?? "",
+      }));
     const result = await fetchCreateInvoiceForPayment(
       invoiceInfo,
       invoiceDetails,
@@ -523,7 +559,11 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
       clearAuthInfo
     );
     if (result.success && result.invoiceId) {
-      const paymentUrl = await fetchVnPayUrl(result.invoiceId, authInfo.token, clearAuthInfo);
+      const paymentUrl = await fetchVnPayUrl(
+        result.invoiceId,
+        authInfo.token,
+        clearAuthInfo
+      );
       if (paymentUrl) {
         window.open(paymentUrl, "_blank");
         setCurrentVnpayInvoice(result.invoiceId);
@@ -663,7 +703,10 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                   <div className="text-gray-800 rounded font-medium">
                     <p>
                       Tiền thừa trả khách:{" "}
-                      {(customerPayAmount - (finalAmount ?? 0)).toLocaleString()} đ
+                      {(
+                        customerPayAmount - (finalAmount ?? 0)
+                      ).toLocaleString()}{" "}
+                      đ
                     </p>
                   </div>
                 )}
@@ -677,7 +720,9 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                             alt="Bank Logo"
                             className="w-8 h-8 mr-2 rounded-full object-contain"
                           />
-                          <span className="font-medium">{selectedBank?.label}</span>
+                          <span className="font-medium">
+                            {selectedBank?.label}
+                          </span>
                         </div>
                         <DownOutlined />
                       </div>

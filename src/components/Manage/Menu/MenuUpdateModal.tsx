@@ -58,7 +58,9 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
 }) => {
   const { authInfo, clearAuthInfo } = useAuth();
   const [formData, setFormData] = useState<MenuDetail | null>(null);
-  const [productCategories, setProductCategories] = useState<ProductCategory[]>([]);
+  const [productCategories, setProductCategories] = useState<ProductCategory[]>(
+    []
+  );
   const [units, setUnits] = useState<Unit[]>([]);
   const [fileList, setFileList] = useState<any[]>([]);
 
@@ -91,6 +93,8 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
           headers: {
             Authorization: `Bearer ${authInfo.token}`,
           },
+          method: "GET",
+          credentials: "include",
         }
       );
       if (response.status === 401) {
@@ -111,7 +115,14 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
   const fetchUnits = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/units/get-all-units`
+        `${process.env.REACT_APP_API_APP_ENDPOINT}api/units/get-all-units`,
+        {
+          headers: {
+            Authorization: `Bearer ${authInfo.token}`,
+          },
+          method: "GET",
+          credentials: "include",
+        }
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -177,7 +188,9 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
         formData.salePrice < formData.costPrice ||
         formData.salePrice > formData.sellPrice
       ) {
-        message.error("Giá khuyến mãi phải nằm trong khoảng giữa giá vốn và giá bán!");
+        message.error(
+          "Giá khuyến mãi phải nằm trong khoảng giữa giá vốn và giá bán!"
+        );
         return false;
       }
     }
@@ -211,13 +224,19 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
         try {
           const formDataToSend = new FormData();
           formDataToSend.append("ProductName", formData.productName);
-          formDataToSend.append("ProductCategoryId", formData.productCategoryId.toString());
+          formDataToSend.append(
+            "ProductCategoryId",
+            formData.productCategoryId.toString()
+          );
           formDataToSend.append("CostPrice", formData.costPrice.toString());
           formDataToSend.append("SellPrice", formData.sellPrice.toString());
           if (formData.salePrice !== null && formData.salePrice !== undefined) {
             formDataToSend.append("SalePrice", formData.salePrice.toString());
           }
-          if (formData.productVat !== null && formData.productVat !== undefined) {
+          if (
+            formData.productVat !== null &&
+            formData.productVat !== undefined
+          ) {
             formDataToSend.append("ProductVat", formData.productVat.toString());
           }
           if (formData.description) {
@@ -239,6 +258,7 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
                 Authorization: `Bearer ${authInfo.token}`,
                 "Content-Type": "multipart/form-data",
               },
+              withCredentials: true,
             }
           );
 
@@ -255,7 +275,9 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
               clearAuthInfo();
             } else if (status === 400) {
               const errorMessage =
-                data.errors?.join(", ") || data.message || "Dữ liệu không hợp lệ!";
+                data.errors?.join(", ") ||
+                data.message ||
+                "Dữ liệu không hợp lệ!";
               message.error(errorMessage);
             } else if (status === 404) {
               message.error(data.message || "Không tìm thấy món ăn!");
@@ -405,9 +427,9 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
                   file.type === "image/jpeg" ||
                   file.type === "image/png" ||
                   file.type === "image/bmp";
-                  
+
                 const isLt2M = file.size / 1024 / 1024 < 2;
-              
+
                 if (!isImage) {
                   message.error("Chỉ hỗ trợ file JPG/PNG/BMP!");
                 }
@@ -419,7 +441,14 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
               onChange={({ fileList }) => setFileList(fileList)}
               defaultFileList={
                 formData.imageUrl
-                  ? [{ uid: "-1", name: "image.jpg", url: formData.imageUrl, status: "done" }]
+                  ? [
+                      {
+                        uid: "-1",
+                        name: "image.jpg",
+                        url: formData.imageUrl,
+                        status: "done",
+                      },
+                    ]
                   : []
               }
             >

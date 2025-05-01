@@ -37,18 +37,24 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ visible, onClose }) => {
     }
     setLoading(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_APP_ENDPOINT}api/cashiers`, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authInfo?.token}`,
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_APP_ENDPOINT}api/cashiers`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authInfo?.token}`,
+          },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.status === 401) {
         clearAuthInfo();
-        message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+        message.error(
+          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        );
         return;
       }
 
@@ -57,13 +63,12 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ visible, onClose }) => {
         message.error(errorData.message || "Lỗi khi thêm nhân viên");
         return;
       }
-      
+
       const successMessage = await response.text();
       message.success(successMessage || "Nhân viên đã được thêm thành công!");
       resetForm();
       onClose();
       window.location.reload();
-
     } catch (error) {
       message.error("Lỗi khi thêm nhân viên");
     } finally {
@@ -117,15 +122,15 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ visible, onClose }) => {
         </div>
 
         <div className="mt-6 flex justify-end space-x-3">
-          <Button 
-            className="bg-green-600 text-white px-6 py-2 rounded-md" 
+          <Button
+            className="bg-green-600 text-white px-6 py-2 rounded-md"
             onClick={handleSubmit}
             loading={loading}
           >
             Lưu
           </Button>
-          <Button 
-            className="bg-gray-300 px-6 py-2 rounded-md" 
+          <Button
+            className="bg-gray-300 px-6 py-2 rounded-md"
             onClick={() => {
               resetForm();
               onClose();

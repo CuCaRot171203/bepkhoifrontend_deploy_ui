@@ -38,19 +38,27 @@ interface Props {
   setOrderType: (shipperId: number | null) => void;
 }
 
-async function fetchRoomAreas(token: string, clearAuthInfo: () => void): Promise<roomAreaOption[]> {
+async function fetchRoomAreas(
+  token: string,
+  clearAuthInfo: () => void
+): Promise<roomAreaOption[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}api/roomarea/get-all?limit=1000&offset=0`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/roomarea/get-all?limit=1000&offset=0`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -75,19 +83,28 @@ async function fetchRoomAreas(token: string, clearAuthInfo: () => void): Promise
   }
 }
 
-async function fetchRooms(token: string, clearAuthInfo: () => void): Promise<room[]> {
+async function fetchRooms(
+  token: string,
+  clearAuthInfo: () => void
+): Promise<room[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}api/rooms/get-all-room-for-pos`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/rooms/get-all-room-for-pos`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -127,17 +144,22 @@ async function fetchRoomFilter(
       query.append("isUse", choosedIsUse.toString());
     }
 
-    const response = await fetch(`${API_BASE_URL}api/rooms/filter-room-pos?${query.toString()}`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/rooms/filter-room-pos?${query.toString()}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -176,14 +198,16 @@ async function updateRoomNote(
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ roomId: roomId, roomNote: roomNote }),
     });
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return false;
     }
 
@@ -220,7 +244,9 @@ const POSRoomTableList: React.FC<Props> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [note, setNote] = useState("");
-  const [selectedRoomToNote, setSelectedRoomToNote] = useState<number | null>(null);
+  const [selectedRoomToNote, setSelectedRoomToNote] = useState<number | null>(
+    null
+  );
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const currentTables = room.slice(startIndex, startIndex + ITEMS_PER_PAGE);
@@ -232,7 +258,10 @@ const POSRoomTableList: React.FC<Props> = ({
   ];
 
   async function getRoomAreas() {
-    const roomAreas = await fetchRoomAreas(authInfo?.token || "", clearAuthInfo);
+    const roomAreas = await fetchRoomAreas(
+      authInfo?.token || "",
+      clearAuthInfo
+    );
     setRoomAreaOptionList(roomAreas);
   }
 
@@ -246,7 +275,12 @@ const POSRoomTableList: React.FC<Props> = ({
   }
 
   async function getRoomFilter() {
-    const rooms = await fetchRoomFilter(choosedArea, choosedIsUse, authInfo?.token || "", clearAuthInfo);
+    const rooms = await fetchRoomFilter(
+      choosedArea,
+      choosedIsUse,
+      authInfo?.token || "",
+      clearAuthInfo
+    );
     setRoom(rooms);
     const maxPage = Math.ceil(rooms.length / ITEMS_PER_PAGE);
     if (currentPage > maxPage && maxPage > 0) {
@@ -270,7 +304,8 @@ const POSRoomTableList: React.FC<Props> = ({
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         const roomExists = room.some((r) => r.roomId === data.roomId);
-        const matchesFilter = choosedIsUse === null || choosedIsUse === data.isUse;
+        const matchesFilter =
+          choosedIsUse === null || choosedIsUse === data.isUse;
         if (roomExists || matchesFilter) {
           getRoomFilter();
         }
@@ -336,7 +371,13 @@ const POSRoomTableList: React.FC<Props> = ({
             <span className="mt-1 text-sm">{room.roomName}</span>
             <span
               className={`mt-1 text-xs text-gray-500 cursor-pointer transition-opacity duration-200
-                ${room.roomNote !== null && room.roomNote !== "" ? "opacity-100 visible" : room.roomId === hoveredId ? "opacity-100 visible" : "opacity-0 invisible"}
+                ${
+                  room.roomNote !== null && room.roomNote !== ""
+                    ? "opacity-100 visible"
+                    : room.roomId === hoveredId
+                    ? "opacity-100 visible"
+                    : "opacity-0 invisible"
+                }
               `}
               onClick={(e) => {
                 e.stopPropagation();
@@ -346,22 +387,33 @@ const POSRoomTableList: React.FC<Props> = ({
                 }
               }}
             >
-              {room.roomNote !== null && room.roomNote !== "" ? room.roomNote : "Nhập ghi chú..."}
+              {room.roomNote !== null && room.roomNote !== ""
+                ? room.roomNote
+                : "Nhập ghi chú..."}
             </span>
           </div>
         ))}
       </div>
       <div className="p-4 bg-[#FFFFFF] flex justify-end gap-2">
         <LeftOutlined
-          className={`cursor-pointer ${currentPage === 1 ? "opacity-50 pointer-events-none" : ""}`}
+          className={`cursor-pointer ${
+            currentPage === 1 ? "opacity-50 pointer-events-none" : ""
+          }`}
           onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
         />
         <span>
           {currentPage} / {Math.ceil(room.length / ITEMS_PER_PAGE)}
         </span>
         <RightOutlined
-          className={`cursor-pointer ${startIndex + ITEMS_PER_PAGE >= room.length ? "opacity-50 pointer-events-none" : ""}`}
-          onClick={() => startIndex + ITEMS_PER_PAGE < room.length && setCurrentPage(currentPage + 1)}
+          className={`cursor-pointer ${
+            startIndex + ITEMS_PER_PAGE >= room.length
+              ? "opacity-50 pointer-events-none"
+              : ""
+          }`}
+          onClick={() =>
+            startIndex + ITEMS_PER_PAGE < room.length &&
+            setCurrentPage(currentPage + 1)
+          }
         />
       </div>
       <Modal
@@ -372,7 +424,12 @@ const POSRoomTableList: React.FC<Props> = ({
           setSelectedRoomToNote(null);
         }}
         onOk={async () => {
-          const success = await updateRoomNote(selectedRoomToNote, note, authInfo?.token || "", clearAuthInfo);
+          const success = await updateRoomNote(
+            selectedRoomToNote,
+            note,
+            authInfo?.token || "",
+            clearAuthInfo
+          );
           if (success) {
             message.success("Cập nhật ghi chú thành công");
             await getRooms();

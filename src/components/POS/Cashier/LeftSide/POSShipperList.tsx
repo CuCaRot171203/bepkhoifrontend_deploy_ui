@@ -31,19 +31,25 @@ export interface ShipperDTO {
   status: boolean;
 }
 
-async function fetchShipperList(token: string, clearAuthInfo: () => void): Promise<ShipperDTO[]> {
+async function fetchShipperList(
+  token: string,
+  clearAuthInfo: () => void
+): Promise<ShipperDTO[]> {
   try {
     const response = await fetch(`${API_BASE_URL}api/Shipper`, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
-      }
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
     });
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -53,7 +59,7 @@ async function fetchShipperList(token: string, clearAuthInfo: () => void): Promi
     }
 
     const data: ShipperDTO[] = await response.json();
-    const activeShippers = data.filter(shipper => shipper.status === true);
+    const activeShippers = data.filter((shipper) => shipper.status === true);
     return activeShippers;
   } catch (error) {
     console.error("Lỗi khi gọi API shipper:", error);
@@ -67,7 +73,7 @@ const POSShipperList: React.FC<Props> = ({
   selectedTable,
   setSelectedTable,
   orderType,
-  setOrderType
+  setOrderType,
 }) => {
   const { authInfo, clearAuthInfo } = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
@@ -80,7 +86,10 @@ const POSShipperList: React.FC<Props> = ({
   useEffect(() => {
     const loadShippers = async () => {
       try {
-        const data = await fetchShipperList(authInfo?.token || "", clearAuthInfo);
+        const data = await fetchShipperList(
+          authInfo?.token || "",
+          clearAuthInfo
+        );
         const mapped: Shipper[] = data.map((item) => ({
           shipperId: item.userId,
           shipperName: item.userName,
@@ -108,7 +117,13 @@ const POSShipperList: React.FC<Props> = ({
         <div
           key="takeaway"
           className={`rounded-lg overflow-hidden pt-1 flex flex-col w-full h-[11vw] items-center transition-colors duration-200 shadow-md
-            ${(selectedShipper === null && selectedTable === null) ? "bg-blue-300" : hoveredId === 0 ? "bg-[#FAEDD7]" : "bg-[#fffbf5]"}`}
+            ${
+              selectedShipper === null && selectedTable === null
+                ? "bg-blue-300"
+                : hoveredId === 0
+                ? "bg-[#FAEDD7]"
+                : "bg-[#fffbf5]"
+            }`}
           onMouseEnter={() => setHoveredId(0)}
           onMouseLeave={() => setHoveredId(null)}
           onClick={() => {
@@ -133,9 +148,10 @@ const POSShipperList: React.FC<Props> = ({
           <div
             key={item.shipperId}
             className={`rounded-lg overflow-hidden pt-1 flex flex-col w-full h-[11vw] items-center transition-colors duration-200 shadow-md
-              ${item.shipperId === selectedShipper
-                ? "bg-blue-300"
-                : item.shipperId === hoveredId
+              ${
+                item.shipperId === selectedShipper
+                  ? "bg-blue-300"
+                  : item.shipperId === hoveredId
                   ? "bg-[#FAEDD7]"
                   : "bg-[#fffbf5]"
               }`}
@@ -177,15 +193,25 @@ const POSShipperList: React.FC<Props> = ({
 
       <div className="p-4 flex justify-end gap-2 flex-shrink-0 bg-white sticky bottom-0 shadow-md">
         <LeftOutlined
-          className={`cursor-pointer ${currentPage === 1 ? "opacity-50 pointer-events-none" : ""}`}
+          className={`cursor-pointer ${
+            currentPage === 1 ? "opacity-50 pointer-events-none" : ""
+          }`}
           onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
         />
         <span>
-          {currentPage} / {Math.max(1, Math.ceil(shippers.length / ITEMS_PER_PAGE))}
+          {currentPage} /{" "}
+          {Math.max(1, Math.ceil(shippers.length / ITEMS_PER_PAGE))}
         </span>
         <RightOutlined
-          className={`cursor-pointer ${startIndex + ITEMS_PER_PAGE >= shippers.length ? "opacity-50 pointer-events-none" : ""}`}
-          onClick={() => startIndex + ITEMS_PER_PAGE < shippers.length && setCurrentPage(currentPage + 1)}
+          className={`cursor-pointer ${
+            startIndex + ITEMS_PER_PAGE >= shippers.length
+              ? "opacity-50 pointer-events-none"
+              : ""
+          }`}
+          onClick={() =>
+            startIndex + ITEMS_PER_PAGE < shippers.length &&
+            setCurrentPage(currentPage + 1)
+          }
         />
       </div>
     </div>

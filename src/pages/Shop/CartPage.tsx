@@ -34,7 +34,8 @@ const CartPage: React.FC = () => {
     const updatedCart = cart
       .map((item) => {
         if (item.id === id) {
-          const updatedQuantity = type === "increase" ? item.quantity + 1 : item.quantity - 1;
+          const updatedQuantity =
+            type === "increase" ? item.quantity + 1 : item.quantity - 1;
           return { ...item, quantity: updatedQuantity };
         }
         return item;
@@ -43,7 +44,8 @@ const CartPage: React.FC = () => {
     updateCart(updatedCart);
   };
 
-  const calculateTotal = () => cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const calculateTotal = () =>
+    cart.reduce((total, item) => total + item.price * item.quantity, 0);
   const discount = 0;
   const total = calculateTotal() - discount;
 
@@ -54,7 +56,9 @@ const CartPage: React.FC = () => {
         return;
       }
 
-      const customerInfo = JSON.parse(sessionStorage.getItem("customerInfo") || "{}");
+      const customerInfo = JSON.parse(
+        sessionStorage.getItem("customerInfo") || "{}"
+      );
       const roomId = sessionStorage.getItem("roomId");
       const selectedOrderId = sessionStorage.getItem("selectedOrderId");
 
@@ -75,35 +79,38 @@ const CartPage: React.FC = () => {
         orderId: parseInt(selectedOrderId),
         customerId: customerInfo.customerId || 0,
         roomId: roomId ? parseInt(roomId) : 0,
-        orderDetails: orderDetails
+        orderDetails: orderDetails,
       };
 
-      const response = await fetch(`${process.env.REACT_APP_API_APP_ENDPOINT}api/orders/update-order-customer`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'accept': '*/*',
-        },
-        body: JSON.stringify(orderPayload)
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_APP_ENDPOINT}api/orders/update-order-customer`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            accept: "*/*",
+          },
+          credentials: "include",
+          body: JSON.stringify(orderPayload),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to update order');
+        throw new Error("Failed to update order");
       }
 
       const result = await response.json();
-      console.log('Order updated:', result);
+      console.log("Order updated:", result);
 
-      messageApi.success('Cập nhật đơn hàng thành công!');
+      messageApi.success("Cập nhật đơn hàng thành công!");
 
       setTimeout(() => {
         sessionStorage.removeItem("cart");
         navigate("/shop/status");
       }, 1000);
-
     } catch (error) {
-      console.error('Error updating order:', error);
-      messageApi.error('Có lỗi xảy ra khi cập nhật đơn hàng!');
+      console.error("Error updating order:", error);
+      messageApi.error("Có lỗi xảy ra khi cập nhật đơn hàng!");
     }
   };
 
@@ -115,7 +122,9 @@ const CartPage: React.FC = () => {
       </div>
 
       {cart.length === 0 ? (
-        <p className="text-center text-gray-500 mt-4">Giỏ hàng của bạn đang trống</p>
+        <p className="text-center text-gray-500 mt-4">
+          Giỏ hàng của bạn đang trống
+        </p>
       ) : (
         <CartList cart={cart} onQuantityChange={handleQuantityChange} />
       )}

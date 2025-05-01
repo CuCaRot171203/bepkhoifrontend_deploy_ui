@@ -25,19 +25,24 @@ interface menuItem {
   isDelete: boolean;
 }
 
-async function fetchMenu(token: string, clearAuthInfo: () => void): Promise<menuItem[]> {
+async function fetchMenu(
+  token: string,
+  clearAuthInfo: () => void
+): Promise<menuItem[]> {
   try {
     const response = await fetch(`${API_BASE_URL}api/Menu/get-menu-pos`, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
-      }
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -90,17 +95,20 @@ async function fetchAddProductToOrder(
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
           accept: "*/*",
         },
+        credentials: "include",
         body: JSON.stringify({ orderId, productId }),
       }
     );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       throw new Error("Unauthorized");
     }
 
@@ -183,7 +191,10 @@ const POSSearchBarLeftSide: React.FC<Props> = ({ selectedOrder }) => {
     setSearchTerm(value);
 
     const normalizeString = (str: string) =>
-      str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      str
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
     const normalizedValue = normalizeString(value);
     if (normalizedValue.trim() === "") {
       setFilteredProducts([]);

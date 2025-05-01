@@ -115,11 +115,14 @@ const fetchAllOrders = async (
         Accept: "*/*",
         Authorization: `Bearer ${token}`,
       },
+      credentials: "include",
     });
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -143,17 +146,22 @@ const fetchAllRoom = async (
   clearAuthInfo: () => void
 ): Promise<RoomModel[]> => {
   try {
-    const response = await fetch(`${API_BASE_URL}api/rooms/get-all-room-for-pos`, {
-      method: "GET",
-      headers: {
-        Accept: "text/plain",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/rooms/get-all-room-for-pos`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "text/plain",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -187,7 +195,9 @@ const fetchAllShippers = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -225,7 +235,9 @@ const fetchOrderDetail = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -250,19 +262,28 @@ const fetchSplitOrder = async (
   clearAuthInfo: () => void
 ): Promise<{ success: boolean; message: string; error?: string }> => {
   try {
-    const response = await fetch(`${API_BASE_URL}api/order-detail/SplitOrderPos`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(requestData),
-    });
+    const response = await fetch(
+      `${API_BASE_URL}api/order-detail/SplitOrderPos`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestData),
+      }
+    );
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
-      return { success: false, message: "Phiên làm việc đã hết hạn.", error: "Unauthorized" };
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
+      return {
+        success: false,
+        message: "Phiên làm việc đã hết hạn.",
+        error: "Unauthorized",
+      };
     }
 
     const result = await response.json();
@@ -315,7 +336,8 @@ const fetchOrders = async (
     const query = new URLSearchParams();
     if (roomId !== null) query.append("roomId", roomId.toString());
     if (shipperId !== null) query.append("shipperId", shipperId.toString());
-    if (orderTypeId !== null) query.append("orderTypeId", orderTypeId.toString());
+    if (orderTypeId !== null)
+      query.append("orderTypeId", orderTypeId.toString());
 
     const response = await fetch(
       `${API_BASE_URL}api/orders/get-order-by-type-pos?${query.toString()}`,
@@ -330,7 +352,9 @@ const fetchOrders = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
       return [];
     }
 
@@ -367,8 +391,14 @@ const fetchCombineOrder = async (
 
     if (response.status === 401) {
       clearAuthInfo();
-      message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
-      return { success: false, message: "Phiên làm việc đã hết hạn.", error: "Unauthorized" };
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
+      return {
+        success: false,
+        message: "Phiên làm việc đã hết hạn.",
+        error: "Unauthorized",
+      };
     }
 
     const result = await response.json();
@@ -412,17 +442,29 @@ const ModalSplitOrder: React.FC<SplitOrderModalProps> = ({
   const [splitToOptionList, setSplitToOptionList] = useState<SplitToOption[]>([
     { value: 0, label: "Tạo đơn mới" },
   ]);
-  const [splitToRoomList, setSplitToRoomList] = useState<SplitToRoomOption[]>([]);
-  const [splitToShipperList, setSplitToShipperList] = useState<SplitToShipperOption[]>([]);
+  const [splitToRoomList, setSplitToRoomList] = useState<SplitToRoomOption[]>(
+    []
+  );
+  const [splitToShipperList, setSplitToShipperList] = useState<
+    SplitToShipperOption[]
+  >([]);
   const [splitToOrder, setSplitToOrder] = useState<number>(0);
   const [splitToRoom, setSplitToRoom] = useState<number | null>(null);
   const [splitToShipper, setSplitToShipper] = useState<number | null>(null);
   const [orderType, setOrderType] = useState<number | undefined>(undefined);
-  const [orderDetails, setOrderDetails] = useState<(OrderDetailModel & { splitQty: number })[]>([]);
-  const [combineOptionList, setCombineOptionList] = useState<CombineOption[]>([]);
-  const [combineOptionValue, setCombineOptionValue] = useState<string | null>(null);
+  const [orderDetails, setOrderDetails] = useState<
+    (OrderDetailModel & { splitQty: number })[]
+  >([]);
+  const [combineOptionList, setCombineOptionList] = useState<CombineOption[]>(
+    []
+  );
+  const [combineOptionValue, setCombineOptionValue] = useState<string | null>(
+    null
+  );
   const [combineOrderList, setCombineOrderList] = useState<OrderModel[]>([]);
-  const [selectedCombineOrderId, setSelectedCombineOrderId] = useState<number | null>(null);
+  const [selectedCombineOrderId, setSelectedCombineOrderId] = useState<
+    number | null
+  >(null);
 
   const SplitColumns = [
     {
@@ -487,7 +529,7 @@ const ModalSplitOrder: React.FC<SplitOrderModalProps> = ({
       title: "Mã khách hàng",
       dataIndex: "customerId",
       key: "customerId",
-      render: (value: number | null) => value ? value : "Khách lẻ",
+      render: (value: number | null) => (value ? value : "Khách lẻ"),
     },
     {
       title: "Mã đơn đặt",
@@ -513,7 +555,9 @@ const ModalSplitOrder: React.FC<SplitOrderModalProps> = ({
       return;
     }
     const orders = await fetchAllOrders(authInfo.token, clearAuthInfo);
-    const filteredOrders = orders.filter((order) => order.orderId !== selectedOrder);
+    const filteredOrders = orders.filter(
+      (order) => order.orderId !== selectedOrder
+    );
     const options: SplitToOption[] = filteredOrders.map((order) => ({
       value: order.orderId,
       label: `Đơn ${order.orderId} - ${order.orderNote || "Không có ghi chú"}`,
@@ -555,7 +599,11 @@ const ModalSplitOrder: React.FC<SplitOrderModalProps> = ({
         message.error("Vui lòng đăng nhập để tiếp tục.");
         return;
       }
-      const data = await fetchOrderDetail(orderId, authInfo.token, clearAuthInfo);
+      const data = await fetchOrderDetail(
+        orderId,
+        authInfo.token,
+        clearAuthInfo
+      );
       if (data.length > 0) {
         const mapped = data.map((item) => ({
           orderDetailId: item.orderDetailId,
@@ -711,7 +759,11 @@ const ModalSplitOrder: React.FC<SplitOrderModalProps> = ({
       };
     }
 
-    const result = await fetchSplitOrder(requestData, authInfo.token, clearAuthInfo);
+    const result = await fetchSplitOrder(
+      requestData,
+      authInfo.token,
+      clearAuthInfo
+    );
 
     if (result.success) {
       message.success(result.message);
@@ -737,7 +789,11 @@ const ModalSplitOrder: React.FC<SplitOrderModalProps> = ({
       secondOrderId: selectedCombineOrderId,
     };
 
-    const result = await fetchCombineOrder(request, authInfo.token, clearAuthInfo);
+    const result = await fetchCombineOrder(
+      request,
+      authInfo.token,
+      clearAuthInfo
+    );
 
     if (result.success) {
       message.success(result.message);
@@ -765,7 +821,16 @@ const ModalSplitOrder: React.FC<SplitOrderModalProps> = ({
         getOrderDetail(selectedOrder);
       }
     }
-  }, [open, authInfo?.token, selectedOrder, getAllOrder, getAllRoom, getAllShippers, getCombinedOptions, getOrderDetail]);
+  }, [
+    open,
+    authInfo?.token,
+    selectedOrder,
+    getAllOrder,
+    getAllRoom,
+    getAllShippers,
+    getCombinedOptions,
+    getOrderDetail,
+  ]);
 
   useEffect(() => {
     if (combineOptionValue !== null) {
@@ -827,7 +892,9 @@ const ModalSplitOrder: React.FC<SplitOrderModalProps> = ({
                   }
                 }}
                 filterOption={(input, option) =>
-                  String(option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+                  String(option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
                 }
                 options={splitToOptionList.filter(Boolean)}
               />
@@ -887,7 +954,9 @@ const ModalSplitOrder: React.FC<SplitOrderModalProps> = ({
                 style={{ width: 300 }}
                 onChange={(value: string) => setCombineOptionValue(value)}
                 filterOption={(input, option) =>
-                  String(option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+                  String(option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
                 }
                 options={combineOptionList}
               />

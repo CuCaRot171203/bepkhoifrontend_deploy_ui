@@ -82,6 +82,7 @@ const ModalSettingPriceById: React.FC<ModalSettingPriceProps> = ({
             "Content-Type": "application/json",
             Authorization: `Bearer ${authInfo.token}`,
           },
+          credentials: "include",
           body: JSON.stringify(requestData),
         }
       );

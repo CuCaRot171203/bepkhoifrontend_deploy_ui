@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { message, Table, Tag } from "antd";
 import type { TableColumnsType } from "antd";
-import './../Menu/MenuList.css';
+import "./../Menu/MenuList.css";
 import ShipperDetailModal from "./ShipperDetailModal";
 import UserUpdateModal from "./UserUpdateModal";
 import { useAuth } from "../../../context/AuthContext";
@@ -40,7 +40,9 @@ const UserList: React.FC<UserListProps> = ({ search, status }) => {
 
   const fetchMenuList = () => {
     setLoading(true);
-    let apiUrl = `${process.env.REACT_APP_API_APP_ENDPOINT}api/Shipper/search?searchTerm=${encodeURIComponent(search.trim())}`;
+    let apiUrl = `${
+      process.env.REACT_APP_API_APP_ENDPOINT
+    }api/Shipper/search?searchTerm=${encodeURIComponent(search.trim())}`;
     if (status === "1" || status === "0") {
       const statusValue = status === "1" ? "true" : "false";
       apiUrl += `&status=${statusValue}`;
@@ -51,11 +53,14 @@ const UserList: React.FC<UserListProps> = ({ search, status }) => {
         Authorization: `Bearer ${authInfo?.token}`,
         "Content-Type": "application/json; charset=utf-8",
       },
+      credentials: "include",
     })
       .then((response) => {
         if (response.status === 401) {
           clearAuthInfo();
-          message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+          message.error(
+            "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+          );
           setItems([]);
           return Promise.reject("Unauthorized");
         }
@@ -94,12 +99,15 @@ const UserList: React.FC<UserListProps> = ({ search, status }) => {
           Authorization: `Bearer ${authInfo?.token}`,
           "Content-Type": "application/json; charset=utf-8",
         },
+        credentials: "include",
       }
     )
       .then((response) => {
         if (response.status === 401) {
           clearAuthInfo();
-          message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+          message.error(
+            "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+          );
           return Promise.reject("Unauthorized");
         }
         if (!response.ok) {

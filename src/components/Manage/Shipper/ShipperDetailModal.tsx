@@ -5,34 +5,34 @@ import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
 
 interface CustomerItem {
-    userId: number;
-    userName: string;
-    phone: string;
-    email: string;
-    date_of_Birth: string;
-    address: string;
-    ward_Commune: string;
-    district: string;
-    province_City: string;
-    roleName: string;
+  userId: number;
+  userName: string;
+  phone: string;
+  email: string;
+  date_of_Birth: string;
+  address: string;
+  ward_Commune: string;
+  district: string;
+  province_City: string;
+  roleName: string;
 }
 
 interface CustomerDetailModalProps {
-    open: boolean;
-    loading: boolean;
-    data: CustomerItem | null;
-    onClose: () => void;
-    onUpdate: () => void;
-    onReloadUserList: () => void;
+  open: boolean;
+  loading: boolean;
+  data: CustomerItem | null;
+  onClose: () => void;
+  onUpdate: () => void;
+  onReloadUserList: () => void;
 }
 
 const ShipperDetailModal: React.FC<CustomerDetailModalProps> = ({
-    open,
-    loading,
-    data,
-    onClose,
-    onUpdate,
-    onReloadUserList,
+  open,
+  loading,
+  data,
+  onClose,
+  onUpdate,
+  onReloadUserList,
 }) => {
   const { authInfo, clearAuthInfo } = useAuth();
 
@@ -56,10 +56,11 @@ const ShipperDetailModal: React.FC<CustomerDetailModalProps> = ({
           const res = await axios.delete(
             `${process.env.REACT_APP_API_APP_ENDPOINT}api/shipper/${data.userId}`,
             {
-              headers: { 
+              headers: {
                 "Content-Type": "application/json; charset=utf-8",
                 Authorization: `Bearer ${authInfo?.token}`,
               },
+              withCredentials: true,
             }
           );
           console.log("Phản hồi từ API:", res.data);
@@ -69,7 +70,9 @@ const ShipperDetailModal: React.FC<CustomerDetailModalProps> = ({
         } catch (error: any) {
           if (error.response?.status === 401) {
             clearAuthInfo();
-            message.error("Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại.");
+            message.error(
+              "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+            );
             return;
           }
           console.error("Lỗi API:", error);
@@ -94,7 +97,9 @@ const ShipperDetailModal: React.FC<CustomerDetailModalProps> = ({
       centered={true}
     >
       <div className="rounded-lg p-6 bg-white">
-        <h2 className="text-xl font-bold text-center mb-6">Thông Tin Shipper</h2>
+        <h2 className="text-xl font-bold text-center mb-6">
+          Thông Tin Shipper
+        </h2>
 
         {loading ? (
           <p className="text-center">Đang tải chi tiết...</p>
@@ -137,7 +142,9 @@ const ShipperDetailModal: React.FC<CustomerDetailModalProps> = ({
               </p>
               <p>
                 <strong>Vai trò:</strong>{" "}
-                {data.roleName === "shipper" ? "Nhân viên giao hàng" : data.roleName}
+                {data.roleName === "shipper"
+                  ? "Nhân viên giao hàng"
+                  : data.roleName}
               </p>
             </div>
           </div>

@@ -62,6 +62,7 @@ const PriceMenuList: React.FC<PriceMenuListProps> = ({
             Authorization: `Bearer ${authInfo.token}`,
             "Content-Type": "application/json; charset=utf-8",
           },
+          credentials: "include",
         }
       );
       if (response.status === 401) {
@@ -113,33 +114,36 @@ const PriceMenuList: React.FC<PriceMenuListProps> = ({
       dataIndex: "costPrice",
       key: "costPrice",
       width: "12vw",
-      render: (price) => (
-        price != null
-        ? <span className="text-[0.9vw]">{price.toLocaleString()}đ</span>
-        : <span className="text-[0.9vw] text-gray-400 italic">--</span>
-      ),
+      render: (price) =>
+        price != null ? (
+          <span className="text-[0.9vw]">{price.toLocaleString()}đ</span>
+        ) : (
+          <span className="text-[0.9vw] text-gray-400 italic">--</span>
+        ),
     },
     {
       title: <span className="text-[0.95vw] font-semibold">Đơn giá</span>,
       dataIndex: "sellPrice",
       key: "sellPrice",
       width: "12vw",
-      render: (price) => (
-        price != null
-        ? <span className="text-[0.9vw]">{price.toLocaleString()}đ</span>
-        : <span className="text-[0.9vw] text-gray-400 italic">--</span>
-      ),
+      render: (price) =>
+        price != null ? (
+          <span className="text-[0.9vw]">{price.toLocaleString()}đ</span>
+        ) : (
+          <span className="text-[0.9vw] text-gray-400 italic">--</span>
+        ),
     },
     {
       title: <span className="text-[0.95vw] font-semibold">Giá sau KM</span>,
       dataIndex: "salePrice",
       key: "salePrice",
       width: "12vw",
-      render: (price) => (
-        price != null
-        ? <span className="text-[0.9vw]">{price.toLocaleString()}đ</span>
-        : <span className="text-[0.9vw] text-gray-400 italic">--</span>
-      ),
+      render: (price) =>
+        price != null ? (
+          <span className="text-[0.9vw]">{price.toLocaleString()}đ</span>
+        ) : (
+          <span className="text-[0.9vw] text-gray-400 italic">--</span>
+        ),
     },
     {
       title: <span className="text-[0.95vw] font-semibold">Chỉnh sửa</span>,

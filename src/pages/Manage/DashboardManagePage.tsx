@@ -49,13 +49,14 @@ const DashboardManagePage: React.FC = () => {
       try {
         // Fetch orders data
         const ordersResponse = await fetch(
-          "https://localhost:7257/api/orders/get-all-orders",
+          `${process.env.REACT_APP_API_APP_ENDPOINT}/api/orders/get-all-orders`,
           {
             method: "GET",
             headers: {
               Authorization: `Bearer ${authInfo.token}`,
               "Content-Type": "application/json; charset=utf-8",
             },
+            credentials: "include" as RequestCredentials,
           }
         );
         if (ordersResponse.status === 401) {
@@ -115,13 +116,14 @@ const DashboardManagePage: React.FC = () => {
 
         // Fetch top customers data
         const customersResponse = await fetch(
-          "https://localhost:7257/api/Customer",
+          `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer`,
           {
             method: "GET",
             headers: {
               Authorization: `Bearer ${authInfo.token}`,
               "Content-Type": "application/json; charset=utf-8",
             },
+            credentials: "include" as RequestCredentials,
           }
         );
         if (customersResponse.status === 401) {

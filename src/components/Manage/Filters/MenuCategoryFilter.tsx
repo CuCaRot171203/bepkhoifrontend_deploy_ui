@@ -24,7 +24,7 @@ const MenuCategoryFilter: React.FC<Props> = ({ category, setCategory }) => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "https://localhost:7257/api/product-categories/get-all-categories",
+          `${process.env.REACT_APP_API_APP_ENDPOINT}/api/product-categories/get-all-categories`,
           {
             headers: {
               Authorization: "Bearer " + token,

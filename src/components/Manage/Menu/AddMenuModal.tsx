@@ -390,7 +390,7 @@ const AddMenuModal: React.FC<AddMenuModalProps> = ({ visible, onClose }) => {
               ))}
             </Select>
             {errors.productCategoryId && (
-              <span className="text-red-500">Bắt buộc</span>
+              <span className="text-red-500">Bắt buộc*</span>
             )}
           </div>
           <div className="flex items-center space-x-3">

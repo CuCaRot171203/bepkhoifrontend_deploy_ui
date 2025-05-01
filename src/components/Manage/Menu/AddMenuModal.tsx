@@ -247,12 +247,19 @@ const AddMenuModal: React.FC<AddMenuModalProps> = ({ visible, onClose }) => {
       );
       formDataToSend.append("CostPrice", formData.costPrice!.toString());
       formDataToSend.append("SellPrice", formData.sellPrice!.toString());
-      if (formData.salePrice !== null) {
+      if (formData.salePrice !== null && formData.salePrice !== undefined) {
         formDataToSend.append("SalePrice", formData.salePrice.toString());
       }
       formDataToSend.append("ProductVat", formData.productVat.toString());
-      if (formData.description) {
-        formDataToSend.append("Description", formData.description);
+      // if (formData.description !== null && formData.description !== undefined) {
+      //   formDataToSend.append("Description", formData.description);
+      // }
+      if (
+        formData.description &&
+        typeof formData.description === "string" &&
+        formData.description.trim() !== ""
+      ) {
+        formDataToSend.append("Description", formData.description.trim());
       }
       formDataToSend.append("UnitId", formData.unitId!.toString());
       formDataToSend.append("IsAvailable", formData.isAvailable.toString());

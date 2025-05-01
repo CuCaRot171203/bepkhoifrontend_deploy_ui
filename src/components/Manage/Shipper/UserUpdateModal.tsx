@@ -67,7 +67,7 @@ const UserUpdateModal: React.FC<UserUpdateModalProps> = ({
       console.log("Dữ liệu gửi lên API:", formattedData);
 
       const response = await axios.put(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Shipper/${formData.userId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Shipper/${formData.userId}`,
         formattedData,
         {
           headers: {

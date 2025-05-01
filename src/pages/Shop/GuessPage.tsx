@@ -18,7 +18,7 @@ async function notifyCustomerJoin(
 ) {
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_API_APP_ENDPOINT}api/orders/notify-customer-join`,
+      `${process.env.REACT_APP_API_APP_ENDPOINT}/api/orders/notify-customer-join`,
       {
         method: "POST",
         headers: {
@@ -76,7 +76,7 @@ const GuessPage: React.FC = () => {
 
       try {
         const searchResponse = await fetch(
-          `${process.env.REACT_APP_API_APP_ENDPOINT}api/Customer/search?searchTerm=${phoneNumber}`,
+          `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer/search?searchTerm=${phoneNumber}`,
           {
             method: "GET",
             headers: {
@@ -147,7 +147,7 @@ const GuessPage: React.FC = () => {
 
     try {
       const searchResponse = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Customer/search?searchTerm=${phoneNumber}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer/search?searchTerm=${phoneNumber}`,
         {
           method: "GET",
           headers: {
@@ -165,7 +165,7 @@ const GuessPage: React.FC = () => {
         (!Array.isArray(customerData) && !customerData?.phone)
       ) {
         const createResponse = await fetch(
-          `${process.env.REACT_APP_API_APP_ENDPOINT}api/Customer/create-new-customer`,
+          `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer/create-new-customer`,
           {
             method: "POST",
             headers: {
@@ -181,7 +181,7 @@ const GuessPage: React.FC = () => {
         }
 
         const newSearchResponse = await fetch(
-          `${process.env.REACT_APP_API_APP_ENDPOINT}api/Customer/search?searchTerm=${phoneNumber}`,
+          `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer/search?searchTerm=${phoneNumber}`,
           {
             method: "GET",
             headers: {

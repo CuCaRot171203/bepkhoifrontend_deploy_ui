@@ -54,7 +54,7 @@ const CashierDetailModal: React.FC<CustomerDetailModalProps> = ({
       onOk: async () => {
         try {
           const res = await axios.delete(
-            `${process.env.REACT_APP_API_APP_ENDPOINT}api/cashiers/${data.userId}`,
+            `${process.env.REACT_APP_API_APP_ENDPOINT}/api/cashiers/${data.userId}`,
             {
               headers: {
                 "Content-Type": "application/json; charset=utf-8",

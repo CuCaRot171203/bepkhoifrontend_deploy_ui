@@ -38,7 +38,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ visible, onClose }) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/cashiers`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/cashiers`,
         {
           method: "POST",
           headers: {

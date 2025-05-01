@@ -43,7 +43,7 @@ const OrderStatus: React.FC = () => {
       }
       setSelectedOrder(parseInt(orderId, 10));
       const response = await axios.get(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/orders/get-order-details-by-order-id`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/orders/get-order-details-by-order-id`,
         {
           params: { orderId },
           withCredentials: true,

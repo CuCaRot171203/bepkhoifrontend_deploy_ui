@@ -42,7 +42,7 @@ const UserList: React.FC<UserListProps> = ({ search, status }) => {
     setLoading(true);
     let apiUrl = `${
       process.env.REACT_APP_API_APP_ENDPOINT
-    }api/Shipper/search?searchTerm=${encodeURIComponent(search.trim())}`;
+    }/api/Shipper/search?searchTerm=${encodeURIComponent(search.trim())}`;
     if (status === "1" || status === "0") {
       const statusValue = status === "1" ? "true" : "false";
       apiUrl += `&status=${statusValue}`;
@@ -93,7 +93,7 @@ const UserList: React.FC<UserListProps> = ({ search, status }) => {
     setLoadingDetail(true);
 
     fetch(
-      `${process.env.REACT_APP_API_APP_ENDPOINT}api/Shipper/${record.userId}`,
+      `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Shipper/${record.userId}`,
       {
         headers: {
           Authorization: `Bearer ${authInfo?.token}`,

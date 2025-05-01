@@ -16,7 +16,7 @@ const CashierManagePage: React.FC = () => {
   const handleExportExcel = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/cashiers/export`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/cashiers/export`,
         {
           method: "GET",
           headers: {

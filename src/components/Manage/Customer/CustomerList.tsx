@@ -38,8 +38,8 @@ const CustomerList: React.FC<CustomerListProps> = ({ search }) => {
     const apiUrl = search.trim()
       ? `${
           process.env.REACT_APP_API_APP_ENDPOINT
-        }api/Customer/search?searchTerm=${encodeURIComponent(search.trim())}`
-      : `${process.env.REACT_APP_API_APP_ENDPOINT}api/Customer`;
+        }/api/Customer/search?searchTerm=${encodeURIComponent(search.trim())}`
+      : `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer`;
 
     try {
       const response = await fetch(apiUrl, {
@@ -79,7 +79,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ search }) => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Customer/${record.customerId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer/${record.customerId}`,
         {
           method: "GET",
           headers: {

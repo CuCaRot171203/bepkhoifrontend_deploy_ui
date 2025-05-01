@@ -41,7 +41,7 @@ const fetchOrderDetail = async (
 ): Promise<OrderDetailModel[]> => {
   if (!orderId) return [];
 
-  const apiUrl = `${API_BASE_URL}api/orders/get-order-details-by-order-id?orderId=${orderId}`;
+  const apiUrl = `${API_BASE_URL}/api/orders/get-order-details-by-order-id?orderId=${orderId}`;
 
   try {
     const response = await fetch(apiUrl, {
@@ -93,7 +93,7 @@ const updateOrderDetailQuantity = async (
   token: string,
   clearAuthInfo: () => void
 ): Promise<OrderDetailModel | null> => {
-  const apiUrl = `${API_BASE_URL}api/orders/update-order-detail-quantity`;
+  const apiUrl = `${API_BASE_URL}/api/orders/update-order-detail-quantity`;
 
   try {
     const response = await fetch(apiUrl, {
@@ -135,7 +135,7 @@ const addNoteToOrderDetail = async (
   token: string,
   clearAuthInfo: () => void
 ): Promise<boolean> => {
-  const apiUrl = `${API_BASE_URL}api/order-detail/add-note-to-order-detail`;
+  const apiUrl = `${API_BASE_URL}/api/order-detail/add-note-to-order-detail`;
 
   try {
     const response = await fetch(apiUrl, {
@@ -189,7 +189,7 @@ const fetchDeleteUnconfirmOrderDetail = async (
     return false;
   }
 
-  const url = `${API_BASE_URL}api/orders/delete-order-detail?orderId=${orderId}&orderDetailId=${orderDetailId}`;
+  const url = `${API_BASE_URL}/api/orders/delete-order-detail?orderId=${orderId}&orderDetailId=${orderDetailId}`;
 
   try {
     const response = await fetch(url, {
@@ -248,7 +248,7 @@ const fetchDeleteConfirmOrderDetail = async (
 
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/orders/delete-confirmed-order-detail?${queryParams.toString()}`,
+      `${API_BASE_URL}/api/orders/delete-confirmed-order-detail?${queryParams.toString()}`,
       {
         method: "DELETE",
         headers: {

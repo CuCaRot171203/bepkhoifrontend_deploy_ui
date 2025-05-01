@@ -120,7 +120,7 @@ const AddMenuModal: React.FC<AddMenuModalProps> = ({ visible, onClose }) => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/product-categories/get-all-categories`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/product-categories/get-all-categories`,
         {
           method: "GET",
           headers: {
@@ -157,7 +157,7 @@ const AddMenuModal: React.FC<AddMenuModalProps> = ({ visible, onClose }) => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/units/get-all-units`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/units/get-all-units`,
         {
           method: "GET",
           headers: {
@@ -264,7 +264,7 @@ const AddMenuModal: React.FC<AddMenuModalProps> = ({ visible, onClose }) => {
       }
 
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/add`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Menu/add`,
         {
           method: "POST",
           headers: {

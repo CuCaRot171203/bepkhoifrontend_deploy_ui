@@ -13,7 +13,7 @@ interface Props {
 const fetchCreateNewCustomer = async (customerName: string, phone: string) => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/Customer/create-new-customer`,
+      `${API_BASE_URL}/api/Customer/create-new-customer`,
       {
         method: "POST",
         headers: {

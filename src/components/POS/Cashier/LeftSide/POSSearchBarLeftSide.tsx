@@ -30,7 +30,7 @@ async function fetchMenu(
   clearAuthInfo: () => void
 ): Promise<menuItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}api/Menu/get-menu-pos`, {
+    const response = await fetch(`${API_BASE_URL}/api/Menu/get-menu-pos`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -91,7 +91,7 @@ async function fetchAddProductToOrder(
 ): Promise<{ message: string; data: any }> {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/orders/add-product-to-order`,
+      `${API_BASE_URL}/api/orders/add-product-to-order`,
       {
         method: "POST",
         headers: {

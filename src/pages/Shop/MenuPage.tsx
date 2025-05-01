@@ -47,7 +47,7 @@ const MenuPage: React.FC = () => {
   const fetchUnits = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/units/get-all-units`
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/units/get-all-units`
       );
       setUnits(response.data);
     } catch (error) {
@@ -61,7 +61,7 @@ const MenuPage: React.FC = () => {
   ) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/get-all-menus-customer`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Menu/get-all-menus-customer`,
         {
           params: {
             sortBy: "ProductId",
@@ -110,7 +110,7 @@ const MenuPage: React.FC = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/product-categories/get-all-categories`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/product-categories/get-all-categories`,
         {
           withCredentials: true,
         }
@@ -147,7 +147,7 @@ const MenuPage: React.FC = () => {
       }
       const { customerId } = JSON.parse(customerInfo);
       const response = await axios.get(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/orders/order-ids-for-qr`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/orders/order-ids-for-qr`,
         {
           params: {
             roomId,

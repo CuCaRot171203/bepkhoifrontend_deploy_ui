@@ -4,7 +4,7 @@ const API_BASE_URL = process.env.REACT_APP_API_APP_ENDPOINT;
 
 // Khởi tạo kết nối SignalR
 const connection = new signalR.HubConnectionBuilder()
-  .withUrl(`${API_BASE_URL}SignalrHub`, {
+  .withUrl(`${API_BASE_URL}/SignalrHub`, {
     withCredentials: true,
   })
   .withAutomaticReconnect()

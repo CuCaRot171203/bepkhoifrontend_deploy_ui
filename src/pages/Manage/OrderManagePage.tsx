@@ -79,7 +79,7 @@ const OrderManagePage: React.FC = () => {
     setDeliveryLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/orders/DeliveryInformation/${deliveryInfoId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/orders/DeliveryInformation/${deliveryInfoId}`,
         {
           headers: {
             Authorization: `Bearer ${authInfo?.token}`,
@@ -113,7 +113,7 @@ const OrderManagePage: React.FC = () => {
     setHistoryLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/orders/cancellation-history/${orderId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/orders/cancellation-history/${orderId}`,
         {
           headers: {
             Authorization: `Bearer ${authInfo?.token}`,
@@ -146,7 +146,7 @@ const OrderManagePage: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/orders/filter-orders`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/orders/filter-orders`,
         {
           method: "POST",
           headers: {
@@ -196,7 +196,7 @@ const OrderManagePage: React.FC = () => {
   const fetchCustomers = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Customer`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer`,
         {
           headers: {
             Authorization: `Bearer ${authInfo?.token}`,
@@ -226,7 +226,7 @@ const OrderManagePage: React.FC = () => {
     setDetailLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/order-detail/get-by-order-id/${orderId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/order-detail/get-by-order-id/${orderId}`,
         {
           headers: {
             Authorization: `Bearer ${authInfo?.token}`,

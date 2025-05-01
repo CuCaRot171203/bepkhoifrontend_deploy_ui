@@ -64,7 +64,7 @@ const fetchOrders = async (
       query.append("orderTypeId", orderTypeId.toString());
 
     const response = await fetch(
-      `${API_BASE_URL}api/orders/get-order-by-type-pos?${query.toString()}`,
+      `${API_BASE_URL}/api/orders/get-order-by-type-pos?${query.toString()}`,
       {
         method: "GET",
         headers: {
@@ -114,7 +114,7 @@ const fetchCreateNewOrder = async (
       orderNote: data.orderNote ?? null,
     };
 
-    const response = await fetch(`${API_BASE_URL}api/orders/create-order`, {
+    const response = await fetch(`${API_BASE_URL}/api/orders/create-order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -157,7 +157,7 @@ const fetchRemoveOrder = async (
 ): Promise<void> => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/orders/remove-order/${orderId}`,
+      `${API_BASE_URL}/api/orders/remove-order/${orderId}`,
       {
         method: "POST",
         headers: {

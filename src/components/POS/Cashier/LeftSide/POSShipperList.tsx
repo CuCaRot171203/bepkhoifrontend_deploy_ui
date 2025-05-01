@@ -36,7 +36,7 @@ async function fetchShipperList(
   clearAuthInfo: () => void
 ): Promise<ShipperDTO[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}api/Shipper`, {
+    const response = await fetch(`${API_BASE_URL}/api/Shipper`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

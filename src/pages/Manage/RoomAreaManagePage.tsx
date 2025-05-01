@@ -31,15 +31,15 @@ const RoomAreaManagePage: React.FC = () => {
   const fetchRoomAreas = async () => {
     setLoading(true);
     try {
-      let apiUrl = `${process.env.REACT_APP_API_APP_ENDPOINT}api/roomarea/get-all?limit=1000`;
+      let apiUrl = `${process.env.REACT_APP_API_APP_ENDPOINT}/api/roomarea/get-all?limit=1000`;
 
       if (search) {
         apiUrl = `${
           process.env.REACT_APP_API_APP_ENDPOINT
-        }api/roomarea/search-by-name-id?name=${encodeURIComponent(search)}`;
+        }/api/roomarea/search-by-name-id?name=${encodeURIComponent(search)}`;
       } else if (status !== "all") {
         const isDelete = status === "0";
-        apiUrl = `${process.env.REACT_APP_API_APP_ENDPOINT}api/roomarea/filter?isDelete=${isDelete}`;
+        apiUrl = `${process.env.REACT_APP_API_APP_ENDPOINT}/api/roomarea/filter?isDelete=${isDelete}`;
       }
 
       const response = await fetch(apiUrl, {
@@ -89,7 +89,7 @@ const RoomAreaManagePage: React.FC = () => {
     setDetailLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/roomarea/${roomAreaId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/roomarea/${roomAreaId}`,
         {
           headers: {
             Authorization: `Bearer ${authInfo?.token}`,
@@ -135,7 +135,7 @@ const RoomAreaManagePage: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/roomarea/create`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/roomarea/create`,
         {
           method: "POST",
           headers: {
@@ -185,7 +185,7 @@ const RoomAreaManagePage: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/roomarea/update/${selectedRoom.roomAreaId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/roomarea/update/${selectedRoom.roomAreaId}`,
         {
           method: "PUT",
           headers: {
@@ -239,7 +239,7 @@ const RoomAreaManagePage: React.FC = () => {
       onOk: async () => {
         try {
           const response = await fetch(
-            `${process.env.REACT_APP_API_APP_ENDPOINT}api/roomarea/delete/${selectedRoom.roomAreaId}`,
+            `${process.env.REACT_APP_API_APP_ENDPOINT}/api/roomarea/delete/${selectedRoom.roomAreaId}`,
             {
               method: "DELETE",
               headers: {

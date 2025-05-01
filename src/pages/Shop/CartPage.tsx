@@ -83,7 +83,7 @@ const CartPage: React.FC = () => {
       };
 
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/orders/update-order-customer`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/orders/update-order-customer`,
         {
           method: "PUT",
           headers: {

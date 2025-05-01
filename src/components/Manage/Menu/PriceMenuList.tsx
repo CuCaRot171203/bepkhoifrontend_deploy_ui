@@ -56,7 +56,7 @@ const PriceMenuList: React.FC<PriceMenuListProps> = ({
     try {
       const queryParams = createQueryParams();
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/get-all-menus?${queryParams}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Menu/get-all-menus?${queryParams}`,
         {
           headers: {
             Authorization: `Bearer ${authInfo.token}`,

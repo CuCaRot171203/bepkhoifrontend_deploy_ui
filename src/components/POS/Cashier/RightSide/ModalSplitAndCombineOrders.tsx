@@ -109,7 +109,7 @@ const fetchAllOrders = async (
   clearAuthInfo: () => void
 ): Promise<OrderModel[]> => {
   try {
-    const response = await fetch(`${API_BASE_URL}api/orders/get-all-orders`, {
+    const response = await fetch(`${API_BASE_URL}/api/orders/get-all-orders`, {
       method: "GET",
       headers: {
         Accept: "*/*",
@@ -147,7 +147,7 @@ const fetchAllRoom = async (
 ): Promise<RoomModel[]> => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/rooms/get-all-room-for-pos`,
+      `${API_BASE_URL}/api/rooms/get-all-room-for-pos`,
       {
         method: "GET",
         headers: {
@@ -185,7 +185,7 @@ const fetchAllShippers = async (
   clearAuthInfo: () => void
 ): Promise<ShipperModel[]> => {
   try {
-    const response = await fetch(`${API_BASE_URL}api/Shipper`, {
+    const response = await fetch(`${API_BASE_URL}/api/Shipper`, {
       method: "GET",
       headers: {
         Accept: "text/plain",
@@ -223,7 +223,7 @@ const fetchOrderDetail = async (
 ): Promise<OrderDetailModel[]> => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/orders/get-order-details-by-order-id?orderId=${orderId}`,
+      `${API_BASE_URL}/api/orders/get-order-details-by-order-id?orderId=${orderId}`,
       {
         method: "GET",
         headers: {
@@ -263,7 +263,7 @@ const fetchSplitOrder = async (
 ): Promise<{ success: boolean; message: string; error?: string }> => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/order-detail/SplitOrderPos`,
+      `${API_BASE_URL}/api/order-detail/SplitOrderPos`,
       {
         method: "POST",
         headers: {
@@ -340,7 +340,7 @@ const fetchOrders = async (
       query.append("orderTypeId", orderTypeId.toString());
 
     const response = await fetch(
-      `${API_BASE_URL}api/orders/get-order-by-type-pos?${query.toString()}`,
+      `${API_BASE_URL}/api/orders/get-order-by-type-pos?${query.toString()}`,
       {
         method: "GET",
         headers: {
@@ -379,7 +379,7 @@ const fetchCombineOrder = async (
   clearAuthInfo: () => void
 ): Promise<{ success: boolean; message: string; error?: string }> => {
   try {
-    const response = await fetch(`${API_BASE_URL}api/orders/combine-orders`, {
+    const response = await fetch(`${API_BASE_URL}/api/orders/combine-orders`, {
       method: "PUT",
       headers: {
         Accept: "*/*",

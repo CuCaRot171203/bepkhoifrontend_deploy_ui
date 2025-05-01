@@ -44,7 +44,7 @@ async function fetchRoomAreas(
 ): Promise<roomAreaOption[]> {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/roomarea/get-all?limit=1000&offset=0`,
+      `${API_BASE_URL}/api/roomarea/get-all?limit=1000&offset=0`,
       {
         method: "GET",
         headers: {
@@ -89,7 +89,7 @@ async function fetchRooms(
 ): Promise<room[]> {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/rooms/get-all-room-for-pos`,
+      `${API_BASE_URL}/api/rooms/get-all-room-for-pos`,
       {
         method: "GET",
         headers: {
@@ -145,7 +145,7 @@ async function fetchRoomFilter(
     }
 
     const response = await fetch(
-      `${API_BASE_URL}api/rooms/filter-room-pos?${query.toString()}`,
+      `${API_BASE_URL}/api/rooms/filter-room-pos?${query.toString()}`,
       {
         method: "GET",
         headers: {
@@ -194,7 +194,7 @@ async function updateRoomNote(
     if (roomId === null) {
       return false;
     }
-    const response = await fetch(`${API_BASE_URL}api/rooms/update-room-note`, {
+    const response = await fetch(`${API_BASE_URL}/api/rooms/update-room-note`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

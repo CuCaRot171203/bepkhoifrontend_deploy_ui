@@ -33,7 +33,7 @@ const fetchCustomerList = async (
   clearAuthInfo: () => void
 ): Promise<CustomerModel[]> => {
   try {
-    const response = await fetch(`${API_BASE_URL}api/Customer`, {
+    const response = await fetch(`${API_BASE_URL}/api/Customer`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ const fetchCustomerByOrderId = async (
 ): Promise<FetchCustomerById | null> => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/orders/get-customer-of-order/${orderId}`,
+      `${API_BASE_URL}/api/orders/get-customer-of-order/${orderId}`,
       {
         method: "GET",
         headers: {
@@ -114,7 +114,7 @@ const assignCustomerToOrder = async (
 ): Promise<boolean> => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/orders/assign-customer-to-order?orderId=${orderId}&customerId=${customerId}`,
+      `${API_BASE_URL}/api/orders/assign-customer-to-order?orderId=${orderId}&customerId=${customerId}`,
       {
         method: "POST",
         headers: {
@@ -152,7 +152,7 @@ const fetchDeleteCustomerFromOrder = async (
 ): Promise<boolean> => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/orders/remove-customer/${orderId}`,
+      `${API_BASE_URL}/api/orders/remove-customer/${orderId}`,
       {
         method: "POST",
         headers: {

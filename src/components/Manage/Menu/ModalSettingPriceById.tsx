@@ -75,7 +75,7 @@ const ModalSettingPriceById: React.FC<ModalSettingPriceProps> = ({
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/update-price/${product.productId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Menu/update-price/${product.productId}`,
         {
           method: "PUT",
           headers: {

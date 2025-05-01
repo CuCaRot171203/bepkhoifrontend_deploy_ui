@@ -34,7 +34,7 @@ export default function LoginPage() {
     const { username, password } = formData;
 
     try {
-      const response = await fetch(`${API_BASE_URL}login`, {
+      const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         credentials: "include",
         headers: {

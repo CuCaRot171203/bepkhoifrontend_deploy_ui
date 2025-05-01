@@ -47,12 +47,12 @@ const RoomsManagePage: React.FC = () => {
   const fetchRooms = async () => {
     setLoading(true);
     try {
-      let apiUrl = `${process.env.REACT_APP_API_APP_ENDPOINT}api/rooms/get-all?limit=100000`;
+      let apiUrl = `${process.env.REACT_APP_API_APP_ENDPOINT}/api/rooms/get-all?limit=100000`;
 
       if (search) {
         apiUrl = `${
           process.env.REACT_APP_API_APP_ENDPOINT
-        }api/rooms/search-by-name?limit=1000&name=${encodeURIComponent(
+        }/api/rooms/search-by-name?limit=1000&name=${encodeURIComponent(
           search
         )}`;
       }
@@ -104,7 +104,7 @@ const RoomsManagePage: React.FC = () => {
   const fetchRoomAreas = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/roomarea/get-all?limit=1000`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/roomarea/get-all?limit=1000`,
         {
           headers: {
             Authorization: `Bearer ${authInfo?.token}`,
@@ -140,7 +140,7 @@ const RoomsManagePage: React.FC = () => {
     setDetailLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/rooms/${roomId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/rooms/${roomId}`,
         {
           headers: {
             Authorization: `Bearer ${authInfo?.token}`,
@@ -200,7 +200,7 @@ const RoomsManagePage: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/rooms/create`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/rooms/create`,
         {
           method: "POST",
           headers: {
@@ -256,7 +256,7 @@ const RoomsManagePage: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/rooms/update/${selectedRoom.roomId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/rooms/update/${selectedRoom.roomId}`,
         {
           method: "PUT",
           headers: {
@@ -313,7 +313,7 @@ const RoomsManagePage: React.FC = () => {
       onOk: async () => {
         try {
           const response = await fetch(
-            `${process.env.REACT_APP_API_APP_ENDPOINT}api/rooms/delete/${selectedRoom.roomId}`,
+            `${process.env.REACT_APP_API_APP_ENDPOINT}/api/rooms/delete/${selectedRoom.roomId}`,
             {
               method: "DELETE",
               headers: {
@@ -350,7 +350,7 @@ const RoomsManagePage: React.FC = () => {
     setQrLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/rooms/generate-qr/${
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/rooms/generate-qr/${
           selectedRoom.roomId
         }?UrlBase=${encodeURIComponent(path)}`,
         {
@@ -401,7 +401,7 @@ const RoomsManagePage: React.FC = () => {
     setQrLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/rooms/delete-qr/${selectedRoom.roomId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/rooms/delete-qr/${selectedRoom.roomId}`,
         {
           method: "DELETE",
           headers: {
@@ -448,7 +448,7 @@ const RoomsManagePage: React.FC = () => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/rooms/download-qr/${selectedRoom.roomId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/rooms/download-qr/${selectedRoom.roomId}`,
         {
           method: "GET",
           headers: {

@@ -88,7 +88,7 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
     }
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/product-categories/get-all-categories`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/product-categories/get-all-categories`,
         {
           headers: {
             Authorization: `Bearer ${authInfo.token}`,
@@ -115,7 +115,7 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
   const fetchUnits = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/units/get-all-units`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/units/get-all-units`,
         {
           headers: {
             Authorization: `Bearer ${authInfo.token}`,
@@ -251,7 +251,7 @@ const MenuUpdateModal: React.FC<MenuUpdateModalProps> = ({
           }
 
           const response = await axios.put(
-            `${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/update-menu/${formData.productId}`,
+            `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Menu/update-menu/${formData.productId}`,
             formDataToSend,
             {
               headers: {

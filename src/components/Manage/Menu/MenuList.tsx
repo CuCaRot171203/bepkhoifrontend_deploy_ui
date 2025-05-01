@@ -85,7 +85,7 @@ const MenuList: React.FC<MenuListProps> = ({ search, category, status }) => {
     try {
       const queryParams = createQueryParams();
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/get-all-menus?${queryParams}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Menu/get-all-menus?${queryParams}`,
         {
           headers: {
             Authorization: `Bearer ${authInfo.token}`,
@@ -134,7 +134,7 @@ const MenuList: React.FC<MenuListProps> = ({ search, category, status }) => {
     setLoadingDetail(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/get-menu-by-id/${record.productId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Menu/get-menu-by-id/${record.productId}`,
         {
           headers: {
             Authorization: `Bearer ${authInfo.token}`,
@@ -171,7 +171,7 @@ const MenuList: React.FC<MenuListProps> = ({ search, category, status }) => {
       setLoadingDetail(true);
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_APP_ENDPOINT}api/Menu/get-menu-by-id/${productId}`,
+          `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Menu/get-menu-by-id/${productId}`,
           {
             headers: {
               Authorization: `Bearer ${authInfo.token}`,

@@ -28,7 +28,7 @@ export default function VerifyPassword() {
     if (!isOtpStage) {
       // request OTP
       try {
-        const response = await fetch(`${API_BASE_URL}api/Passwords/send-otp`, {
+        const response = await fetch(`${API_BASE_URL}/api/Passwords/send-otp`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -48,7 +48,7 @@ export default function VerifyPassword() {
     } else {
       // authorize OTP
       try {
-        const response = await fetch(`${API_BASE_URL}api/Passwords/verify`, {
+        const response = await fetch(`${API_BASE_URL}/api/Passwords/verify`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, otp }),

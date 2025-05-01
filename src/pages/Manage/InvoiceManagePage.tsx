@@ -54,7 +54,7 @@ const InvoiceManagePage: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Invoice/filter-invoices`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Invoice/filter-invoices`,
         {
           method: "POST",
           headers: {

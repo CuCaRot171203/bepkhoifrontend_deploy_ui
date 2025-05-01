@@ -54,7 +54,7 @@ const fetchAddNoteToOrder = async (
   token: string,
   clearAuthInfo: () => void
 ): Promise<boolean> => {
-  const apiUrl = `${API_BASE_URL}api/orders/add-note`;
+  const apiUrl = `${API_BASE_URL}/api/orders/add-note`;
 
   try {
     const response = await fetch(apiUrl, {
@@ -103,7 +103,7 @@ const confirmOrderPos = async (
   token: string,
   clearAuthInfo: () => void
 ): Promise<boolean> => {
-  const apiUrl = `${API_BASE_URL}api/order-detail/confirm/${orderId}`;
+  const apiUrl = `${API_BASE_URL}/api/order-detail/confirm/${orderId}`;
 
   try {
     const response = await fetch(apiUrl, {
@@ -151,7 +151,7 @@ const fetchGeneralData = async (
 ): Promise<OrderGeneralDataPosDto | null> => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/orders/get-order-general-data/${orderId}`,
+      `${API_BASE_URL}/api/orders/get-order-general-data/${orderId}`,
       {
         method: "GET",
         headers: {

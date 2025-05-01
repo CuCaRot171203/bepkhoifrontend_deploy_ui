@@ -117,7 +117,7 @@ async function fetchCreateInvoiceForPayment(
 }> {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/Invoice/create-invoice-for-payment`,
+      `${API_BASE_URL}/api/Invoice/create-invoice-for-payment`,
       {
         method: "POST",
         headers: {
@@ -178,7 +178,7 @@ async function fetchOrderPayment(
     return null;
   }
   try {
-    const url = `${API_BASE_URL}api/orders/Get-order-payment-information/${orderId}`;
+    const url = `${API_BASE_URL}/api/orders/Get-order-payment-information/${orderId}`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -231,7 +231,7 @@ async function fetchVnPayUrl(
 ): Promise<string | null> {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/Invoice/vnpay-url?Id=${orderId}`,
+      `${API_BASE_URL}/api/Invoice/vnpay-url?Id=${orderId}`,
       {
         method: "GET",
         headers: {
@@ -272,7 +272,7 @@ async function printInvoicePdf(
 ) {
   try {
     const response = await fetch(
-      `${API_BASE_URL}api/invoice/${invoiceId}/print-pdf`,
+      `${API_BASE_URL}/api/invoice/${invoiceId}/print-pdf`,
       {
         method: "GET",
         headers: {

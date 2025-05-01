@@ -11,7 +11,7 @@ function ShopMenuRedirect() {
     const checkRoomValidity = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_APP_ENDPOINT}api/rooms/get-all?limit=1000&offset=0`,
+          `${process.env.REACT_APP_API_APP_ENDPOINT}/api/rooms/get-all?limit=1000&offset=0`,
           {
             method: "GET",
             credentials: "include",

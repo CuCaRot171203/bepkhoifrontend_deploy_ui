@@ -45,7 +45,7 @@ const SettingPricePage: React.FC = () => {
 
       const apiUrl = `${
         process.env.REACT_APP_API_APP_ENDPOINT
-      }api/Menu/export-product-price-excel?${queryParams.toString()}`;
+      }/api/Menu/export-product-price-excel?${queryParams.toString()}`;
       const response = await fetch(apiUrl, {
         method: "GET",
         headers: {

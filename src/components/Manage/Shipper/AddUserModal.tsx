@@ -41,7 +41,7 @@ const AddShipperModal: React.FC<AddShipperModalProps> = ({
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Shipper`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Shipper`,
         {
           method: "POST",
           headers: {

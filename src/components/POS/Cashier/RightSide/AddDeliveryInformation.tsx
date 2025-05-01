@@ -29,7 +29,7 @@ const fetchDeliveryInformation = async (
   token: string,
   clearAuthInfo: () => void
 ): Promise<DeliveryInformation | null> => {
-  const url = `${API_BASE_URL}api/orders/delivery-information/${orderId}`;
+  const url = `${API_BASE_URL}/api/orders/delivery-information/${orderId}`;
 
   try {
     const response = await fetch(url, {
@@ -77,7 +77,7 @@ const fetchEditDeliveryInformation = async (
   token: string,
   clearAuthInfo: () => void
 ): Promise<boolean> => {
-  const url = `${API_BASE_URL}api/orders/add-order-delivery-information`;
+  const url = `${API_BASE_URL}/api/orders/add-order-delivery-information`;
 
   try {
     const response = await fetch(url, {

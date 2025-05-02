@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { message } from "antd";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import {
+  CarOutlined,
+  LeftOutlined,
+  RightOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
 import { useAuth } from "../../../../context/AuthContext";
 
 const API_BASE_URL = process.env.REACT_APP_API_APP_ENDPOINT;
@@ -135,7 +140,7 @@ const POSShipperList: React.FC<Props> = ({
           <div className="relative flex flex-col items-center w-full gap-1">
             <div className="absolute justify-center rounded-lg p-2 flex flex-col items-center">
               <div className="w-[5vw] rounded-full bg-yellow-300 flex items-center justify-center h-[5vw]">
-                🥡
+                <ShoppingCartOutlined />
               </div>
               <div className="absolute w-[90%] text-[0.9vw] text-center translate-y-[6vw] bg-white text-black font-semibold z-10 rounded-lg p-1">
                 Mang về
@@ -162,20 +167,7 @@ const POSShipperList: React.FC<Props> = ({
             <div className="relative flex flex-col items-center w-full gap-1">
               <div className="absolute justify-center rounded-lg p-2 flex flex-col items-center">
                 <div className="w-[5vw] rounded-full bg-gray-300 flex items-center justify-center h-[5vw]">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.125h15.002M9.75 21.75l-3 1.5-3-1.5m9.75-3l3 1.5 3-1.5M6.75 7.5l3-1.5 3 1.5m3-1.5l-3 1.5-3-1.5"
-                    />
-                  </svg>
+                  <CarOutlined />
                 </div>
                 <div className="absolute w-[90%] text-[0.9vw] text-center translate-y-[6vw] bg-white text-black font-semibold z-10 rounded-lg p-1">
                   {item.shipperName}

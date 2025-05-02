@@ -1,5 +1,7 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
+import VnpaySuccess from "./VnpaySuccess";
+import VnpayFailure from "./VnpayFailure";
 
 const VnpayTransactionResult: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -7,15 +9,8 @@ const VnpayTransactionResult: React.FC = () => {
   const result = resultParam === "true";
 
   return (
-    <div className="text-center mt-10">
-      <h1
-        className={`text-2xl font-bold ${
-          result ? "text-green-600" : "text-red-600"
-        }`}
-      >
-        {/* {result ? 'Giao dịch thành công' : 'Giao dịch thất bại'} */}
-        {result ? "Giao dịch thành công" : "Giao dịch thất bại"}
-      </h1>
+    <div className="w-full h-screen flex items-center justify-center">
+      {result ? <VnpaySuccess /> : <VnpayFailure />}
     </div>
   );
 };

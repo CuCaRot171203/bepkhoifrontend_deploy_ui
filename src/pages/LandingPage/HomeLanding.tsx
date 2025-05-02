@@ -676,7 +676,7 @@ const HomeLanding: React.FC = () => {
         </div>
 
         <div className="w-[85vw] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-[8vw] md:gap-[4vw] px-[4vw] md:px-[8vw]">
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-[8vw] md:gap-[4vw] px-[4vw] md:px-[8vw]">
             {/* Google Maps */}
             <div className="flex flex-col items-center bg-gray-50 rounded-lg p-[4vw] md:p-[2vw] hover:shadow-lg transition-all duration-300">
               <div className="w-[8vw] h-[8vw] md:w-[4vw] md:h-[4vw] mb-[2vw] md:mb-[1vw]">
@@ -694,14 +694,14 @@ const HomeLanding: React.FC = () => {
                     ★
                   </span>
                   <span className="text-[2.4vw] md:text-[1.2vw] font-semibold">
-                    4.7/5
+                    4.2/5
                   </span>
                 </div>
                 <p className="text-[2vw] md:text-[1vw] text-gray-600 mb-[1vw] md:mb-[0.5vw]">
                   25 đánh giá
                 </p>
                 <a
-                  href="https://maps.app.goo.gl/example"
+                  href="https://maps.app.goo.gl/CwZNhpvuouFcUmZh7"
                   target="_blank"
                   className="text-[2vw] md:text-[1vw] text-blue-600 hover:underline"
                 >
@@ -727,7 +727,7 @@ const HomeLanding: React.FC = () => {
                     ★
                   </span>
                   <span className="text-[2.4vw] md:text-[1.2vw] font-semibold">
-                    4.7/5
+                    4.8/5
                   </span>
                 </div>
                 <p className="text-[2vw] md:text-[1vw] text-gray-600 mb-[1vw] md:mb-[0.5vw]">
@@ -760,7 +760,7 @@ const HomeLanding: React.FC = () => {
                     ★
                   </span>
                   <span className="text-[2.4vw] md:text-[1.2vw] font-semibold">
-                    4.7/5
+                    4.5/5
                   </span>
                 </div>
                 <p className="text-[2vw] md:text-[1vw] text-gray-600 mb-[1vw] md:mb-[0.5vw]">

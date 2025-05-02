@@ -1,6 +1,7 @@
 import {
   BellOutlined,
   CaretDownOutlined,
+  CarOutlined,
   DollarOutlined,
   EditOutlined,
   SplitCellsOutlined,
@@ -384,7 +385,9 @@ const POSPayment: React.FC<Props> = ({
               onClick={() => setIsAddDeliveryInformationOpen(true)}
               disabled={orderData?.totalQuantity === 0}
             >
-              <span className="pl-2">Giao hàng</span>
+              <span className="pl-2">
+                <CarOutlined />
+              </span>
             </button>
           )}
         </div>

@@ -220,7 +220,7 @@ const POSSearchBarLeftSide: React.FC<Props> = ({ selectedOrder }) => {
         placeholder="Tìm món ăn(F3)"
         className="w-full rounded-full transition-all duration-200"
         style={{
-          width: "350px",
+          width: "20vw",
           border: `2px solid ${isFocused ? "#FFE4B5" : "#d9d9d9"}`,
           boxShadow: isFocused
             ? "0px 0px 5px rgba(255, 228, 181, 0.7)"

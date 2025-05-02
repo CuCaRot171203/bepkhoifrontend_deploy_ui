@@ -286,7 +286,7 @@ const RoomAreaManagePage: React.FC = () => {
     <div className="flex w-full h-full px-[8.33%] relative font-sans screen-menu-page justify-center">
       <div className="flex flex-row  justify-center">
         <Sidebar search={search} onSearchChange={setSearch} />
-        <div className="flex flex-col">
+        <div className="flex flex-col w-[60vw]">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-3xl font-bold">Quản lý khu vực phòng</h1>
             <div className="flex items-center font-semibold button-up-of-list">

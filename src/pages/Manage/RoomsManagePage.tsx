@@ -517,7 +517,7 @@ const RoomsManagePage: React.FC = () => {
     <div className="flex w-full font-sans justify-center">
       <div className="flex gap-[0.75vw]">
         <Sidebar search={search} onSearchChange={setSearch} />
-        <div className="flex-1 p-[1vw]">
+        <div className="flex-1 w-[60vw]">
           <div className="flex justify-between items-center mb-[1vw]">
             <h1 className="text-[1.5vw] font-bold">Quản lý bàn</h1>
             <div className="flex items-center">

@@ -202,7 +202,7 @@ const ShipperManagePage: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Shipper/${userId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Shipper/${userId}`,
         data,
         {
           headers: {
@@ -240,13 +240,16 @@ const ShipperManagePage: React.FC = () => {
     }
 
     try {
-      await axios.delete(`${process.env.REACT_APP_API_APP_ENDPOINT}${userId}`, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${authInfo?.token}`,
-        },
-        withCredentials: true,
-      });
+      await axios.delete(
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/${userId}`,
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: `Bearer ${authInfo?.token}`,
+          },
+          withCredentials: true,
+        }
+      );
 
       message.success(`Xóa shipper "${userName}" thành công!`);
       fetchShippers();
@@ -314,7 +317,7 @@ const ShipperManagePage: React.FC = () => {
     try {
       const newStatus = !currentStatus;
       const response = await axios.put(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}status/${userId}?status=${newStatus}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/status/${userId}?status=${newStatus}`,
         {},
         {
           headers: {

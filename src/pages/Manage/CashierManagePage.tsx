@@ -203,7 +203,7 @@ const CashierManagePage: React.FC = () => {
 
     try {
       const response = await axios.put(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/cashiers/${userId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/cashiers/${userId}`,
         data,
         {
           headers: {
@@ -241,13 +241,16 @@ const CashierManagePage: React.FC = () => {
     }
 
     try {
-      await axios.delete(`${process.env.REACT_APP_API_APP_ENDPOINT}${userId}`, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${authInfo?.token}`,
-        },
-        withCredentials: true,
-      });
+      await axios.delete(
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/${userId}`,
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: `Bearer ${authInfo?.token}`,
+          },
+          withCredentials: true,
+        }
+      );
 
       message.success(`Xóa nhân viên "${userName}" thành công!`);
       fetchCashiers();
@@ -315,7 +318,7 @@ const CashierManagePage: React.FC = () => {
     try {
       const newStatus = !currentStatus;
       const response = await axios.put(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}status/${userId}?status=${newStatus}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/status/${userId}?status=${newStatus}`,
         {},
         {
           headers: {

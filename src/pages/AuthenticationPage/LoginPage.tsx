@@ -158,10 +158,10 @@ export default function LoginPage() {
                 </label>
               </div>
               <a
-                href="http://localhost:3000/verify"
+                href="/reset-password"
                 className="text-[0.9vw] font-medium text-blue-600 hover:underline"
               >
-                Forgot password?
+                Quên mật khẩu?
               </a>
             </div>
             <button

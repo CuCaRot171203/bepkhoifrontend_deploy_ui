@@ -20,7 +20,6 @@
 // import VnpayTransactionResult from "./pages/POS/VnpayTransactionResult";
 // import posRoutes from "./Routes/POSRoutes";
 
-
 // const App: React.FC = () => {
 
 //   const [modelMode, setModelMode] = useState<string>("0");
@@ -113,10 +112,15 @@
 
 // export default App;
 
-
 ///////////////////////////////////////////////////////////////////
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import ManageLayout from "./layouts/ManageLayout";
 import ShopLayout from "./layouts/ShopLayout";
 import LoginPage from "./pages/AuthenticationPage/LoginPage";
@@ -138,6 +142,7 @@ import VnpayTransactionResult from "./pages/POS/VnpayTransactionResult";
 import posRoutes from "./Routes/POSRoutes";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/Authentication/ProtectedRoute";
+import ResetPassword from "./pages/AuthenticationPage/ResetPassword";
 
 const App: React.FC = () => {
   const [modelMode, setModelMode] = useState<string>("0");
@@ -145,15 +150,24 @@ const App: React.FC = () => {
   useEffect(() => {
     const getModelMode = () => {
       const ua = navigator.userAgent.toLowerCase();
-      const isTouchDevice = "ontouchend" in window || navigator.maxTouchPoints > 0;
+      const isTouchDevice =
+        "ontouchend" in window || navigator.maxTouchPoints > 0;
       if (/iphone|android.*mobile/.test(ua)) return "1";
-      if (/ipad/.test(ua) || (ua.includes("macintosh") && isTouchDevice) || (/android/.test(ua) && !/mobile/.test(ua)))
+      if (
+        /ipad/.test(ua) ||
+        (ua.includes("macintosh") && isTouchDevice) ||
+        (/android/.test(ua) && !/mobile/.test(ua))
+      )
         return "2";
       return "0";
     };
     const mode = getModelMode();
     setModelMode(mode);
-    console.log(`Model Mode: ${mode} (${mode === "1" ? "Điện thoại" : mode === "2" ? "Máy tính bảng" : "PC"})`);
+    console.log(
+      `Model Mode: ${mode} (${
+        mode === "1" ? "Điện thoại" : mode === "2" ? "Máy tính bảng" : "PC"
+      })`
+    );
   }, []);
 
   const ShopRouteWrapper: React.FC<{ modelMode: string }> = ({ modelMode }) => {
@@ -199,6 +213,7 @@ const App: React.FC = () => {
                 {/* Route cho login và verify */}
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/verify" element={<VerifyAccount />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
 
                 {/* Route cho manage (chỉ admin) */}
                 <Route
@@ -209,12 +224,19 @@ const App: React.FC = () => {
                     </ProtectedRoute>
                   }
                 >
-                  <Route index element={<Navigate to="/manage/dashboard" replace />} />
+                  <Route
+                    index
+                    element={<Navigate to="/manage/dashboard" replace />}
+                  />
                   {manageRoutes.map((route, index) => (
                     <Route
                       key={index}
                       path={route.path}
-                      element={<ProtectedRoute roles={route.roles}>{route.element}</ProtectedRoute>}
+                      element={
+                        <ProtectedRoute roles={route.roles}>
+                          {route.element}
+                        </ProtectedRoute>
+                      }
                     />
                   ))}
                 </Route>
@@ -233,16 +255,27 @@ const App: React.FC = () => {
                     <Route
                       key={index}
                       path={route.path}
-                      element={<ProtectedRoute roles={route.roles}>{route.element}</ProtectedRoute>}
+                      element={
+                        <ProtectedRoute roles={route.roles}>
+                          {route.element}
+                        </ProtectedRoute>
+                      }
                     />
                   ))}
                 </Route>
 
                 {/* Route cho shop (giữ nguyên logic hiện có, không dùng ProtectedRoute) */}
-                <Route path="/shop" element={<ShopRouteWrapper modelMode={modelMode} />}>
+                <Route
+                  path="/shop"
+                  element={<ShopRouteWrapper modelMode={modelMode} />}
+                >
                   <Route index element={<Navigate to="/shop/menu" replace />} />
                   {shopRoutes.map((route, index) => (
-                    <Route key={index} path={route.path} element={route.element} />
+                    <Route
+                      key={index}
+                      path={route.path}
+                      element={route.element}
+                    />
                   ))}
                 </Route>
 
@@ -252,7 +285,11 @@ const App: React.FC = () => {
                     route.index ? (
                       <Route key={index} index element={route.element} />
                     ) : (
-                      <Route key={index} path={route.path} element={route.element} />
+                      <Route
+                        key={index}
+                        path={route.path}
+                        element={route.element}
+                      />
                     )
                   )}
                 </Route>

@@ -124,7 +124,7 @@ const CashierManagePage: React.FC = () => {
     setLoadingDetail(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/cashiers/${userId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/cashiers/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${authInfo?.token}`,
@@ -159,7 +159,7 @@ const CashierManagePage: React.FC = () => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/cashiers`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/cashiers`,
         {
           method: "POST",
           headers: {

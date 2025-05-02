@@ -123,7 +123,7 @@ const ShipperManagePage: React.FC = () => {
     setLoadingDetail(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Shipper/${userId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Shipper/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${authInfo?.token}`,
@@ -158,7 +158,7 @@ const ShipperManagePage: React.FC = () => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Shipper`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Shipper`,
         {
           method: "POST",
           headers: {

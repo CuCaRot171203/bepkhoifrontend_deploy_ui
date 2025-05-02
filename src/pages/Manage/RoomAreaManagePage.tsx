@@ -216,7 +216,8 @@ const RoomAreaManagePage: React.FC = () => {
       }
 
       const result = await response.json();
-      message.success(result.message || "Cập nhật khu vực phòng thành công!");
+      // message.success(result.message || "Cập nhật khu vực phòng thành công!");
+      message.success("Cập nhật khu vực phòng thành công!");
       setIsEditModalOpen(false);
       fetchRoomAreas();
     } catch (error: any) {

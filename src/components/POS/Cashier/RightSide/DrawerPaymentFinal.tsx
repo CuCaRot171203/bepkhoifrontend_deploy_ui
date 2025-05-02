@@ -117,7 +117,7 @@ async function fetchCreateInvoiceForPayment(
 }> {
   try {
     const response = await fetch(
-      `${API_BASE_URL}/api/Invoice/create-invoice-for-payment`,
+      `${API_BASE_URL}api/Invoice/create-invoice-for-payment`,
       {
         method: "POST",
         headers: {
@@ -178,13 +178,14 @@ async function fetchOrderPayment(
     return null;
   }
   try {
-    const url = `${API_BASE_URL}/api/orders/Get-order-payment-information/${orderId}`;
+    const url = `${API_BASE_URL}api/orders/Get-order-payment-information/${orderId}`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
 
     if (response.status === 401) {
@@ -231,13 +232,14 @@ async function fetchVnPayUrl(
 ): Promise<string | null> {
   try {
     const response = await fetch(
-      `${API_BASE_URL}/api/Invoice/vnpay-url?Id=${orderId}`,
+      `${API_BASE_URL}api/Invoice/vnpay-url?Id=${orderId}`,
       {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
+        credentials: "include",
       }
     );
 
@@ -272,13 +274,14 @@ async function printInvoicePdf(
 ) {
   try {
     const response = await fetch(
-      `${API_BASE_URL}/api/invoice/${invoiceId}/print-pdf`,
+      `${API_BASE_URL}api/invoice/${invoiceId}/print-pdf`,
       {
         method: "GET",
         headers: {
           Accept: "application/pdf",
           Authorization: `Bearer ${token}`,
         },
+        credentials: "include",
       }
     );
 
@@ -295,17 +298,7 @@ async function printInvoicePdf(
     }
 
     const blob = await response.blob();
-
-    // Xóa sau khi kiểm tra
-    // console.log("📄 Blob size:", blob.size);
-
-    // if (blob.size === 0) {
-    //   message.error("Hóa đơn trả về rỗng. Kiểm tra backend.");
-    //   return;
-    // }
-
     const blobUrl = URL.createObjectURL(blob);
-    window.open(blobUrl, "_blank");
 
     const iframe = document.createElement("iframe");
     iframe.style.display = "none";
@@ -322,15 +315,6 @@ async function printInvoicePdf(
         URL.revokeObjectURL(blobUrl);
       }, 7000);
     };
-
-    // iframe.onload = () => {
-    //   setTimeout(() => {
-    //     iframe.contentWindow?.focus();
-    //     iframe.contentWindow?.print();
-    //     document.body.removeChild(iframe);
-    //     URL.revokeObjectURL(blobUrl);
-    //   }, 1000); // đợi 1s cho chắc
-    // };
   } catch (err) {
     console.error("Lỗi khi in hóa đơn:", err);
     message.error("Lỗi khi in hóa đơn.");

@@ -14,7 +14,7 @@ const ShopLayout: React.FC<ShopLayoutProps> = ({ modelMode }) => {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 1280);
     };
 
     checkMobile();

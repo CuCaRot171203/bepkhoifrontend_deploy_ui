@@ -54,7 +54,7 @@ const POSLayout: React.FC = () => {
 
   if (isMobile) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-[#faedd7] text-center text-gray-800 text-[2.1vw] p-[2vw]">
+      <div className="min-h-screen w-full flex items-center justify-center bg-[#faedd7] text-center text-gray-800 text-[3.5vw] p-[2vw]">
         Màn hình này không thể hoạt động trên thiết bị di động
       </div>
     );

@@ -295,7 +295,17 @@ async function printInvoicePdf(
     }
 
     const blob = await response.blob();
+
+    // Xóa sau khi kiểm tra
+    console.log("📄 Blob size:", blob.size);
+
+    if (blob.size === 0) {
+      message.error("Hóa đơn trả về rỗng. Kiểm tra backend.");
+      return;
+    }
+
     const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, "_blank");
 
     const iframe = document.createElement("iframe");
     iframe.style.display = "none";
@@ -303,14 +313,23 @@ async function printInvoicePdf(
 
     document.body.appendChild(iframe);
 
-    iframe.onload = () => {
-      iframe.contentWindow?.focus();
-      iframe.contentWindow?.print();
+    // iframe.onload = () => {
+    //   iframe.contentWindow?.focus();
+    //   iframe.contentWindow?.print();
 
+    //   setTimeout(() => {
+    //     document.body.removeChild(iframe);
+    //     URL.revokeObjectURL(blobUrl);
+    //   }, 7000);
+    // };
+
+    iframe.onload = () => {
       setTimeout(() => {
+        iframe.contentWindow?.focus();
+        iframe.contentWindow?.print();
         document.body.removeChild(iframe);
         URL.revokeObjectURL(blobUrl);
-      }, 7000);
+      }, 1000); // đợi 1s cho chắc
     };
   } catch (err) {
     console.error("Lỗi khi in hóa đơn:", err);

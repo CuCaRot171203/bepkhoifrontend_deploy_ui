@@ -94,7 +94,7 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
 
         <button
           onClick={handleOpenModal}
-          className="hover:text-yellow-500 transition text-[1.2vw] absolute right-[2vw] top-[1vw]"
+          className="hover:text-yellow-500 transition text-[1.2vw] absolute right-[52vw] top-[2vw] flex items-center justify-center w-[3vw] h-[3vw] rounded-full hover:bg-gray-200 text-black"
           title="Thông tin cá nhân"
         >
           <UserOutlined />

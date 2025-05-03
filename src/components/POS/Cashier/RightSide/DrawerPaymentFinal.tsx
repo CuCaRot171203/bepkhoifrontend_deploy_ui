@@ -576,7 +576,7 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
 
   const maxDiscountValue = (orderPaymentInfo?.amountDue || 0) + (totalVat || 0);
   const isOtherPaymentInvalid =
-    otherPayment < 0 || otherPayment > MAX_DECIMAL_VALUE;
+    otherPayment > 0 || otherPayment < MAX_DECIMAL_VALUE;
 
   return (
     <div className="rounded-lg">
@@ -646,7 +646,7 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                       inputMode="decimal"
                       value={otherPayment}
                       className={`border-b focus:outline-none text-right w-[8vw] ${
-                        isOtherPaymentInvalid
+                        !isOtherPaymentInvalid
                           ? "border-red-500"
                           : "border-gray-400"
                       }`}
@@ -660,16 +660,13 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                             "Chi phí khác không được nhỏ hơn 0"
                           );
                           message.warning("Chi phí khác không được nhỏ hơn 0");
-                          // } else if (val > maxOtherPayment) {
-                          //   setOtherPayment(val);
-                          //   setOtherPaymentError(
-                          //     `Chi phí khác không được vượt quá ${maxOtherPayment.toLocaleString()}đ`
-                          //   );
-                          //   message.warning("Giá trị vượt mức cho phép!");
-                        } else {
+                        } else if (val > MAX_DECIMAL_VALUE) {
                           setOtherPayment(val);
                           setOtherPaymentError("Giá trị vượt mức cho phép!");
                           message.warning("Giá trị vượt mức cho phép!");
+                        } else {
+                          setOtherPayment(val);
+                          setOtherPaymentError(null);
                         }
                       }}
                     />
@@ -689,35 +686,32 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                     inputMode="numeric"
                     value={discount}
                     className={`border-b focus:outline-none text-right w-[8vw] ${
-                      isOtherPaymentInvalid
+                      !isOtherPaymentInvalid
                         ? "border-red-500"
                         : "border-gray-400"
                     }`}
                     onChange={(e) => {
-                      // const val = Number(e.target.value);
-                      // if (val >= 0) setDiscount(val);
-
                       const val = Number(e.target.value);
-                      // if (isNaN(val)) return;
-                      // if (val >= 0) setDiscount(val);
                       setDiscount(val);
 
                       if (val < 0) {
-                        setDiscount(val);
+                        // setDiscount(val);
                         setDiscountError("Giảm giá không được nhỏ hơn 0");
                         message.warning("Giảm giá không được nhỏ hơn 0");
                       } else if (val > maxDiscountValue) {
-                        setDiscount(val);
+                        // setDiscount(val);
                         setDiscountError(
                           `Giảm giá không được vượt quá ${maxDiscountValue.toLocaleString()}đ`
                         );
                         message.warning("Giá trị vượt mức cho phép!");
+                      } else {
+                        setDiscountError(null); // ✅ Xoá lỗi nếu hợp lệ
                       }
                     }}
                   />
-                  {/* {DiscountError && (
+                  {DiscountError && (
                     <p className="text-red-500 text-xs mt-1">{DiscountError}</p>
-                  )} */}
+                  )}
                 </div>
                 <div className="flex flex-row pt-2 pb-2">
                   <p className="justify-start font-medium">VAT</p>
@@ -806,7 +800,11 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                     handleCheckoutVnpay();
                   }
                 }}
-                disabled={!!isOtherPaymentInvalid}
+                disabled={
+                  isOtherPaymentInvalid ||
+                  !!otherPaymentError ||
+                  !!DiscountError
+                }
               >
                 $ Thanh toán
               </button>

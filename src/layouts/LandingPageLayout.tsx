@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import HeaderLanding from "../components/LandingPage/HeaderLanding";
 import FooterLanding from "../components/LandingPage/FooterLanding";
+import FloatingContactButtons from "../components/LandingPage/FloatingContactButtons";
 const LandingPageLayout: React.FC = () => {
   return (
     <div className="min-h-screen w-full bg-gray-100 flex flex-col">
@@ -11,6 +12,7 @@ const LandingPageLayout: React.FC = () => {
       <div className="mt-[129px] flex-1 flex flex-col">
         <div className="flex-1">
           <Outlet />
+          <FloatingContactButtons />
         </div>
       </div>
     </div>

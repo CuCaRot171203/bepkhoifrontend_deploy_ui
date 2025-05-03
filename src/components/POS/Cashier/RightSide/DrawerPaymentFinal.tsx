@@ -638,7 +638,19 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                     className="border-b border-gray-400 focus:outline-none text-right"
                     onChange={(e) => {
                       const val = Number(e.target.value);
-                      if (val >= 0) setOtherPayment(val);
+
+                      const maxValueAllowed =
+                        (orderPaymentInfo?.amountDue || 0) + (totalVat || 0);
+
+                      if (val >= 0 && val <= maxValueAllowed) {
+                        setOtherPayment(val);
+                      } else if (val > maxValueAllowed) {
+                        message.warning(
+                          `Giá trị không được vượt quá ${maxValueAllowed.toLocaleString()}đ`
+                        );
+                      }
+
+                      // if (val >= 0) setOtherPayment(val);
                     }}
                   />
                 </div>

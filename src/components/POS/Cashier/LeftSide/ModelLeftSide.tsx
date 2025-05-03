@@ -3,8 +3,10 @@ import POSRoomTableList from "./POSRoomTableList";
 import POSMenuList from "./POSMenuList";
 import POSSearchBarLeftSide from "./POSSearchBarLeftSide";
 import POSShipperList from "./POSShipperList";
-import { UserOutlined } from "@ant-design/icons";
+import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import UserUpdateModalPos from "../../UserUpdateModalPos";
+import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 interface ModelLeftSideProps {
   selectedTable: number | null;
@@ -37,6 +39,7 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
   const handleOpenModal = () => {
     setIsModalVisible(true);
   };
+  const navigate = useNavigate();
 
   const handleCloseModal = () => {
     setIsModalVisible(false);
@@ -93,8 +96,15 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
         </div>
 
         <button
+          className="hover:text-yellow-500 transition text-[1.2vw] absolute right-[52vw] top-[1.2vw] flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full hover:bg-gray-200 text-black"
+          title="Thông tin cá nhân"
+          onClick={() => navigate("/")}
+        >
+          <HomeOutlined />
+        </button>
+        <button
           onClick={handleOpenModal}
-          className="hover:text-yellow-500 transition text-[1.2vw] absolute right-[52vw] top-[1vw] flex items-center justify-center w-[3vw] h-[3vw] rounded-full hover:bg-gray-200 text-black"
+          className="hover:text-yellow-500 transition text-[1.2vw] absolute right-[55vw] top-[1.2vw] flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full hover:bg-gray-200 text-black"
           title="Thông tin cá nhân"
         >
           <UserOutlined />

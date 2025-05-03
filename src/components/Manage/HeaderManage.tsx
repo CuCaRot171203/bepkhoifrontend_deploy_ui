@@ -11,14 +11,14 @@ import {
 import logoBepKhoi from "../../styles/LoginPage/images/logoBepKhoi.png";
 import UserUpdateModal from "./UserUpdateModal";
 
-
 const navItems = [
   { label: "Tổng quan", path: "/manage/dashboard" },
   {
     label: "Hàng hóa",
     submenu: [
-      { label: "Danh mục", path: "/manage/menu" },
+      { label: "Sản phẩm", path: "/manage/menu" },
       { label: "Thiết lập giá", path: "/manage/settingPrice" },
+      { label: "Loại sản phẩm", path: "/manage/menuCategory" },
     ],
   },
   {
@@ -89,7 +89,9 @@ const HeaderManage: React.FC = () => {
             <span>Tiếng Việt (VN)</span>
           </button>
           <div className="flex items-center gap-[0.3vw]">
-            <span className="font-bold text-yellow-500">{localStorage.getItem("UserName")}</span>
+            <span className="font-bold text-yellow-500">
+              {localStorage.getItem("UserName")}
+            </span>
           </div>
           <button
             onClick={handleOpenModal}

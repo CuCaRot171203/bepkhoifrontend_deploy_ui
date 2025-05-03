@@ -10,7 +10,7 @@ const MenuCategoryPage: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   return (
-    <div className="flex w-full h-full px-[8.33vw] font-sans screen-menu-page">
+    <div className="flex w-full h-full px-[15vw] font-sans screen-menu-page">
       <div className="flex flex-1 p-[1vw] gap-[0.5vw]">
         <main className="flex-1 overflow-auto">
           <div className="flex justify-between items-center mb-[1vw]">

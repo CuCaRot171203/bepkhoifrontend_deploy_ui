@@ -187,7 +187,7 @@ const AddMenuModal: React.FC<AddMenuModalProps> = ({ visible, onClose }) => {
 
   const handleChange = (key: keyof typeof formData, value: any) => {
     setFormData({ ...formData, [key]: value });
-    setErrors({ ...errors, [key]: false }); // Clear error on change
+    setErrors({ ...errors, [key]: false });
   };
 
   const validateForm = () => {

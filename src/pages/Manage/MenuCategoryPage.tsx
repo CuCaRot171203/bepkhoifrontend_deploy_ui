@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import AddMenuModal from "../../components/Manage/Menu/AddMenuModal";
+// import AddMenuModal from "../../components/Manage/Menu/AddMenuModal";
 import "./MenuPage.css";
 import MenuCategoryList from "../../components/Manage/Menu/MenuCategoryList";
+import AddMenuCategoryModal from "../../components/Manage/Menu/AddMenuCategoryModal";
 
 const MenuCategoryPage: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -39,7 +40,7 @@ const MenuCategoryPage: React.FC = () => {
         </main>
       </div>
       {isAddModalOpen && (
-        <AddMenuModal
+        <AddMenuCategoryModal
           visible={isAddModalOpen}
           onClose={() => setIsAddModalOpen(false)}
         />

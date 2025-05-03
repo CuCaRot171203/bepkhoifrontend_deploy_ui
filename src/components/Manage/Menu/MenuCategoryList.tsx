@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { message, Table } from "antd";
+import { message, Table, Popconfirm } from "antd";
 import type { TableColumnsType } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 import "./MenuList.css";
 import { useAuth } from "../../../context/AuthContext";
 
@@ -53,12 +54,40 @@ const MenuCategoryList: React.FC = () => {
     }
   }, [authInfo.token, clearAuthInfo]);
 
-  // API call when search, category, status, page change
   useEffect(() => {
     fetchMenuCategoryList();
   }, [page, fetchMenuCategoryList]);
 
-  // Column of table
+  const handleDelete = async (id: number) => {
+    if (!authInfo.token) {
+      message.error("Vui lòng đăng nhập lại!");
+      clearAuthInfo();
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Menu/product-category/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${authInfo.token}`,
+          },
+          credentials: "include",
+        }
+      );
+      const result = await res.json();
+      if (res.ok) {
+        message.success("Xóa danh mục thành công!");
+        fetchMenuCategoryList(); // refresh lại
+      } else {
+        message.error(result.message || "Xóa thất bại!");
+      }
+    } catch (error) {
+      message.error("Không thể kết nối đến server.");
+    }
+  };
+
   const columns: TableColumnsType<MenuCategoryItem> = [
     {
       title: "ID",
@@ -72,16 +101,22 @@ const MenuCategoryList: React.FC = () => {
       dataIndex: "productCategoryTitle",
       key: "productCategoryTitle",
       className: "text-[0.8vw]",
-      render: (text, record) => (
-        <span
-          className="font-medium cursor-pointer text-[0.8vw]"
-          onClick={(e) => {
-            e.stopPropagation();
-            // handleRowClick(record);
-          }}
-        >
-          {text}
-        </span>
+    },
+    {
+      title: "",
+      key: "actions",
+      width: 80,
+      render: (_, record) => (
+        <div className="flex justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <Popconfirm
+            title="Bạn có chắc chắn muốn xóa?"
+            onConfirm={() => handleDelete(record.productCategoryId)}
+            okText="OK"
+            cancelText="Hủy"
+          >
+            <DeleteOutlined className="text-red-600 cursor-pointer text-[1vw]" />
+          </Popconfirm>
+        </div>
       ),
     },
   ];
@@ -101,6 +136,7 @@ const MenuCategoryList: React.FC = () => {
         }}
         locale={{ emptyText: "Không có dữ liệu phù hợp." }}
         className="custom-table"
+        rowClassName={() => "group"} // Dùng cho hover
       />
     </div>
   );

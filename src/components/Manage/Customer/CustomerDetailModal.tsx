@@ -1,11 +1,14 @@
-import React from "react";
-import { Modal, Skeleton, Tag } from "antd";
+import React, { useState } from "react";
+import { message, Modal, Skeleton, Tag } from "antd";
 import {
   UserOutlined,
   PhoneOutlined,
   IdcardOutlined,
   DollarOutlined,
+  EditOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
+import { useAuth } from "../../../context/AuthContext";
 
 interface CustomerItem {
   customerId: number;
@@ -43,6 +46,87 @@ const CustomerDetailModal: React.FC<CustomerDetailModalProps> = ({
   };
 
   const status = data ? getCustomerStatus(data.totalAmountSpent) : null;
+  const { authInfo, clearAuthInfo } = useAuth();
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editedName, setEditedName] = useState(data?.customerName || "");
+  const [editedPhone, setEditedPhone] = useState(data?.phone || "");
+
+  const handleDelete = () => {
+    if (!data) return;
+
+    Modal.confirm({
+      title: "Xác nhận xóa",
+      content: `Bạn có chắc chắn muốn xóa người dùng "${data.customerName}" không?`,
+      okText: "Xóa",
+      cancelText: "Hủy",
+      okButtonProps: {
+        style: {
+          backgroundColor: "#FF4D4F",
+          borderColor: "#FF4D4F",
+          color: "#fff",
+        },
+      },
+      onOk: async () => {
+        try {
+          const response = await fetch(
+            `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer/delete/${data.customerId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authInfo?.token}`,
+              },
+              credentials: "include",
+            }
+          );
+
+          if (response.ok) {
+            message.success("Xóa khách hàng thành công!");
+            onClose();
+          } else {
+            const errorText = await response.text();
+            throw new Error(errorText || "Xóa khách hàng thất bại.");
+          }
+        } catch (error: any) {
+          message.error(`Lỗi: ${error.message}`);
+        }
+      },
+    });
+  };
+
+  const handleOpenEdit = () => {
+    setEditedName(data?.customerName || "");
+    setEditedPhone(data?.phone || "");
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdate = async () => {
+    if (!data) return;
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer/update/${data.customerId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authInfo?.token}`,
+          },
+          credentials: "include",
+        }
+      );
+      if (res.ok) {
+        message.success("Cập nhật thông tin thành công!");
+        setIsEditModalOpen(false);
+        onClose(); // hoặc reload lại data tùy nhu cầu
+      } else {
+        const err = await res.text();
+        throw new Error(err);
+      }
+    } catch (error: any) {
+      message.error(`Lỗi: ${error.message}`);
+    }
+  };
 
   return (
     <Modal
@@ -105,6 +189,23 @@ const CustomerDetailModal: React.FC<CustomerDetailModalProps> = ({
                 </div>
               </div>
             </div>
+
+            <div className="flex justify-end gap-3 mt-6">
+              <button
+                onClick={handleOpenEdit}
+                className="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex items-center gap-2"
+              >
+                <EditOutlined />
+                Cập nhật
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600 flex items-center gap-2"
+              >
+                <DeleteOutlined />
+                Xóa
+              </button>
+            </div>
           </div>
         ) : (
           <div className="text-center py-4 text-gray-500">
@@ -112,6 +213,36 @@ const CustomerDetailModal: React.FC<CustomerDetailModalProps> = ({
           </div>
         )}
       </div>
+      <Modal
+        title="Cập nhật khách hàng"
+        open={isEditModalOpen}
+        onCancel={() => setIsEditModalOpen(false)}
+        onOk={handleUpdate}
+        okText="Lưu"
+        cancelText="Hủy"
+      >
+        <p>
+          <strong>ID:</strong> {data?.customerId}
+        </p>
+        <div className="mt-3">
+          <label className="block mb-1">Họ và tên</label>
+          <input
+            type="text"
+            value={editedName}
+            onChange={(e) => setEditedName(e.target.value)}
+            className="w-full border px-2 py-1 rounded"
+          />
+        </div>
+        <div className="mt-3">
+          <label className="block mb-1">Số điện thoại</label>
+          <input
+            type="text"
+            value={editedPhone}
+            onChange={(e) => setEditedPhone(e.target.value)}
+            className="w-full border px-2 py-1 rounded"
+          />
+        </div>
+      </Modal>
     </Modal>
   );
 };

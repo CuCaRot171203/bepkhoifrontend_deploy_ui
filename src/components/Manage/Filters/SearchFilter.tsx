@@ -24,7 +24,7 @@ const SearchFilter: React.FC<Props> = ({ search, setSearch }) => {
       </label>
       <Space direction="vertical" className="w-full rounded-[0.3vw]">
         <Search
-          placeholder="Theo mã, tên hàng"
+          placeholder="Theo tên hàng"
           enterButton={<SearchOutlined className="text-[1vw]" />}
           value={search}
           onChange={(e) => setSearch(e.target.value)}

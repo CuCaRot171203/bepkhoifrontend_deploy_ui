@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import POSRoomTableList from "./POSRoomTableList";
 import POSMenuList from "./POSMenuList";
 import POSSearchBarLeftSide from "./POSSearchBarLeftSide";
-import POSShipperList from "./POSShipperList"
+import POSShipperList from "./POSShipperList";
+import { UserOutlined } from "@ant-design/icons";
+import UserUpdateModalPos from "../../UserUpdateModalPos";
 
 interface ModelLeftSideProps {
   selectedTable: number | null;
@@ -22,26 +24,41 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
   selectedShipper,
   setSelectedShipper,
   orderType,
-  setOrderType
+  setOrderType,
 }) => {
-  const [activeTab, setActiveTab] = useState<"room" | "menu" | "shiper">("room");
+  const [activeTab, setActiveTab] = useState<"room" | "menu" | "shiper">(
+    "room"
+  );
 
   function handleChangeTab(tab: "room" | "menu" | "shiper") {
     setActiveTab(tab);
   }
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+  const handleReloadUser = () => {
+    console.log("Tải lại thông tin sau khi cập nhật...");
+  };
 
   return (
     <div className="p-3 bg-[#FFFFFF] rounded-lg h-[calc(100vh-2rem)] flex flex-col">
       {/* Tabs & Search */}
       <div className="flex items-center border-b border-gray-300 pb-2">
         <div className="flex space-x-[1vw]">
-        <button
+          <button
             className={` py-[1vw] font-semibold transition ${
               activeTab === "shiper"
                 ? "bg-[#FFFFFF] text-[#ffbe4f] border-b-2 border-[#ffbe4f]"
                 : "text-gray-700"
             }`}
-            onClick={() => {handleChangeTab("shiper")}}
+            onClick={() => {
+              handleChangeTab("shiper");
+            }}
           >
             Giao đi
           </button>
@@ -51,7 +68,9 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
                 ? "bg-[#FFFFFF] text-[#ffbe4f] border-b-2 border-[#ffbe4f]"
                 : "text-gray-700"
             }`}
-            onClick={() => {handleChangeTab("room")}}
+            onClick={() => {
+              handleChangeTab("room");
+            }}
           >
             Phòng bàn
           </button>
@@ -61,21 +80,29 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
                 ? "bg-[#FFFFFF] text-[#ffbe4f] border-b-2 border-[#ffbe4f]"
                 : "text-gray-700"
             }`}
-            onClick={() => {handleChangeTab("menu")}}
+            onClick={() => {
+              handleChangeTab("menu");
+            }}
           >
             Thực đơn
           </button>
         </div>
 
         <div className="ml-[3vw] mr-[3vw]">
-          <POSSearchBarLeftSide 
-          selectedOrder={selectedOrder}
-          />
+          <POSSearchBarLeftSide selectedOrder={selectedOrder} />
+
+          <button
+            onClick={handleOpenModal}
+            className="hover:text-yellow-500 transition text-[1.2vw]"
+            title="Thông tin cá nhân"
+          >
+            <UserOutlined />
+          </button>
         </div>
       </div>
 
       <div className="mt-4 flex-1 overflow-hidden">
-      {activeTab === "shiper" && (
+        {activeTab === "shiper" && (
           <POSShipperList
             selectedShipper={selectedShipper}
             setSelectedShipper={setSelectedShipper}
@@ -104,6 +131,11 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
           />
         )}
       </div>
+      <UserUpdateModalPos
+        open={isModalVisible}
+        onClose={handleCloseModal}
+        onReload={handleReloadUser}
+      />
     </div>
   );
 };

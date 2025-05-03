@@ -114,7 +114,8 @@ const MenuCategoryList: React.FC = () => {
             okText="OK"
             cancelText="Hủy"
             okButtonProps={{
-              className: "bg-blue-500 hover:bg-blue-600 text-white border-none",
+              className:
+                "bg-blue-500 hover:bg-blue-600 text-white border-none !important",
             }}
           >
             <DeleteOutlined className="text-red-600 cursor-pointer text-[1vw]" />

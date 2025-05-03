@@ -135,6 +135,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ search }) => {
         className="custom-table"
         onRow={(record) => ({
           onClick: () => handleRowClick(record),
+          className: "hover:cursor-pointer",
         })}
       />
 

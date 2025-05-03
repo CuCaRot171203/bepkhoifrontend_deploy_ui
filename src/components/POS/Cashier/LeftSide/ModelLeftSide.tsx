@@ -88,7 +88,7 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
           </button>
         </div>
 
-        <div className="ml-[3vw] mr-[3vw]">
+        <div className="ml-[3vw] mr-[3vw] flex flex-row items-center justify-between">
           <POSSearchBarLeftSide selectedOrder={selectedOrder} />
 
           <button

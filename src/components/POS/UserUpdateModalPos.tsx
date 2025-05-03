@@ -409,6 +409,9 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
             ))}
           </Select>
           <Input addonBefore="Địa chỉ" value={formData.address} disabled />
+          <div className="w-full h-auto italic text-red-700 text-[0.9vw]">
+            Ở màn hình POS bạn không thể sửa thông tin
+          </div>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-3 mt-4">

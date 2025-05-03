@@ -120,7 +120,7 @@ export default function LoginPage() {
                 id="username"
                 value={formData.username}
                 onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 text-[0.9vw] text-gray-900 rounded-lg w-full p-[0.6vw]"
+                className="bg-gray-50 border border-gray-300 text-[0.9vw] text-gray-900 rounded-lg w-full p-[0.6vw] outline-none"
                 placeholder="name@company.com"
                 required
               />
@@ -138,7 +138,7 @@ export default function LoginPage() {
                 id="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="bg-gray-50 border border-gray-300 text-[0.9vw] text-gray-900 rounded-lg w-full p-[0.6vw]"
+                className="bg-gray-50 border border-gray-300 text-[0.9vw] text-gray-900 rounded-lg w-full p-[0.6vw] outline-none"
                 placeholder="••••••••"
                 required
               />

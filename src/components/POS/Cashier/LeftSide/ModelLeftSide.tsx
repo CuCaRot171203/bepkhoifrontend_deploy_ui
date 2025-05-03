@@ -90,15 +90,15 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
 
         <div className="ml-[3vw] mr-[3vw] flex flex-row items-center justify-between gap-[1vw]">
           <POSSearchBarLeftSide selectedOrder={selectedOrder} />
-
-          <button
-            onClick={handleOpenModal}
-            className="hover:text-yellow-500 transition text-[1.2vw]"
-            title="Thông tin cá nhân"
-          >
-            <UserOutlined />
-          </button>
         </div>
+
+        <button
+          onClick={handleOpenModal}
+          className="hover:text-yellow-500 transition text-[1.2vw] absolute right-[2vw] top-[1vw]"
+          title="Thông tin cá nhân"
+        >
+          <UserOutlined />
+        </button>
       </div>
 
       <div className="mt-4 flex-1 overflow-hidden">

@@ -366,7 +366,7 @@ const POSPayment: React.FC<Props> = ({
           <button
             className={`px-3 py-1 rounded-full flex items-center ${
               selectedOrder != null && orderData?.totalQuantity != 0
-                ? "bg-white text-gray-700 cursor-pointer hover:bg-gray-200"
+                ? "bg-gray-200 text-gray-700 cursor-pointer hover:bg-gray-400"
                 : "text-gray-400 cursor-not-allowed"
             }`}
             onClick={() => setIsModalSplitOrderOpen(true)}

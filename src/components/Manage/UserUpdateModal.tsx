@@ -209,8 +209,8 @@ const UserUpdateModal: React.FC<Props> = ({ open, onClose, onReload }) => {
         }
       );
       if (response.status === 401) {
-        message.success("Mật khẩu của bạn đã được thay đổi");
-        // clearAuthInfo();
+        message.error("Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại!");
+        clearAuthInfo();
         return;
       }
       message.success("Đổi mật khẩu thành công!");

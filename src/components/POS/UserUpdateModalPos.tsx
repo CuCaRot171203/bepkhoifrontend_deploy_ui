@@ -264,9 +264,9 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
       );
 
       if (response.status === 401) {
-        clearAuthInfo();
-        message.error(
-          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        // clearAuthInfo();
+        message.success(
+          "Bạn đã đổi mật khẩu thành công. Vui lòng đăng nhập lại."
         );
         return;
       }
@@ -278,9 +278,9 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
       setIsInfoMode(true);
     } catch (error: any) {
       if (error.response?.status === 401) {
-        clearAuthInfo();
-        message.error(
-          "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+        // clearAuthInfo();
+        message.success(
+          "Bạn đã đổi mật khẩu thành công. Vui lòng đăng nhập lại."
         );
       } else {
         message.error("Đổi mật khẩu thất bại!");

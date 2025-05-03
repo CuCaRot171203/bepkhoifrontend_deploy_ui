@@ -44,6 +44,9 @@ const CustomerDetailModal: React.FC<CustomerDetailModalProps> = ({
     }
     return { text: "Khách hàng đăng ký", color: "blue" };
   };
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+  };
 
   const status = data ? getCustomerStatus(data.totalAmountSpent) : null;
   const { authInfo, clearAuthInfo } = useAuth();
@@ -122,7 +125,7 @@ const CustomerDetailModal: React.FC<CustomerDetailModalProps> = ({
       if (res.ok) {
         message.success("Cập nhật thông tin thành công!");
         setIsEditModalOpen(false);
-        onClose(); // hoặc reload lại data tùy nhu cầu
+        onClose();
       } else {
         const err = await res.text();
         throw new Error(err);
@@ -220,7 +223,7 @@ const CustomerDetailModal: React.FC<CustomerDetailModalProps> = ({
       <Modal
         title="Cập nhật khách hàng"
         open={isEditModalOpen}
-        onCancel={() => setIsEditModalOpen(false)}
+        onCancel={handleCloseEditModal}
         onOk={handleUpdate}
         okText="Lưu"
         cancelText="Hủy"

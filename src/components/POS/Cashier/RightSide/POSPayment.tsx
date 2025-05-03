@@ -4,6 +4,7 @@ import {
   CarOutlined,
   DollarOutlined,
   EditOutlined,
+  PrinterOutlined,
   SplitCellsOutlined,
 } from "@ant-design/icons";
 import { Empty, Input, Modal, message } from "antd";
@@ -331,6 +332,18 @@ const POSPayment: React.FC<Props> = ({
           <p className="text-gray-600 font-semibold mr-2 ml-2">
             Bếp Khói Ocean Park
           </p>
+          <button
+            className={`px-3 py-1 rounded-full flex items-center ${
+              selectedOrder != null && orderData?.totalQuantity != 0
+                ? "bg-gray-200 text-gray-700 cursor-pointer hover:bg-gray-400"
+                : "text-gray-400 cursor-not-allowed"
+            }`}
+            onClick={() => setIsModalSplitOrderOpen(true)}
+            disabled={!(selectedOrder != null && orderData?.totalQuantity != 0)}
+          >
+            <PrinterOutlined />
+            <span className="pl-2">In tạm tính</span>
+          </button>
         </div>
         <div className="flex-1"></div>
         <div className="justify-end flex flex-row">

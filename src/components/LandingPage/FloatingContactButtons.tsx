@@ -28,7 +28,7 @@ const FloatingContactButtons = () => {
 
       {/* Zalo */}
       <a
-        href="https://zalo.me/xxxxxxxxxx"
+        href="https://zalo.me/0975307087"
         target="_blank"
         rel="noopener noreferrer"
         className="w-[3.5vw] h-[3.5vw] bg-[#0068FF] text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition font-bold text-[1.3vw]"

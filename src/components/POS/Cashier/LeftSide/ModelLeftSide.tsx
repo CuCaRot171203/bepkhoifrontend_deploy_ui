@@ -35,18 +35,6 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
   function handleChangeTab(tab: "room" | "menu" | "shiper") {
     setActiveTab(tab);
   }
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const handleOpenModal = () => {
-    setIsModalVisible(true);
-  };
-  const navigate = useNavigate();
-
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
-  };
-  const handleReloadUser = () => {
-    console.log("Tải lại thông tin sau khi cập nhật...");
-  };
 
   return (
     <div className="p-3 bg-[#FFFFFF] rounded-lg h-[calc(100vh-2rem)] flex flex-col">
@@ -94,21 +82,6 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
         <div className="ml-[3vw] mr-[3vw]">
           <POSSearchBarLeftSide selectedOrder={selectedOrder} />
         </div>
-
-        <button
-          className="hover:text-[#967b30] transition text-[1.2vw] absolute right-[55vw] top-[3.5vh] flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full hover:bg-gray-200 text-black"
-          title="Trang chủ"
-          onClick={() => navigate("/")}
-        >
-          <HomeOutlined />
-        </button>
-        <button
-          onClick={handleOpenModal}
-          className="hover:text-[#967b30] transition text-[1.2vw] absolute right-[52vw] top-[3.5vh] flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full hover:bg-gray-200 text-black"
-          title="Thông tin cá nhân"
-        >
-          <UserOutlined />
-        </button>
       </div>
 
       <div className="mt-4 flex-1 overflow-hidden">
@@ -141,11 +114,6 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
           />
         )}
       </div>
-      <UserUpdateModalPos
-        open={isModalVisible}
-        onClose={handleCloseModal}
-        onReload={handleReloadUser}
-      />
     </div>
   );
 };

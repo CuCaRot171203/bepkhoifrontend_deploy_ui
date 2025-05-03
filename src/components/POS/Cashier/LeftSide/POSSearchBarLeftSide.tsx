@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Input, List, Avatar, message } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { HomeOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
 import type { InputRef } from "antd";
 import { useAuth } from "../../../../context/AuthContext"; // Import AuthContext
+import { useNavigate } from "react-router-dom";
+import UserUpdateModalPos from "../../UserUpdateModalPos";
 const API_BASE_URL = process.env.REACT_APP_API_APP_ENDPOINT;
 
 interface Props {
@@ -213,8 +215,24 @@ const POSSearchBarLeftSide: React.FC<Props> = ({ selectedOrder }) => {
     }
   };
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+  };
+  const navigate = useNavigate();
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+  const handleReloadUser = () => {
+    console.log("Tải lại thông tin sau khi cập nhật...");
+  };
+
   return (
-    <div ref={searchRef} className="absolute w-[20vw] translate-y-[-1vw] z-50">
+    <div
+      ref={searchRef}
+      className="absolute w-[15vw] translate-y-[-1vw] z-50 flex flex-row"
+    >
       <Input
         ref={inputRef}
         placeholder="Tìm món ăn(F3)"
@@ -272,6 +290,27 @@ const POSSearchBarLeftSide: React.FC<Props> = ({ selectedOrder }) => {
           />
         </div>
       )}
+
+      <button
+        className="hover:text-[#967b30] transition text-[1.2vw] flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full hover:bg-gray-200 text-black"
+        title="Trang chủ"
+        onClick={() => navigate("/")}
+      >
+        <HomeOutlined />
+      </button>
+      <button
+        onClick={handleOpenModal}
+        className="hover:text-[#967b30] transition text-[1.2vw] flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full hover:bg-gray-200 text-black"
+        title="Thông tin cá nhân"
+      >
+        <UserOutlined />
+      </button>
+
+      <UserUpdateModalPos
+        open={isModalVisible}
+        onClose={handleCloseModal}
+        onReload={handleReloadUser}
+      />
     </div>
   );
 };

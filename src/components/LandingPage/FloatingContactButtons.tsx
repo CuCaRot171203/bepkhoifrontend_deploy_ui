@@ -8,13 +8,13 @@ import {
 const FloatingContactButtons = () => {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-4 items-end">
-      <button
+      {/* <button
         title="Chatbot AI"
         className="w-[3.5vw] h-[3.5vw] bg-orange-500 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition"
         onClick={() => console.log("Open chatbot")}
       >
         <RobotOutlined />
-      </button>
+      </button> */}
 
       {/* Messenger */}
       <a

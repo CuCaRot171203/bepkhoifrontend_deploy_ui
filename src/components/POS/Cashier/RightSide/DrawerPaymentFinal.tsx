@@ -800,11 +800,7 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                     handleCheckoutVnpay();
                   }
                 }}
-                disabled={
-                  isOtherPaymentInvalid ||
-                  !!otherPaymentError ||
-                  !!DiscountError
-                }
+                disabled={!!otherPaymentError || !!DiscountError}
               >
                 $ Thanh toán
               </button>

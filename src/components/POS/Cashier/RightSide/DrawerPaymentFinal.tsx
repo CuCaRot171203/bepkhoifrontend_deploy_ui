@@ -698,7 +698,9 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                       // if (val >= 0) setDiscount(val);
 
                       const val = Number(e.target.value);
-                      if (isNaN(val)) return;
+                      // if (isNaN(val)) return;
+                      // if (val >= 0) setDiscount(val);
+                      setDiscount(val);
 
                       if (val < 0) {
                         setDiscount(val);
@@ -713,9 +715,9 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                       }
                     }}
                   />
-                  {DiscountError && (
+                  {/* {DiscountError && (
                     <p className="text-red-500 text-xs mt-1">{DiscountError}</p>
-                  )}
+                  )} */}
                 </div>
                 <div className="flex flex-row pt-2 pb-2">
                   <p className="justify-start font-medium">VAT</p>

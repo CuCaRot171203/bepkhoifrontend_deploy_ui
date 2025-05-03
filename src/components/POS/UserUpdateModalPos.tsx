@@ -350,67 +350,15 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
             disabled
           />
           <Input
-            addonBefore="Tên đăng nhập"
+            addonBefore="Tên người dùng"
             value={formData.userName}
             onChange={(e) => handleChange("userName", e.target.value)}
             disabled
           />
-          <DatePicker
-            value={
-              formData.date_of_Birth
-                ? moment(formData.date_of_Birth)
-                : undefined
-            }
-            onChange={(d, s) => handleChange("date_of_Birth", s)}
-            format="YYYY-MM-DD"
-            style={{ width: "100%" }}
-            disabled
-          />
-          <Select
-            value={formData.province_City}
-            onChange={(v, o: any) => {
-              handleChange("province_City", o.children);
-              fetchDistricts(o.value);
-            }}
-            placeholder="Tỉnh / Thành phố"
-            disabled
-          >
-            {provinces.map((p) => (
-              <Option key={p.ProvinceID} value={p.ProvinceID} disabled>
-                {p.ProvinceName}
-              </Option>
-            ))}
-          </Select>
-          <Select
-            value={formData.district}
-            onChange={(v, o: any) => {
-              handleChange("district", o.children);
-              fetchWards(o.value);
-            }}
-            placeholder="Quận / Huyện"
-            disabled
-          >
-            {districts.map((d) => (
-              <Option key={d.DistrictID} value={d.DistrictID}>
-                {d.DistrictName}
-              </Option>
-            ))}
-          </Select>
-          <Select
-            value={formData.ward_Commune}
-            onChange={(v, o: any) => handleChange("ward_Commune", o.children)}
-            placeholder="Phường / Xã"
-            disabled
-          >
-            {wards.map((w) => (
-              <Option key={w.WardCode} value={w.WardCode}>
-                {w.WardName}
-              </Option>
-            ))}
-          </Select>
           <Input addonBefore="Địa chỉ" value={formData.address} disabled />
-          <div className="w-full h-auto italic text-red-700 text-[0.9vw]">
-            Ở màn hình POS bạn không thể sửa thông tin
+          <div className="w-full h-auto italic text-red-700 text-[0.9vw] flex items-center justify-center">
+            Ở màn hình <span className="font-semibold">POS</span> bạn không thể
+            sửa thông tin
           </div>
         </div>
       ) : (

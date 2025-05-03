@@ -253,7 +253,7 @@ const POSSearchBarLeftSide: React.FC<Props> = ({ selectedOrder }) => {
       {isFocused && searchTerm && filteredProducts.length > 0 && (
         <div
           style={{ width: "380px" }}
-          className="absolute w-full bg-white border border-gray-300 rounded-md shadow-lg z-50 max-h-60 overflow-y-auto"
+          className="absolute w-full bg-white border border-gray-300 rounded-md shadow-lg mt-[2vw] z-50 max-h-60 overflow-y-auto"
         >
           <List
             itemLayout="horizontal"

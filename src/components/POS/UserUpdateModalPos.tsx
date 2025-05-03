@@ -310,125 +310,26 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
       <h2 className="text-xl font-bold text-center">
         CẬP NHẬT THÔNG TIN CÁ NHÂN
       </h2>
-
-      <div className="flex justify-center items-center gap-4 mt-4 select-none">
-        <span
-          className={`text-sm font-medium cursor-pointer transition-colors ${
-            isInfoMode ? "text-blue-600" : "text-gray-500"
-          }`}
-          onClick={() => setIsInfoMode(true)}
-        >
-          Thông tin
-        </span>
-        <div
-          className="relative w-12 h-6 bg-gray-300 rounded-full cursor-pointer"
-          onClick={() => setIsInfoMode(!isInfoMode)}
-        >
-          <div
-            className="absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all duration-300"
-            style={{ left: isInfoMode ? "2px" : "calc(100% - 22px)" }}
-          />
-        </div>
-        <span
-          className={`text-sm font-medium cursor-pointer transition-colors ${
-            !isInfoMode ? "text-blue-600" : "text-gray-500"
-          }`}
-          onClick={() => setIsInfoMode(false)}
-        >
-          Mật khẩu
-        </span>
+      <div className="flex flex-col items-center gap-3 mt-4">
+        <Input.Password
+          className="w-80 h-9 text-sm"
+          placeholder="Mật khẩu cũ"
+          value={oldPass}
+          onChange={(e) => setOldPass(e.target.value)}
+        />
+        <Input.Password
+          className="w-80 h-9 text-sm"
+          placeholder="Mật khẩu mới"
+          value={newPass}
+          onChange={(e) => setNewPass(e.target.value)}
+        />
+        <Input.Password
+          className="w-80 h-9 text-sm"
+          placeholder="Xác nhận mật khẩu mới"
+          value={confirmPass}
+          onChange={(e) => setConfirmPass(e.target.value)}
+        />
       </div>
-
-      {loading || !formData ? (
-        <div className="text-center py-10">
-          <Spin size="large" />
-        </div>
-      ) : isInfoMode ? (
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          <Input addonBefore="Email" value={formData.email} disabled />
-          <Input
-            addonBefore="Số điện thoại"
-            value={formData.phone}
-            onChange={(e) => handleChange("phone", e.target.value)}
-          />
-          <Input
-            addonBefore="Tên đăng nhập"
-            value={formData.userName}
-            onChange={(e) => handleChange("userName", e.target.value)}
-          />
-          <DatePicker
-            value={
-              formData.date_of_Birth
-                ? moment(formData.date_of_Birth)
-                : undefined
-            }
-            onChange={(d, s) => handleChange("date_of_Birth", s)}
-            format="YYYY-MM-DD"
-            style={{ width: "100%" }}
-          />
-          <Select
-            value={formData.province_City}
-            onChange={(v, o: any) => {
-              handleChange("province_City", o.children);
-              fetchDistricts(o.value);
-            }}
-            placeholder="Tỉnh / Thành phố"
-          >
-            {provinces.map((p) => (
-              <Option key={p.ProvinceID} value={p.ProvinceID}>
-                {p.ProvinceName}
-              </Option>
-            ))}
-          </Select>
-          <Select
-            value={formData.district}
-            onChange={(v, o: any) => {
-              handleChange("district", o.children);
-              fetchWards(o.value);
-            }}
-            placeholder="Quận / Huyện"
-          >
-            {districts.map((d) => (
-              <Option key={d.DistrictID} value={d.DistrictID}>
-                {d.DistrictName}
-              </Option>
-            ))}
-          </Select>
-          <Select
-            value={formData.ward_Commune}
-            onChange={(v, o: any) => handleChange("ward_Commune", o.children)}
-            placeholder="Phường / Xã"
-          >
-            {wards.map((w) => (
-              <Option key={w.WardCode} value={w.WardCode}>
-                {w.WardName}
-              </Option>
-            ))}
-          </Select>
-          <Input addonBefore="Địa chỉ" value={formData.address} disabled />
-        </div>
-      ) : (
-        <div className="flex flex-col items-center gap-3 mt-4">
-          <Input.Password
-            className="w-80 h-9 text-sm"
-            placeholder="Mật khẩu cũ"
-            value={oldPass}
-            onChange={(e) => setOldPass(e.target.value)}
-          />
-          <Input.Password
-            className="w-80 h-9 text-sm"
-            placeholder="Mật khẩu mới"
-            value={newPass}
-            onChange={(e) => setNewPass(e.target.value)}
-          />
-          <Input.Password
-            className="w-80 h-9 text-sm"
-            placeholder="Xác nhận mật khẩu mới"
-            value={confirmPass}
-            onChange={(e) => setConfirmPass(e.target.value)}
-          />
-        </div>
-      )}
 
       <div className="flex justify-end gap-4 mt-6">
         <Button

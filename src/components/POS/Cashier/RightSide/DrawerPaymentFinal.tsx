@@ -567,9 +567,9 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
       console.error("Chi tiết lỗi:", result.error);
     }
   };
-  const [otherPaymentError, setOtherPaymentError] = useState<string | null>(
-    null
-  );
+  // const [otherPaymentError, setOtherPaymentError] = useState<string | null>(
+  //   null
+  // );
   const maxOtherPayment = (orderPaymentInfo?.amountDue || 0) + (totalVat || 0);
   const isOtherPaymentInvalid = otherPayment > maxOtherPayment;
 
@@ -641,7 +641,9 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                     min={0}
                     value={otherPayment}
                     className={`border-b focus:outline-none text-right ${
-                      otherPaymentError ? "border-red-500" : "border-gray-400"
+                      isOtherPaymentInvalid
+                        ? "border-red-500"
+                        : "border-gray-400"
                     }`}
                     onChange={(e) => {
                       const val = Number(e.target.value);
@@ -757,7 +759,7 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                     handleCheckoutVnpay();
                   }
                 }}
-                disabled={!!otherPaymentError}
+                disabled={isOtherPaymentInvalid}
               >
                 $ Thanh toán
               </button>

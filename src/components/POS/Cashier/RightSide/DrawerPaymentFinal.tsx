@@ -571,9 +571,10 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
   const [otherPaymentError, setOtherPaymentError] = useState<string | null>(
     null
   );
+  const [DiscountError, setDiscountError] = useState<string | null>(null);
   const MAX_DECIMAL_VALUE = Number.MAX_SAFE_INTEGER;
 
-  const maxOtherPayment = (orderPaymentInfo?.amountDue || 0) + (totalVat || 0);
+  const maxDiscountValue = (orderPaymentInfo?.amountDue || 0) + (totalVat || 0);
   const isOtherPaymentInvalid =
     otherPayment < 0 || otherPayment > MAX_DECIMAL_VALUE;
 
@@ -659,15 +660,16 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                             "Chi phí khác không được nhỏ hơn 0"
                           );
                           message.warning("Chi phí khác không được nhỏ hơn 0");
-                        } else if (val > maxOtherPayment) {
-                          setOtherPayment(val);
-                          setOtherPaymentError(
-                            `Chi phí khác không được vượt quá ${maxOtherPayment.toLocaleString()}đ`
-                          );
-                          message.warning("Giá trị vượt mức cho phép!");
+                          // } else if (val > maxOtherPayment) {
+                          //   setOtherPayment(val);
+                          //   setOtherPaymentError(
+                          //     `Chi phí khác không được vượt quá ${maxOtherPayment.toLocaleString()}đ`
+                          //   );
+                          //   message.warning("Giá trị vượt mức cho phép!");
                         } else {
                           setOtherPayment(val);
-                          setOtherPaymentError(null);
+                          setOtherPaymentError("Giá trị vượt mức cho phép!");
+                          message.warning("Giá trị vượt mức cho phép!");
                         }
                       }}
                     />
@@ -686,12 +688,34 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                     type="number"
                     inputMode="numeric"
                     value={discount}
-                    className="border-b border-gray-400 focus:outline-none text-right"
+                    className={`border-b focus:outline-none text-right w-[8vw] ${
+                      isOtherPaymentInvalid
+                        ? "border-red-500"
+                        : "border-gray-400"
+                    }`}
                     onChange={(e) => {
+                      // const val = Number(e.target.value);
+                      // if (val >= 0) setDiscount(val);
+
                       const val = Number(e.target.value);
-                      if (val >= 0) setDiscount(val);
+                      if (isNaN(val)) return;
+
+                      if (val < 0) {
+                        setDiscount(val);
+                        setDiscountError("Giảm giá không được nhỏ hơn 0");
+                        message.warning("Giảm giá không được nhỏ hơn 0");
+                      } else if (val > maxDiscountValue) {
+                        setDiscount(val);
+                        setDiscountError(
+                          `Giảm giá không được vượt quá ${maxDiscountValue.toLocaleString()}đ`
+                        );
+                        message.warning("Giá trị vượt mức cho phép!");
+                      }
                     }}
                   />
+                  {DiscountError && (
+                    <p className="text-red-500 text-xs mt-1">{DiscountError}</p>
+                  )}
                 </div>
                 <div className="flex flex-row pt-2 pb-2">
                   <p className="justify-start font-medium">VAT</p>

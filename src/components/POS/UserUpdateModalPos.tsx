@@ -60,7 +60,7 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${process.env.REACT_APP_API_APP_ENDPOINT}get-user-by-id/${id}`,
+          `${process.env.REACT_APP_API_APP_ENDPOINT}/get-user-by-id/${id}`,
           {
             headers: {
               Authorization: `Bearer ${authInfo.token}`,
@@ -188,7 +188,7 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
 
     try {
       const response = await axios.put(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/cashiers/${authInfo.userId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/cashiers/${authInfo.userId}`,
         payload,
         {
           headers: {
@@ -253,7 +253,7 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}api/Passwords/change-password`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Passwords/change-password`,
         payload,
         {
           headers: {

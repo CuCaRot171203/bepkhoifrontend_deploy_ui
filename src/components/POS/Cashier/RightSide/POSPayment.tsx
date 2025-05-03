@@ -52,6 +52,60 @@ interface OrderModel {
   orderNote: string | null;
 }
 
+async function printTempInvoicePdf(
+  invoiceId: number,
+  token: string,
+  clearAuthInfo: () => void
+) {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/api/invoice/${invoiceId}/print-pdf-temp-Invoice`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/pdf",
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      }
+    );
+
+    if (response.status === 401) {
+      clearAuthInfo();
+      message.error(
+        "Phiên làm việc của bạn đã hết hạn. Vui lòng đăng nhập lại."
+      );
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error("Không thể tải hóa đơn");
+    }
+
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";
+    iframe.src = blobUrl;
+
+    document.body.appendChild(iframe);
+
+    iframe.onload = () => {
+      iframe.contentWindow?.focus();
+      iframe.contentWindow?.print();
+
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+        URL.revokeObjectURL(blobUrl);
+      }, 15000);
+    };
+  } catch (err) {
+    console.error("Lỗi khi in hóa đơn:", err);
+    message.error("Lỗi khi in hóa đơn.");
+  }
+}
+
 const fetchAddNoteToOrder = async (
   request: AddNoteRequest,
   token: string,
@@ -336,9 +390,15 @@ const POSPayment: React.FC<Props> = ({
             className={`px-3 py-1 rounded-full flex items-center ${
               selectedOrder != null && orderData?.totalQuantity != 0
                 ? "bg-gray-200 text-gray-700 cursor-pointer hover:bg-gray-400"
-                : "text-gray-400 cursor-not-allowed"
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
             }`}
-            onClick={() => setIsModalSplitOrderOpen(true)}
+            onClick={() =>
+              printTempInvoicePdf(
+                selectedOrder!,
+                authInfo?.token || "",
+                clearAuthInfo
+              )
+            }
             disabled={!(selectedOrder != null && orderData?.totalQuantity != 0)}
           >
             <PrinterOutlined />
@@ -382,7 +442,7 @@ const POSPayment: React.FC<Props> = ({
             className={`px-3 py-1 rounded-full flex items-center ${
               selectedOrder != null && orderData?.totalQuantity != 0
                 ? "bg-gray-200 text-gray-700 cursor-pointer hover:bg-gray-400"
-                : "text-gray-400 cursor-not-allowed"
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
             }`}
             onClick={() => setIsModalSplitOrderOpen(true)}
             disabled={!(selectedOrder != null && orderData?.totalQuantity != 0)}

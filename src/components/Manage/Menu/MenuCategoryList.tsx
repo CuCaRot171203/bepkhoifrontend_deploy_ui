@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { message, Table } from "antd";
 import type { TableColumnsType } from "antd";
 import "./MenuList.css";
@@ -16,7 +16,7 @@ const MenuCategoryList: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
 
-  const fetchMenuCategoryList = async () => {
+  const fetchMenuCategoryList = useCallback(async () => {
     if (!authInfo.token) {
       message.error("Vui lòng đăng nhập lại!");
       clearAuthInfo();
@@ -51,12 +51,12 @@ const MenuCategoryList: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [authInfo.token, clearAuthInfo]);
 
   // API call when search, category, status, page change
   useEffect(() => {
     fetchMenuCategoryList();
-  }, [page]);
+  }, [page, fetchMenuCategoryList]);
 
   // Column of table
   const columns: TableColumnsType<MenuCategoryItem> = [

@@ -13,7 +13,7 @@ const MenuCategoryPage: React.FC = () => {
       <div className="flex flex-1 p-[1vw] gap-[0.5vw]">
         <main className="flex-1 overflow-auto">
           <div className="flex justify-between items-center mb-[1vw]">
-            <h1 className="text-[1.8vw] font-bold">Hàng hóa</h1>
+            <h1 className="text-[1.8vw] font-bold">Danh mục sản phẩm</h1>
             <div className="flex gap-[0.5vw]">
               <div className="flex items-center font-semibold button-up-of-list">
                 <Button

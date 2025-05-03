@@ -292,7 +292,7 @@ const POSSearchBarLeftSide: React.FC<Props> = ({ selectedOrder }) => {
       )}
 
       <button
-        className="hover:text-[#967b30] px-[2vw] transition text-[1.2vw] flex items-center justify-center w-[2vw] h-[2vw] rounded-full hover:bg-gray-200 text-black"
+        className="hover:text-[#967b30] ml-[2vw] px-[0vw] transition text-[1.2vw] flex items-center justify-center w-[2vw] h-[2vw] rounded-full hover:bg-gray-200 text-black"
         title="Trang chủ"
         onClick={() => navigate("/")}
       >
@@ -300,7 +300,7 @@ const POSSearchBarLeftSide: React.FC<Props> = ({ selectedOrder }) => {
       </button>
       <button
         onClick={handleOpenModal}
-        className="hover:text-[#967b30] px-[2vw] transition text-[1.2vw] flex items-center justify-center w-[2vw] h-[2vw] rounded-full hover:bg-gray-200 text-black"
+        className="hover:text-[#967b30] ml-[2vw] transition text-[1.2vw] flex items-center justify-center w-[2vw] h-[2vw] rounded-full hover:bg-gray-200 text-black"
         title="Thông tin cá nhân"
       >
         <UserOutlined />

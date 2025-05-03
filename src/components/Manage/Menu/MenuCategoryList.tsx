@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { message, Table, Tag } from "antd";
-import type { TableColumnsType, TableProps } from "antd";
+import { message, Table } from "antd";
+import type { TableColumnsType } from "antd";
 import "./MenuList.css";
-import MenuDetailModal from "./MenuDetailModal";
-import MenuUpdateModal from "./MenuUpdateModal";
 import { useAuth } from "../../../context/AuthContext";
 
 interface MenuCategoryItem {
@@ -11,27 +9,14 @@ interface MenuCategoryItem {
   productCategoryTitle: string;
 }
 
-const MenuCategoryList: React.FC = ({}) => {
+const MenuCategoryList: React.FC = () => {
   const { authInfo, clearAuthInfo } = useAuth();
   const [items, setItems] = useState<MenuCategoryItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [page, setPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
-  const [loadingDetail, setLoadingDetail] = useState<boolean>(false);
-  //   const [detailData, setDetailData] = useState<MenuDetail | null>(null);
-  const [openDetail, setOpenDetail] = useState<boolean>(false);
-  const [openUpdate, setOpenUpdate] = useState<boolean>(false);
-  //   const [updateData, setUpdateData] = useState<MenuDetail | null>(null);
 
-  // Function create query params
-  const createQueryParams = () => {
-    const params = new URLSearchParams();
-
-    return params.toString();
-  };
-
-  const fetchMenuList = async () => {
+  const fetchMenuCategoryList = async () => {
     if (!authInfo.token) {
       message.error("Vui lòng đăng nhập lại!");
       clearAuthInfo();
@@ -40,7 +25,6 @@ const MenuCategoryList: React.FC = ({}) => {
 
     setLoading(true);
     try {
-      const queryParams = createQueryParams();
       const response = await fetch(
         `${process.env.REACT_APP_API_APP_ENDPOINT}/api/product-categories/get-all-categories`,
         {
@@ -71,8 +55,8 @@ const MenuCategoryList: React.FC = ({}) => {
 
   // API call when search, category, status, page change
   useEffect(() => {
-    fetchMenuList();
-  }, [page, authInfo.token]);
+    fetchMenuCategoryList();
+  }, [page]);
 
   // Column of table
   const columns: TableColumnsType<MenuCategoryItem> = [
@@ -84,7 +68,7 @@ const MenuCategoryList: React.FC = ({}) => {
       className: "text-[0.8vw]",
     },
     {
-      title: "Tên món",
+      title: "Tên danh mục",
       dataIndex: "productCategoryTitle",
       key: "productCategoryTitle",
       className: "text-[0.8vw]",

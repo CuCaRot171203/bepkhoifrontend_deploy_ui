@@ -3,13 +3,9 @@ import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import AddMenuModal from "../../components/Manage/Menu/AddMenuModal";
 import "./MenuPage.css";
-import { useAuth } from "../../context/AuthContext";
+import MenuCategoryList from "../../components/Manage/Menu/MenuCategoryList";
 
 const MenuCategoryPage: React.FC = () => {
-  const { authInfo, clearAuthInfo } = useAuth();
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState<string[]>([]);
-  const [status, setStatus] = useState<string>("all");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   return (
@@ -39,7 +35,7 @@ const MenuCategoryPage: React.FC = () => {
               </div>
             </div>
           </div>
-          <MenuCategoryPage />
+          <MenuCategoryList />
         </main>
       </div>
       {isAddModalOpen && (

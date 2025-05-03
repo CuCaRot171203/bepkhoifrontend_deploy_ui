@@ -47,7 +47,7 @@ const HomeLanding: React.FC = () => {
 
       {/* NET VAN HOA */}
       <div className="w-full h-auto bg-[#F0EEEE] flex flex-col items-center">
-        <div className="w-[90vw] md:w-[85vw] h-auto flex flex-col md:flex-row pt-[8vw] md:pt-[4vw] pb-[8vw] md:pb-[4vw] justify-evenly">
+        <div className="w-[85vw] md:w-[85vw] h-auto flex flex-col md:flex-row pt-[8vw] md:pt-[4vw] pb-[8vw] md:pb-[4vw] justify-evenly">
           <div className="w-full md:w-[50vw] h-auto px-[4vw] md:px-0">
             <p className="text-[6vw] md:text-[2.3vw] font-semibold font-['Dancing_Script'] text-center md:text-left">
               NÉT VĂN HÓA GIỮA LÒNG HÀ NỘI
@@ -66,7 +66,7 @@ const HomeLanding: React.FC = () => {
             </p>
           </div>
           {/* Image */}
-          <div className="w-[90vw] md:w-[30vw] h-auto mt-[6vw] md:mt-0 px-[4vw] md:px-0">
+          <div className="w-[85vw] md:w-[30vw] h-auto mt-[6vw] md:mt-0 px-[4vw] md:px-0">
             <img
               src={restaurant}
               alt="Restaurant"
@@ -88,7 +88,7 @@ const HomeLanding: React.FC = () => {
 
       {/* TRAI NGHIEM */}
       <div className="w-[99vw] h-auto bg-white flex flex-col items-center">
-        <div className="w-[90vw] md:w-[84vw] flex flex-col md:flex-row justify-between mt-[4vw] md:mt-[2vw]">
+        <div className="w-[85vw] md:w-[84vw] flex flex-col md:flex-row justify-between mt-[4vw] md:mt-[2vw]">
           <div className="w-full md:w-[24vw] h-auto pb-[6vw] md:pb-[2vw]">
             {/* The ngang 1 */}
             <div className="w-full h-[16vw] md:h-[8vw] flex flex-row items-center justify-center">
@@ -346,7 +346,7 @@ const HomeLanding: React.FC = () => {
 
       {/* FEEDBACK */}
       <div className="w-[99vw] h-auto bg-white pt-[5vw] md:pt-[2.5vw] pb-[10vw] md:pb-[5vw]">
-        <div className="w-[90vw] md:w-[85vw] mx-auto relative">
+        <div className="w-[85vw] md:w-[85vw] mx-auto relative">
           {/* Slider container */}
           <div className="w-full overflow-hidden">
             <div
@@ -781,7 +781,7 @@ const HomeLanding: React.FC = () => {
 
       {/* FOOTER */}
       <div className="w-[99vw] h-auto bg-[#F0EEEE] py-[8vw] md:py-[4vw]">
-        <div className="w-[90vw] md:w-[85vw] mx-auto flex flex-col md:flex-row justify-between gap-[8vw] md:gap-0">
+        <div className="w-[85vw] md:w-[85vw] mx-auto flex flex-col md:flex-row justify-between gap-[8vw] md:gap-0">
           {/* Contact */}
           <div className="w-full md:w-[25vw]">
             <h3 className="text-[4vw] md:text-[1.5vw] font-semibold mb-[4vw] md:mb-[2vw]">

@@ -567,6 +567,9 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
       console.error("Chi tiết lỗi:", result.error);
     }
   };
+  const [otherPaymentError, setOtherPaymentError] = useState<string | null>(
+    null
+  );
 
   return (
     <div className="rounded-lg">
@@ -635,24 +638,30 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                     inputMode="numeric"
                     min={0}
                     value={otherPayment}
-                    className="border-b border-gray-400 focus:outline-none text-right"
+                    className={`border-b focus:outline-none text-right ${
+                      otherPaymentError ? "border-red-500" : "border-gray-400"
+                    }`}
                     onChange={(e) => {
                       const val = Number(e.target.value);
-
                       const maxValueAllowed =
                         (orderPaymentInfo?.amountDue || 0) + (totalVat || 0);
 
                       if (val >= 0 && val <= maxValueAllowed) {
                         setOtherPayment(val);
-                      } else if (val > maxValueAllowed) {
-                        message.warning(
-                          `Giá trị không được vượt quá ${maxValueAllowed.toLocaleString()}đ`
+                        setOtherPaymentError(null); // ✅ clear lỗi nếu hợp lệ
+                      } else {
+                        setOtherPayment(val); // vẫn cập nhật để giữ giá trị người dùng gõ
+                        setOtherPaymentError(
+                          `Chi phí khác không được vượt quá ${maxValueAllowed.toLocaleString()}đ`
                         );
                       }
-
-                      // if (val >= 0) setOtherPayment(val);
                     }}
                   />
+                  {otherPaymentError && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {otherPaymentError}
+                    </p>
+                  )}
                 </div>
                 <div className="flex flex-row pt-2 pb-2">
                   <p className="justify-start font-medium">Giảm giá</p>
@@ -755,6 +764,7 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                     handleCheckoutVnpay();
                   }
                 }}
+                disabled={!!otherPaymentError}
               >
                 $ Thanh toán
               </button>

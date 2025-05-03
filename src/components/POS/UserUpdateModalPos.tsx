@@ -303,7 +303,7 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
       open={open}
       onCancel={onClose}
       footer={null}
-      width="32vw"
+      width="40vw"
       centered
       destroyOnClose
     >
@@ -312,19 +312,19 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
       </h2>
       <div className="flex flex-col items-center gap-3 mt-4">
         <Input.Password
-          className="w-[80%] h-9 text-sm"
+          className="w-80 h-9 text-sm"
           placeholder="Mật khẩu cũ"
           value={oldPass}
           onChange={(e) => setOldPass(e.target.value)}
         />
         <Input.Password
-          className="w-[80%] h-9 text-sm"
+          className="w-80 h-9 text-sm"
           placeholder="Mật khẩu mới"
           value={newPass}
           onChange={(e) => setNewPass(e.target.value)}
         />
         <Input.Password
-          className="w-[80%] h-9 text-sm"
+          className="w-80 h-9 text-sm"
           placeholder="Xác nhận mật khẩu mới"
           value={confirmPass}
           onChange={(e) => setConfirmPass(e.target.value)}

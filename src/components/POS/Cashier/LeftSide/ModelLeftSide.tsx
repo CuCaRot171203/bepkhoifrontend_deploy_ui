@@ -96,15 +96,15 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
         </div>
 
         <button
-          className="hover:text-yellow-500 transition text-[1.2vw] absolute right-[52vw] top-[1.2vw] flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full hover:bg-gray-200 text-black"
-          title="Thông tin cá nhân"
+          className="hover:text-[#967b30] transition text-[1.2vw] absolute right-[55vw] top-[1.5vw] flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full hover:bg-gray-200 text-black"
+          title="Trang chủ"
           onClick={() => navigate("/")}
         >
           <HomeOutlined />
         </button>
         <button
           onClick={handleOpenModal}
-          className="hover:text-yellow-500 transition text-[1.2vw] absolute right-[55vw] top-[1.2vw] flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full hover:bg-gray-200 text-black"
+          className="hover:text-[#967b30] transition text-[1.2vw] absolute right-[52vw] top-[1.5vw] flex items-center justify-center w-[2.5vw] h-[2.5vw] rounded-full hover:bg-gray-200 text-black"
           title="Thông tin cá nhân"
         >
           <UserOutlined />

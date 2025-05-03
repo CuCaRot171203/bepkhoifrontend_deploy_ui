@@ -68,7 +68,7 @@ const HeaderManage: React.FC = () => {
           <img
             src={logoBepKhoi}
             alt="Logo Bếp Khói"
-            className="w-[5vw] h-[5vw] min-w-[4vw] min-h-[4vw] max-w-[8vw] max-h-[8vw] object-contain items-center gap-x-[1vw]"
+            className="w-[5vw] h-[5vw] min-w-[4vw] min-h-[4vw] max-w-[8vw] max-h-[8vw] object-contain items-center gap-x-[1vw] hover:cursor-pointer"
             onClick={() => navigate("/")}
           />
           <div className="flex flex-col">

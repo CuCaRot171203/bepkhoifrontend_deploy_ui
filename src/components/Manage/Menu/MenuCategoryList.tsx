@@ -43,9 +43,9 @@ const MenuCategoryList: React.FC = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json();
-      setItems(data.data ?? []);
-      setTotal(data.totalRecords || 0);
+      const data: MenuCategoryItem[] = await response.json();
+      setItems(data);
+      setTotal(data.length);
     } catch (error) {
       setItems([]);
     } finally {

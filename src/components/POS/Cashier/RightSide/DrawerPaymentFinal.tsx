@@ -567,11 +567,15 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
       console.error("Chi tiết lỗi:", result.error);
     }
   };
-  // const [otherPaymentError, setOtherPaymentError] = useState<string | null>(
-  //   null
-  // );
+
+  const [otherPaymentError, setOtherPaymentError] = useState<string | null>(
+    null
+  );
+  const MAX_DECIMAL_VALUE = Number.MAX_SAFE_INTEGER;
+
   const maxOtherPayment = (orderPaymentInfo?.amountDue || 0) + (totalVat || 0);
-  const isOtherPaymentInvalid = otherPayment > maxOtherPayment;
+  const isOtherPaymentInvalid =
+    otherPayment < 0 || otherPayment > MAX_DECIMAL_VALUE;
 
   return (
     <div className="rounded-lg">
@@ -635,29 +639,46 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                 <div className="flex flex-row pt-2 pb-2">
                   <p className="justify-start font-medium">Chi phí khác</p>
                   <div className="flex-1" />
-                  <input
-                    type="number"
-                    inputMode="numeric"
-                    min={0}
-                    value={otherPayment}
-                    className={`border-b focus:outline-none text-right ${
-                      isOtherPaymentInvalid
-                        ? "border-red-500"
-                        : "border-gray-400"
-                    }`}
-                    onChange={(e) => {
-                      const val = Number(e.target.value);
+                  <div className="flex flex-col items-end">
+                    <input
+                      type="number"
+                      inputMode="decimal"
+                      value={otherPayment}
+                      className={`border-b focus:outline-none text-right w-[8vw] ${
+                        isOtherPaymentInvalid
+                          ? "border-red-500"
+                          : "border-gray-400"
+                      }`}
+                      onChange={(e) => {
+                        const val = Number(e.target.value);
+                        if (isNaN(val)) return;
 
-                      if (val >= 0) setOtherPayment(val);
-                    }}
-                  />
-                  {isOtherPaymentInvalid && (
-                    <p className="text-red-500 text-sm mt-1">
-                      Chi phí khác không được vượt quá{" "}
-                      {maxOtherPayment.toLocaleString()}đ
-                    </p>
-                  )}
+                        if (val < 0) {
+                          setOtherPayment(val);
+                          setOtherPaymentError(
+                            "Chi phí khác không được nhỏ hơn 0"
+                          );
+                          message.warning("Chi phí khác không được nhỏ hơn 0");
+                        } else if (val > maxOtherPayment) {
+                          setOtherPayment(val);
+                          setOtherPaymentError(
+                            `Chi phí khác không được vượt quá ${maxOtherPayment.toLocaleString()}đ`
+                          );
+                          message.warning("Giá trị vượt mức cho phép!");
+                        } else {
+                          setOtherPayment(val);
+                          setOtherPaymentError(null);
+                        }
+                      }}
+                    />
+                    {otherPaymentError && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {otherPaymentError}
+                      </p>
+                    )}
+                  </div>
                 </div>
+
                 <div className="flex flex-row pt-2 pb-2">
                   <p className="justify-start font-medium">Giảm giá</p>
                   <div className="flex-1" />
@@ -759,7 +780,7 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                     handleCheckoutVnpay();
                   }
                 }}
-                disabled={isOtherPaymentInvalid}
+                disabled={!!isOtherPaymentInvalid}
               >
                 $ Thanh toán
               </button>

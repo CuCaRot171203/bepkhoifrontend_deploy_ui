@@ -105,7 +105,11 @@ const CustomerDetailModal: React.FC<CustomerDetailModalProps> = ({
     if (!data) return;
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer/update/${data.customerId}`,
+        `${process.env.REACT_APP_API_APP_ENDPOINT}/api/Customer/update/${
+          data.customerId
+        }?customerName=${encodeURIComponent(
+          editedName
+        )}&phone=${encodeURIComponent(editedPhone)}`,
         {
           method: "PUT",
           headers: {
@@ -220,25 +224,28 @@ const CustomerDetailModal: React.FC<CustomerDetailModalProps> = ({
         onOk={handleUpdate}
         okText="Lưu"
         cancelText="Hủy"
+        okButtonProps={{
+          className: "bg-blue-500 hover:bg-blue-600 text-white border-none",
+        }}
       >
         <p>
           <strong>ID:</strong> {data?.customerId}
         </p>
-        <div className="mt-3">
-          <label className="block mb-1">Họ và tên</label>
-          <input
-            type="text"
-            value={editedName}
-            onChange={(e) => setEditedName(e.target.value)}
-            className="w-full border px-2 py-1 rounded"
-          />
-        </div>
         <div className="mt-3">
           <label className="block mb-1">Số điện thoại</label>
           <input
             type="text"
             value={editedPhone}
             onChange={(e) => setEditedPhone(e.target.value)}
+            className="w-full border px-2 py-1 rounded disabled"
+          />
+        </div>
+        <div className="mt-3">
+          <label className="block mb-1">Họ và tên</label>
+          <input
+            type="text"
+            value={editedName}
+            onChange={(e) => setEditedName(e.target.value)}
             className="w-full border px-2 py-1 rounded"
           />
         </div>

@@ -570,6 +570,8 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
   const [otherPaymentError, setOtherPaymentError] = useState<string | null>(
     null
   );
+  const maxOtherPayment = (orderPaymentInfo?.amountDue || 0) + (totalVat || 0);
+  const isOtherPaymentInvalid = otherPayment > maxOtherPayment;
 
   return (
     <div className="rounded-lg">
@@ -643,23 +645,14 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                     }`}
                     onChange={(e) => {
                       const val = Number(e.target.value);
-                      const maxValueAllowed =
-                        (orderPaymentInfo?.amountDue || 0) + (totalVat || 0);
 
-                      if (val >= 0 && val <= maxValueAllowed) {
-                        setOtherPayment(val);
-                        setOtherPaymentError(null); // ✅ clear lỗi nếu hợp lệ
-                      } else {
-                        setOtherPayment(val); // vẫn cập nhật để giữ giá trị người dùng gõ
-                        setOtherPaymentError(
-                          `Chi phí khác không được vượt quá ${maxValueAllowed.toLocaleString()}đ`
-                        );
-                      }
+                      if (val >= 0) setOtherPayment(val);
                     }}
                   />
-                  {otherPaymentError && (
+                  {isOtherPaymentInvalid && (
                     <p className="text-red-500 text-sm mt-1">
-                      {otherPaymentError}
+                      Chi phí khác không được vượt quá{" "}
+                      {maxOtherPayment.toLocaleString()}đ
                     </p>
                   )}
                 </div>

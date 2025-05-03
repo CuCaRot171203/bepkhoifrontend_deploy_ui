@@ -88,13 +88,13 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
           </button>
         </div>
 
-        <div className="ml-[3vw] mr-[3vw] flex flex-row items-center justify-between gap-[1vw]">
+        <div className="ml-[3vw] mr-[3vw]">
           <POSSearchBarLeftSide selectedOrder={selectedOrder} />
         </div>
 
         <button
           onClick={handleOpenModal}
-          className="hover:text-yellow-500 transition text-[1.2vw] absolute right-[52vw] top-[2vw] flex items-center justify-center w-[3vw] h-[3vw] rounded-full hover:bg-gray-200 text-black"
+          className="hover:text-yellow-500 transition text-[1.2vw] absolute right-[52vw] top-[1vw] flex items-center justify-center w-[3vw] h-[3vw] rounded-full hover:bg-gray-200 text-black"
           title="Thông tin cá nhân"
         >
           <UserOutlined />

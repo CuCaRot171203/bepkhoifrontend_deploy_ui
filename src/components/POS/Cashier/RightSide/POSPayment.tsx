@@ -53,13 +53,13 @@ interface OrderModel {
 }
 
 async function printTempInvoicePdf(
-  invoiceId: number,
+  orderId: number,
   token: string,
   clearAuthInfo: () => void
 ) {
   try {
     const response = await fetch(
-      `${API_BASE_URL}/api/invoice/${invoiceId}/print-pdf-temp-Invoice`,
+      `${API_BASE_URL}/api/orders/${orderId}/print-pdf-temp-Invoice`,
       {
         method: "GET",
         headers: {

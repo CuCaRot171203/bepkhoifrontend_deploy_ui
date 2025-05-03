@@ -8,17 +8,19 @@ interface CartConfirmProps {
   onCreateOrder: () => void;
 }
 
-const CartConfirm: React.FC<CartConfirmProps> = ({ 
-  total, 
-  discount, 
+const CartConfirm: React.FC<CartConfirmProps> = ({
+  total,
+  discount,
   calculateTotal,
-  onCreateOrder 
+  onCreateOrder,
 }) => {
   return (
     <div className="bg-white p-4 rounded-md shadow-md mt-4">
       <div className="flex justify-between mb-2">
         <span className="text-gray-600">Tạm tính:</span>
-        <span className="font-medium">{calculateTotal().toLocaleString()}đ</span>
+        <span className="font-medium">
+          {calculateTotal().toLocaleString()}đ
+        </span>
       </div>
       <div className="flex justify-between mb-2">
         <span className="text-gray-600">Giảm giá:</span>
@@ -37,11 +39,11 @@ const CartConfirm: React.FC<CartConfirmProps> = ({
         >
           ✔ Xác nhận
         </Button>
-        <Button
+        {/* <Button
           className="flex-1 bg-yellow-500 text-black rounded-md py-2"
         >
           💳 Thanh toán
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

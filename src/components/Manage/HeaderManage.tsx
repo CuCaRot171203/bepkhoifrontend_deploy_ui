@@ -14,26 +14,26 @@ import UserUpdateModal from "./UserUpdateModal";
 const navItems = [
   { label: "Tổng quan", path: "/manage/dashboard" },
   {
-    label: "Hàng hóa",
+    label: "Thực đơn",
     submenu: [
-      { label: "Sản phẩm", path: "/manage/menu" },
-      { label: "Thiết lập giá", path: "/manage/settingPrice" },
-      { label: "Loại sản phẩm", path: "/manage/menuCategory" },
+      { label: "Thực đơn", path: "/manage/menu" },
+      { label: "Giá món ăn", path: "/manage/settingPrice" },
+      { label: "Loại thực đơn", path: "/manage/menuCategory" },
     ],
   },
   {
-    label: "Quản lý phòng",
+    label: "Quản lý bàn",
     path: "/manage/rooms",
     submenu: [
-      { label: "Phòng", path: "/manage/rooms" },
-      { label: "Khu vực phòng", path: "/manage/roomArea" },
+      { label: "Bàn", path: "/manage/rooms" },
+      { label: "Khu vực bàn", path: "/manage/roomArea" },
     ],
   },
   {
     label: "Quản lý hóa đơn",
     submenu: [
       { label: "Hóa đơn", path: "/manage/invoice" },
-      { label: "Phiếu đặt hàng", path: "/manage/order" },
+      { label: "Thông tin đặt hàng", path: "/manage/order" },
     ],
   },
   {

@@ -13,6 +13,7 @@ import ModalSplitOrder from "./ModalSplitAndCombineOrders";
 import AddDeliveryInformation from "./AddDeliveryInformation";
 import useSignalR from "../../../../CustomHook/useSignalR";
 import { useAuth } from "../../../../context/AuthContext";
+import imageLogo from "../../../../styles/LoginPage/images/logoBepKhoi.png";
 
 const API_BASE_URL = process.env.REACT_APP_API_APP_ENDPOINT;
 
@@ -325,7 +326,8 @@ const POSPayment: React.FC<Props> = ({
   return (
     <div className="px-3 w-full bg-white rounded-md">
       <div className="flex flex-row bg-[#fafafa] w-full border-b py-2">
-        <div className="justify-start flex items-center">
+        <div className="justify-start flex items-center flex-row">
+          <img src={imageLogo} alt="" className="w-[2vw] h-auto" />
           <p className="text-gray-600 font-semibold mr-2 ml-2">
             Bếp Khói Ocean Park
           </p>

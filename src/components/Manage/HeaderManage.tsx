@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Dropdown, Modal } from "antd";
 import {
   EditOutlined,
@@ -59,6 +59,7 @@ const HeaderManage: React.FC = () => {
   const handleReloadUser = () => {
     console.log("Tải lại thông tin sau khi cập nhật...");
   };
+  const navigate = useNavigate();
 
   return (
     <header className="bg-white shadow-md font-sans">
@@ -68,6 +69,7 @@ const HeaderManage: React.FC = () => {
             src={logoBepKhoi}
             alt="Logo Bếp Khói"
             className="w-[5vw] h-[5vw] min-w-[4vw] min-h-[4vw] max-w-[8vw] max-h-[8vw] object-contain items-center gap-x-[1vw]"
+            onClick={() => navigate("/")}
           />
           <div className="flex flex-col">
             <div className="text-[1.5vw] font-semibold text-gray-800">

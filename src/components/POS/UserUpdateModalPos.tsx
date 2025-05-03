@@ -357,8 +357,7 @@ const UserUpdateModalPos: React.FC<Props> = ({ open, onClose, onReload }) => {
           />
           <Input addonBefore="Địa chỉ" value={formData.address} disabled />
           <div className="w-full h-auto italic text-red-700 text-[0.9vw] flex items-center justify-center">
-            Ở màn hình <span className="font-semibold"> POS </span> bạn không
-            thể sửa thông tin
+            Ở màn hình POS bạn không thể sửa thông tin
           </div>
         </div>
       ) : (

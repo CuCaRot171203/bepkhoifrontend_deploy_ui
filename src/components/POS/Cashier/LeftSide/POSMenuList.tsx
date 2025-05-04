@@ -357,7 +357,7 @@ const POSMenuList: React.FC<Props> = ({ selectedTable, selectedOrder }) => {
               </div>
             </div>
 
-            <div className="relative translate-y-[7.5vw] text-[1vw] flex justify-center text-center text-black font-bold w-[80%] h-auto">
+            <div className="relative translate-y-[7.5vw] text-[1vw] flex justify-center text-center mt-[0.3vw] text-black font-bold w-[80%] h-auto">
               <p className="text-center text-[1vw] w-[90%] break-words leading-tight">
                 {item.productName}
               </p>

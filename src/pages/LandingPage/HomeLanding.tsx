@@ -655,7 +655,10 @@ const HomeLanding: React.FC = () => {
           </p>
           <button
             onClick={() =>
-              window.open("https://www.facebook.com/duchoainam98", "_blank")
+              window.open(
+                "https://www.facebook.com/nhahangbepkhoi.op1",
+                "_blank"
+              )
             }
             className="bg-red-600 hover:bg-red-700 text-white px-[4vw] md:px-[2vw] py-[2vw] md:py-[1vw] rounded-full text-[2.4vw] md:text-[1.2vw] font-semibold transition-colors duration-300"
           >
@@ -838,7 +841,7 @@ const HomeLanding: React.FC = () => {
             </h3>
             <div className="flex flex-col gap-[2vw] md:gap-[1vw]">
               <a
-                href="https://www.facebook.com/duchoainam98"
+                href="https://www.facebook.com/nhahangbepkhoi.op1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-[2vw] md:gap-[1vw] hover:text-blue-600 transition-colors"
@@ -914,7 +917,7 @@ const HomeLanding: React.FC = () => {
                   <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
                 </svg>
                 <p className="text-[3vw] md:text-[1vw]">
-                  duc.hoainam@gmail.com
+                  admin@nhahangbepkhoi.shop
                 </p>
               </div>
               <div className="flex items-center gap-[2vw] md:gap-[1vw]">

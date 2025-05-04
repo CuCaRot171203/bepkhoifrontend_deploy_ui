@@ -3,6 +3,7 @@ import { Input, Button, Modal, message } from "antd";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import ModalCreateCustomer from "./ModalCreateCustomer";
 import { useAuth } from "../../../../context/AuthContext";
+import useSignalR from "../../../../CustomHook/useSignalR";
 
 const API_BASE_URL = process.env.REACT_APP_API_APP_ENDPOINT;
 
@@ -219,7 +220,16 @@ const POSTableAndCustomerBar: React.FC<Props> = ({
     const customerList = await fetchCustomerList(authInfo.token, clearAuthInfo);
     setCustomerList(customerList);
   }, [authInfo?.token, clearAuthInfo]);
-
+  useSignalR(
+    {
+      eventName: "NewCustomerAdded",
+      groupName: "customer",
+      callback: () => {
+        loadCustomers();
+      },
+    },
+    [authInfo?.token, loadCustomers]
+  );
   const loadCustomerByOrder = useCallback(async () => {
     if (!authInfo?.token) {
       message.error("Vui lòng đăng nhập để tiếp tục.");

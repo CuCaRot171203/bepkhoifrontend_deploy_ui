@@ -333,7 +333,7 @@ const POSSearchBarLeftSide: React.FC<Props> = ({ selectedOrder }) => {
         <NotificationOutlined />
       </button>
       {showNotifications && (
-        <div className="absolute right-0 top-[3.5vw] bg-white border border-gray-300 rounded-md shadow-lg w-[20vw] max-h-[9.5vw] overflow-y-auto z-50">
+        <div className="absolute right-0 top-[3.5vw] bg-white border border-gray-300 rounded-md shadow-lg w-[25vw] max-h-[15vw] overflow-y-auto z-50">
           <List
             size="small"
             dataSource={mockNotifications}

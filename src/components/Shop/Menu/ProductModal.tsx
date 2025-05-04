@@ -41,6 +41,12 @@ const ProductModal: React.FC<ProductModalProps> = ({
         title: "Bạn chưa có phiếu đặt hàng trong hệ thống!",
         content: "Vui lòng liên hệ nhân viên quầy để tạo phiếu đặt hàng mới",
         okText: "Đã hiểu",
+        okButtonProps: {
+          style: {
+            backgroundColor: "#1890ff",
+            borderColor: "#1890ff",
+          },
+        },
       });
       return;
     }
@@ -48,20 +54,32 @@ const ProductModal: React.FC<ProductModalProps> = ({
     const cart = JSON.parse(sessionStorage.getItem("cart") || "[]");
     const orderId = parseInt(selectedOrderId);
 
+    let processedProductNote = productNote;
+    if (productNote) {
+      processedProductNote = productNote.trim().replace(/\s+/g, " ");
+    }
+
     const existingItems = cart.filter(
       (item: any) => item.id === product.id && item.orderId === orderId
     );
 
-    if (existingItems.length === 0 || !productNote) {
-      cart.push({
-        ...product,
-        quantity,
-        orderId,
-        productNote: productNote.trim() || "",
-      });
+    if (!processedProductNote) {
+      const itemWithoutNote = existingItems.find(
+        (item: any) => !item.productNote
+      );
+      if (itemWithoutNote) {
+        itemWithoutNote.quantity += quantity;
+      } else {
+        cart.push({
+          ...product,
+          quantity,
+          orderId,
+          productNote: "",
+        });
+      }
     } else {
       const itemWithSameNote = existingItems.find(
-        (item: any) => item.productNote === productNote
+        (item: any) => item.productNote === processedProductNote
       );
 
       if (itemWithSameNote) {
@@ -71,7 +89,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
           ...product,
           quantity,
           orderId,
-          productNote,
+          productNote: processedProductNote,
         });
       }
     }

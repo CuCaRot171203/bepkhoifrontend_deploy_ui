@@ -709,10 +709,10 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                       }
                     }}
                   />
-                  {DiscountError && (
-                    <p className="text-red-500 text-xs mt-1">{DiscountError}</p>
-                  )}
                 </div>
+                {DiscountError && (
+                  <p className="text-red-500 text-xs mt-1">{DiscountError}</p>
+                )}
                 <div className="flex flex-row pt-2 pb-2">
                   <p className="justify-start font-medium">VAT</p>
                   <div className="flex-1" />

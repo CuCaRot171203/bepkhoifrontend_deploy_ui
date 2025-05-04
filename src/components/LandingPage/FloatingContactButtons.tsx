@@ -4,6 +4,8 @@ import {
   MessageOutlined,
   RobotOutlined,
 } from "@ant-design/icons";
+import messengerLogo from "../../styles/LandingPage/messenger.png";
+import zaloLogo from "../../styles/LandingPage/zalo.png";
 
 const FloatingContactButtons = () => {
   return (
@@ -23,7 +25,7 @@ const FloatingContactButtons = () => {
         rel="noopener noreferrer"
         className="w-[3.5vw] h-[3.5vw] bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition"
       >
-        <MessageOutlined />
+        <img src={messengerLogo} alt="" className="w-[2vw] h-auto" />
       </a>
 
       {/* Zalo */}
@@ -33,7 +35,7 @@ const FloatingContactButtons = () => {
         rel="noopener noreferrer"
         className="w-[3.5vw] h-[3.5vw] bg-[#0068FF] text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition font-bold text-[1.3vw]"
       >
-        Z
+        <img src={zaloLogo} alt="" className="w-[2vw] h-auto" />
       </a>
 
       {/* Calling */}

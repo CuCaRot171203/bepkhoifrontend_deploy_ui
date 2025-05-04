@@ -14,6 +14,7 @@ const POSLayout: React.FC = () => {
   const [selectedOrder, setSelectedOrder] = useState<number | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [customerJoinList, setCustomerJoinList] = useState<string[]>([]);
 
   const handleSelectTable = (tableId: number | null) => {
     setSelectedTable(tableId);
@@ -31,6 +32,10 @@ const POSLayout: React.FC = () => {
         message.info(
           `Khách hàng ${data.customerName} (ID: ${data.customerId}, SĐT: ${data.phone}) đã vào phòng ${data.roomId}`
         );
+        setCustomerJoinList((prevList) => [
+          ...prevList,
+          `Khách hàng ${data.customerName} - SĐT: ${data.phone} đã vào phòng ${data.roomId}`,
+        ]);
       }, 500);
     };
   }, []);
@@ -77,6 +82,7 @@ const POSLayout: React.FC = () => {
               setSelectedShipper={setSelectedShipper}
               orderType={orderType}
               setOrderType={setOrderType}
+              customerJoinList={customerJoinList}
             />
           </div>
           <div className="w-1/2">

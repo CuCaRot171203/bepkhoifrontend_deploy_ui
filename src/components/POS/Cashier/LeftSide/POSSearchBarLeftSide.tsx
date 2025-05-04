@@ -14,6 +14,7 @@ const API_BASE_URL = process.env.REACT_APP_API_APP_ENDPOINT;
 
 interface Props {
   selectedOrder: number | null;
+  customerJoinList: string[];
 }
 
 interface menuItem {
@@ -132,7 +133,10 @@ async function fetchAddProductToOrder(
   }
 }
 
-const POSSearchBarLeftSide: React.FC<Props> = ({ selectedOrder }) => {
+const POSSearchBarLeftSide: React.FC<Props> = ({
+  selectedOrder,
+  customerJoinList,
+}) => {
   const { authInfo, clearAuthInfo } = useAuth(); // Sử dụng AuthContext
   const [searchTerm, setSearchTerm] = useState("");
   const [allProducts, setAllProducts] = useState<menuItem[]>([]);
@@ -234,19 +238,6 @@ const POSSearchBarLeftSide: React.FC<Props> = ({ selectedOrder }) => {
   };
 
   const [showNotifications, setShowNotifications] = useState(false);
-  const mockNotifications = [
-    "Khách hàng A - SĐT: 0975307087 đã vào bàn 1",
-    "Khách hàng B - SĐT: 0981234567 đã vào bàn 2",
-    "Khách hàng C - SĐT: 0912345678 đã vào bàn 3",
-    "Khách hàng D - SĐT: 0901122334 đã vào bàn 4",
-    "Khách hàng E - SĐT: 0999988888 đã vào bàn 5",
-    "Khách hàng F - SĐT: 0909090909 đã vào bàn 6",
-    "Khách hàng G - SĐT: 0938383838 đã vào bàn 7",
-    "Khách hàng H - SĐT: 0955555555 đã vào bàn 8",
-    "Khách hàng I - SĐT: 0966666666 đã vào bàn 9",
-    "Khách hàng J - SĐT: 0977777777 đã vào bàn 10",
-  ];
-
   return (
     <div
       ref={searchRef}
@@ -336,7 +327,7 @@ const POSSearchBarLeftSide: React.FC<Props> = ({ selectedOrder }) => {
         <div className="absolute right-0 top-[3.5vw] bg-white border border-gray-300 rounded-md shadow-lg w-[25vw] max-h-[15vw] overflow-y-auto z-50">
           <List
             size="small"
-            dataSource={mockNotifications}
+            dataSource={customerJoinList}
             renderItem={(item) => (
               <List.Item className="hover:bg-gray-100 cursor-default">
                 {item}

@@ -17,6 +17,7 @@ interface ModelLeftSideProps {
   setSelectedShipper: (shipperId: number | null) => void;
   orderType: number | null;
   setOrderType: (shipperId: number | null) => void;
+  customerJoinList: string[];
 }
 const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
   selectedTable,
@@ -27,6 +28,7 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
   setSelectedShipper,
   orderType,
   setOrderType,
+  customerJoinList,
 }) => {
   const [activeTab, setActiveTab] = useState<"room" | "menu" | "shiper">(
     "room"
@@ -80,7 +82,10 @@ const ModelLeftSide: React.FC<ModelLeftSideProps> = ({
         </div>
 
         <div className="ml-[3vw] mr-[3vw]">
-          <POSSearchBarLeftSide selectedOrder={selectedOrder} />
+          <POSSearchBarLeftSide
+            selectedOrder={selectedOrder}
+            customerJoinList={customerJoinList}
+          />
         </div>
       </div>
 

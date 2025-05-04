@@ -30,11 +30,11 @@ const POSLayout: React.FC = () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
         message.info(
-          `Khách hàng ${data.customerName} (ID: ${data.customerId}, SĐT: ${data.phone}) đã vào phòng ${data.roomId}`
+          `Khách hàng ${data.customerName} (ID: ${data.customerId}, SĐT: ${data.phone}) đã vào bàn ${data.roomId}`
         );
         setCustomerJoinList((prevList) => [
           ...prevList,
-          `Khách hàng ${data.customerName} - SĐT: ${data.phone} đã vào phòng ${data.roomId}`,
+          `Khách hàng ${data.customerName} - SĐT: ${data.phone} đã vào bàn ${data.roomId}`,
         ]);
       }, 500);
     };

@@ -152,7 +152,7 @@ const PriceMenuList: React.FC<PriceMenuListProps> = ({
       render: (_, record) => (
         <button
           onClick={() => handleOpenModal(record)}
-          className="edit-button text-[0.9vw] flex items-center"
+          className="edit-button text-[0.6vw] flex items-center"
         >
           <EditOutlined className="mr-[0.5vw]" /> Cập nhật
         </button>

@@ -705,13 +705,15 @@ const DrawerPaymentFinal: React.FC<DrawerPaymentFinalProps> = ({
                         );
                         message.warning("Giá trị vượt mức cho phép!");
                       } else {
-                        setDiscountError(null); // ✅ Xoá lỗi nếu hợp lệ
+                        setDiscountError(null);
                       }
                     }}
                   />
                 </div>
                 {DiscountError && (
-                  <p className="text-red-500 text-xs mt-1">{DiscountError}</p>
+                  <p className="text-red-500 text-xs mt-1 text-end">
+                    {DiscountError}
+                  </p>
                 )}
                 <div className="flex flex-row pt-2 pb-2">
                   <p className="justify-start font-medium">VAT</p>

@@ -43,7 +43,7 @@ const FloatingContactButtons = () => {
         href="tel:0975307087"
         className="w-[3.5vw] h-[3.5vw] bg-green-500 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition"
       >
-        <PhoneOutlined className="w-[2vw] h-auto" />
+        <PhoneOutlined className="w-[2vw] h-auto flex-shrink-0" />
       </a>
     </div>
   );

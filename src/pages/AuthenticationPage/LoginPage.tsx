@@ -150,12 +150,12 @@ export default function LoginPage() {
                   type="checkbox"
                   className="w-[1vw] h-[1vw] border border-gray-300 rounded"
                 />
-                <label
+                {/* <label
                   htmlFor="remember"
                   className="ml-[0.5vw] text-[0.9vw] text-gray-500"
                 >
                   Remember me
-                </label>
+                </label> */}
               </div>
               <a
                 href="/reset-password"
@@ -171,7 +171,7 @@ export default function LoginPage() {
               Sign in
             </button>
             <p className="text-[0.9vw] text-gray-500">
-              contact for admin to get account
+              Liên hệ với chúng tôi qua SĐT 0975307087 để được hỗ trợ.
             </p>
           </form>
         </div>

@@ -1,4 +1,8 @@
-import { AppstoreOutlined, HomeFilled, ShoppingCartOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  HomeFilled,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "../../CustomHook/useCart";
@@ -21,10 +25,14 @@ const FooterShop: React.FC = () => {
   const getActiveTab = (): string => {
     const path = location.pathname;
 
-    if (["/shop/cart", "/shop/status", "/shop/payment"].some(p => path.startsWith(p))) {
+    if (
+      ["/shop/cart", "/shop/status", "/shop/payment"].some((p) =>
+        path.startsWith(p)
+      )
+    ) {
       return "cart";
     }
-    if (["/shop/menu", "/shop/category"].some(p => path.startsWith(p))) {
+    if (["/shop/menu", "/shop/category"].some((p) => path.startsWith(p))) {
       return "home";
     }
     return "others";
@@ -35,7 +43,9 @@ const FooterShop: React.FC = () => {
   return (
     <footer className="bg-[#FCE9D2] py-3 px-6 flex justify-around items-center shadow-t-md">
       <div
-        className={`flex flex-col items-center space-y-1 cursor-pointer ${activeTab === "home" ? "text-yellow-500" : "text-gray-700"}`}
+        className={`flex flex-col items-center space-y-1 cursor-pointer ${
+          activeTab === "home" ? "text-yellow-500" : "text-gray-700"
+        }`}
         onClick={() => handleClick("home")}
       >
         <HomeFilled className="text-3xl" />
@@ -43,7 +53,9 @@ const FooterShop: React.FC = () => {
       </div>
 
       <div
-        className={`relative flex flex-col items-center space-y-1 cursor-pointer ${activeTab === "cart" ? "text-yellow-500" : "text-gray-700"}`}
+        className={`relative flex flex-col items-center space-y-1 cursor-pointer ${
+          activeTab === "cart" ? "text-yellow-500" : "text-gray-700"
+        }`}
         onClick={() => handleClick("cart")}
       >
         <div className="relative">
@@ -57,13 +69,15 @@ const FooterShop: React.FC = () => {
         <div className="text-sm font-semibold">Giỏ hàng</div>
       </div>
 
-      <div
-        className={`flex flex-col items-center space-y-1 cursor-pointer ${activeTab === "others" ? "text-yellow-500" : "text-gray-700"}`}
-        onClick={() => handleClick("others")}
+      {/* <div
+        className={`flex flex-col items-center space-y-1 cursor-pointer ${
+          activeTab === "others" ? "text-yellow-500" : "text-gray-700"
+        }`}
+        // onClick={() => handleClick("others")}
       >
         <AppstoreOutlined className="text-3xl" />
         <div className="text-sm font-semibold">Khác</div>
-      </div>
+      </div> */}
     </footer>
   );
 };

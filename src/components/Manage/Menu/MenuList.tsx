@@ -234,18 +234,24 @@ const MenuList: React.FC<MenuListProps> = ({ search, category, status }) => {
       dataIndex: "sellPrice",
       key: "sellPrice",
       className: "text-[0.8vw]",
-      render: (price) => (
-        <span className="text-[0.8vw]">{price?.toLocaleString()}đ</span>
-      ),
+      render: (price) =>
+        price ? (
+          <span className="text-[0.8vw]">{price.toLocaleString()}đ</span>
+        ) : (
+          <span className="text-[0.8vw]"></span>
+        ),
     },
     {
       title: "Giá KM",
       dataIndex: "salePrice",
       key: "salePrice",
       className: "text-[0.8vw]",
-      render: (price) => (
-        <span className="text-[0.8vw]">{price?.toLocaleString()}đ</span>
-      ),
+      render: (price) =>
+        price ? (
+          <span className="text-[0.8vw]">{price.toLocaleString()}đ</span>
+        ) : (
+          <span className="text-[0.8vw]"></span>
+        ),
     },
     {
       title: "VAT (%)",

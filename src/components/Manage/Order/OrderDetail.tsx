@@ -1,5 +1,13 @@
 import React from "react";
-import { Modal, Descriptions, Divider, Table, Button, Skeleton, Collapse } from "antd";
+import {
+  Modal,
+  Descriptions,
+  Divider,
+  Table,
+  Button,
+  Skeleton,
+  Collapse,
+} from "antd";
 import type { ColumnsType } from "antd/es/table";
 
 interface OrderDetailItem {
@@ -60,7 +68,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
   deliveryLoading,
   cancellationHistory,
   historyLoading,
-  onClose
+  onClose,
 }) => {
   const cancellationColumns: ColumnsType<CancellationHistoryItem> = [
     {
@@ -72,7 +80,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
       title: "Số lượng",
       dataIndex: "quantity",
       key: "quantity",
-      align: 'center',
+      align: "center",
     },
     {
       title: "Nhân viên",
@@ -83,7 +91,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
       title: "Lý do",
       dataIndex: "reason",
       key: "reason",
-      render: (reason) => reason || 'Không có lý do',
+      render: (reason) => reason || "Không có lý do",
     },
   ];
 
@@ -111,10 +119,10 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
               {createdTime && new Date(createdTime).toLocaleString()}
             </Descriptions.Item>
             <Descriptions.Item label="Tổng tiền">
-              {amountDue?.toLocaleString('vi-VN')}₫
+              {amountDue?.toLocaleString("vi-VN")}₫
             </Descriptions.Item>
             <Descriptions.Item label="Ghi chú" span={2}>
-              {orderNote || 'Không có ghi chú'}
+              {orderNote || "Không có ghi chú"}
             </Descriptions.Item>
           </Descriptions>
 
@@ -137,7 +145,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
                   {deliveryInfo.receiverAddress}
                 </Descriptions.Item>
                 <Descriptions.Item label="Ghi chú giao hàng" span={2}>
-                  {deliveryInfo.deliveryNote || 'Không có ghi chú'}
+                  {deliveryInfo.deliveryNote || "Không có ghi chú"}
                 </Descriptions.Item>
               </Descriptions>
             </>
@@ -159,24 +167,26 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
                 title: "Số lượng",
                 dataIndex: "quantity",
                 key: "quantity",
-                align: 'center',
+                align: "center",
               },
               {
                 title: "Đơn giá",
                 dataIndex: "price",
                 key: "price",
-                render: (price) => price.toLocaleString('vi-VN') + '₫',
+                render: (price) => price.toLocaleString("vi-VN") + "₫",
               },
               {
                 title: "Thành tiền",
                 key: "total",
-                render: (_, record) => (record.price * record.quantity).toLocaleString('vi-VN') + '₫',
+                render: (_, record) =>
+                  (record.price * record.quantity).toLocaleString("vi-VN") +
+                  "₫",
               },
               {
                 title: "Ghi chú",
                 dataIndex: "productNote",
                 key: "productNote",
-                render: (note) => note || 'Không có ghi chú',
+                render: (note) => note || "Không có ghi chú",
               },
             ]}
           />
@@ -184,7 +194,7 @@ const OrderDetail: React.FC<OrderDetailProps> = ({
           {cancellationHistory.length > 0 && (
             <>
               <Divider orientation="left">Lịch sử hủy món</Divider>
-              <Collapse defaultActiveKey={['1']}>
+              <Collapse defaultActiveKey={["1"]}>
                 <Panel header="Xem chi tiết các món đã hủy" key="1">
                   <Table<CancellationHistoryItem>
                     rowKey="orderCancellationHistoryId"

@@ -112,7 +112,7 @@ export default function LoginPage() {
                 htmlFor="username"
                 className="block mb-[0.5vw] text-[0.9vw] font-medium text-gray-900"
               >
-                Your email
+                Email
               </label>
               <input
                 type="email"
@@ -121,7 +121,7 @@ export default function LoginPage() {
                 value={formData.username}
                 onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-[0.9vw] text-gray-900 rounded-lg w-full p-[0.6vw] outline-none"
-                placeholder="name@company.com"
+                placeholder="email@nhahangbepkhoi.com"
                 required
               />
             </div>
@@ -130,7 +130,7 @@ export default function LoginPage() {
                 htmlFor="password"
                 className="block mb-[0.5vw] text-[0.9vw] font-medium text-gray-900"
               >
-                Password
+                Mật khẩu
               </label>
               <input
                 type="password"
@@ -148,7 +148,7 @@ export default function LoginPage() {
                 <input
                   id="remember"
                   type="checkbox"
-                  className="w-[1vw] h-[1vw] border border-gray-300 rounded"
+                  className="w-[1vw] h-[1vw] border border-gray-300 rounded hidden"
                 />
                 {/* <label
                   htmlFor="remember"
@@ -168,7 +168,7 @@ export default function LoginPage() {
               type="submit"
               className="w-full bg-[#fcc25d] text-[0.9vw] text-blue font-semibold rounded-lg px-[1.2vw] py-[0.6vw] hover:bg-[#dba342]"
             >
-              Sign in
+              Đăng nhập
             </button>
             <p className="text-[0.9vw] text-gray-500">
               Liên hệ với chúng tôi qua SĐT 0975307087 để được hỗ trợ.
